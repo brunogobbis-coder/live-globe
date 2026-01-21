@@ -2,6 +2,23 @@
 
 Uma página interativa inspirada no [Shopify BFCM Globe](https://bfcm.shopify.com/), adaptada com o look and feel da **Nuvemshop** usando o **Nimbus Design System**.
 
+## Guiding Principles
+
+### 1. PURPOSE: Brand & Emotion
+- Impress merchants, build brand association with **innovation + locality**
+- Trigger the feeling: "I want to share this"
+- Create emotional connection, not just data display
+
+### 2. IDENTITY: Unmistakably Local
+- Must FEEL Brazilian (then Mexican, Argentine, Colombian, Chilean)
+- Not generic tech visualization - culturally resonant
+- Brazil's shape, cities, regions should be recognizable and celebrated
+
+### 3. ORIGINALITY: Not a Copy
+- Different from Shopify **in concept**, not just execution
+- Shopify shows commerce as data (arcs flying through air)
+- We show commerce as **human moments** (emotions, milestones, journeys)
+
 ## 🚀 Demo
 
 Abra o arquivo `index.html` em qualquer navegador moderno para ver a página em ação.
