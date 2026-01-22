@@ -6339,6 +6339,7 @@
             const svg = document.querySelector('.brazil-map-svg');
             const indicator = document.getElementById('zoom-state-indicator');
             const statePaths = document.querySelectorAll('.state-path');
+            const tooltip = document.getElementById('region-tooltip');
             
             if (!svg) return;
             
@@ -6346,7 +6347,7 @@
             svg.style.transformOrigin = 'center center';
             svg.style.transform = 'scale(1)';
             
-            // Clear state
+            // Clear state first to prevent recursion
             state.zoomedState = null;
             
             // Hide indicator
@@ -6355,8 +6356,10 @@
             // Remove active from all states
             statePaths.forEach(p => p.classList.remove('active'));
             
-            // Close tooltip
-            closeTooltip();
+            // Close tooltip directly (not calling closeTooltip to avoid recursion)
+            state.tooltipVisible = false;
+            state.selectedCity = null;
+            tooltip.classList.remove('visible');
         }
         
         function initBrazilMap() {
@@ -6574,6 +6577,11 @@
             
             // Remove active state
             document.querySelectorAll('#brazil-map .state').forEach(s => s.classList.remove('active'));
+            
+            // Also reset map zoom if zoomed
+            if (state.zoomedState) {
+                resetMapZoom();
+            }
         }
 
         function focusOnCity() {
