@@ -1122,8 +1122,8 @@
             bottom: 24px;
             left: 32px;
             z-index: 100;
-            width: 280px;
-            max-height: 280px;
+            width: 300px;
+            max-height: calc(100vh - 150px);
         }
 
         .panel-header {
@@ -1152,9 +1152,13 @@
         .sales-list {
             display: flex;
             flex-direction: column;
-            gap: 8px;
-            max-height: 320px;
-            overflow: hidden;
+            gap: 6px;
+            max-height: 420px;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding-right: 4px;
+            scrollbar-width: thin;
+            scrollbar-color: var(--dark-border-light) transparent;
         }
 
         .sale-item {
@@ -1167,6 +1171,50 @@
             border: 1px solid var(--dark-border);
             border-radius: 10px;
             animation: slideIn 0.4s ease-out;
+        }
+        
+        /* Channel-specific background colors */
+        .sale-item.channel-online {
+            background: linear-gradient(135deg, rgba(33, 150, 243, 0.15), rgba(18, 18, 31, 0.9));
+            border-color: rgba(33, 150, 243, 0.3);
+        }
+        
+        .sale-item.channel-chat {
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.15), rgba(18, 18, 31, 0.9));
+            border-color: rgba(76, 175, 80, 0.3);
+        }
+        
+        .sale-item.channel-pos {
+            background: linear-gradient(135deg, rgba(255, 152, 0, 0.15), rgba(18, 18, 31, 0.9));
+            border-color: rgba(255, 152, 0, 0.3);
+        }
+        
+        .sale-item.channel-marketplace {
+            background: linear-gradient(135deg, rgba(156, 39, 176, 0.15), rgba(18, 18, 31, 0.9));
+            border-color: rgba(156, 39, 176, 0.3);
+        }
+        
+        .sale-item.channel-social {
+            background: linear-gradient(135deg, rgba(233, 30, 99, 0.15), rgba(18, 18, 31, 0.9));
+            border-color: rgba(233, 30, 99, 0.3);
+        }
+        
+        /* Custom scrollbar for webkit browsers */
+        .sales-list::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .sales-list::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        
+        .sales-list::-webkit-scrollbar-thumb {
+            background: var(--dark-border-light);
+            border-radius: 3px;
+        }
+        
+        .sales-list::-webkit-scrollbar-thumb:hover {
+            background: var(--dark-border);
         }
 
         @keyframes slideIn {
@@ -5482,7 +5530,7 @@
         // SALES FEED
         // ============================================
         const salesList = document.getElementById('sales-list');
-        const maxSales = 5;
+        const maxSales = 20;
 
         function getRandomSegment() {
             const segments = Object.keys(CONFIG.segments);
@@ -5792,7 +5840,7 @@
             const stateCulture = stateIcon.culture || '';
             
             const item = document.createElement('div');
-            item.className = 'sale-item' + (isFirstSale ? ' first-sale' : '') + (humanMoment ? ' has-moment' : '');
+            item.className = 'sale-item channel-' + channel + (isFirstSale ? ' first-sale' : '') + (humanMoment ? ' has-moment' : '');
             
             // Generate a store name for tooltip (use existing for first sale, or random)
             const displayStoreName = storeName || CONFIG.storeNames[Math.floor(Math.random() * CONFIG.storeNames.length)];
@@ -5805,10 +5853,10 @@
             // First sale badge
             let firstSaleBadge = isFirstSale ? `<div class="first-sale-badge">🎉 Primeira Venda!</div>` : '';
             
-            // HUMAN MOMENT: Add customer name and story
-            const customerInfo = humanMoment 
-                ? `<div class="sale-customer">${customerName}</div><div class="sale-moment">${humanMoment}</div>`
-                : `<div class="sale-customer">${customerName}</div>`;
+            // HUMAN MOMENT: Show moment story only (no customer name in main view)
+            const momentInfo = humanMoment 
+                ? `<div class="sale-moment">${humanMoment}</div>`
+                : '';
             
             // Build tooltip solutions HTML
             let tooltipSolutions = '';
@@ -5843,9 +5891,9 @@
                 <div class="sale-icon" style="background: linear-gradient(135deg, ${segmentData.color}, ${segmentData.color}dd)">${segmentData.emoji}</div>
                 <div class="sale-info">
                     <div class="sale-location">${regionIcon} ${city.name}, ${city.state}</div>
-                    ${customerInfo}
                     <div class="sale-product">${product}</div>
                     <div class="sale-badges">${badgesHtml}</div>
+                    ${momentInfo}
                 </div>
                 <div style="text-align: right;">
                     <div class="sale-value">R$ ${value.toLocaleString('pt-BR')}</div>
