@@ -1,0 +1,32 @@
+/**
+ * Right Sidebar Component
+ * ========================
+ * Main sidebar with GMV, stats, and filters
+ */
+
+.right-sidebar {
+    position: fixed;
+    top: 70px;
+    right: 0;
+    width: 320px;
+    height: calc(100vh - 70px);
+    background: linear-gradient(180deg, rgba(18, 18, 31, 0.95) 0%, rgba(10, 10, 20, 0.98) 100%);
+    border-left: 1px solid var(--dark-border);
+    padding: 24px;
+    overflow-y: auto;
+    z-index: 100;
+    backdrop-filter: blur(20px);
+}
+
+.right-sidebar::-webkit-scrollbar {
+    width: 4px;
+}
+
+.right-sidebar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.right-sidebar::-webkit-scrollbar-thumb {
+    background: var(--dark-border-light);
+    border-radius: 2px;
+}

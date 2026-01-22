@@ -1,0 +1,122 @@
+/**
+ * Base Styles & Nimbus Design System Variables
+ * ==============================================
+ */
+
+:root {
+    /* Nimbus Design System - Nuvemshop Colors */
+    --primary-interactive: #0059d5;
+    --primary-hover: #00429f;
+    --primary-pressed: #00347d;
+    --primary-surface: #eef5ff;
+    --primary-light: #4d8fe8;
+    --primary-glow: rgba(0, 89, 213, 0.6);
+    
+    --secondary: #7c3aed;
+    --secondary-light: #a78bfa;
+    
+    --neutral-background: #ffffff;
+    --neutral-surface: #f6f6f6;
+    --neutral-text-high: #0a0a0a;
+    --neutral-text-low: #5d5d5d;
+    
+    --success: #36b37e;
+    --success-light: #57d9a3;
+    --warning: #ffab00;
+    --danger: #de350b;
+    --danger-light: #ff6b4a;
+    
+    /* Segment Colors */
+    --segment-moda: #e91e63;
+    --segment-eletronicos: #2196f3;
+    --segment-casa: #ff9800;
+    --segment-beleza: #9c27b0;
+    --segment-alimentos: #4caf50;
+    --segment-esportes: #00bcd4;
+    --segment-pets: #795548;
+    --segment-livros: #607d8b;
+    
+    /* Dark theme */
+    --dark-bg: #0a0a14;
+    --dark-surface: #12121f;
+    --dark-surface-2: #1a1a2e;
+    --dark-border: #1e1e2d;
+    --dark-border-light: #2a2a3e;
+    
+    --font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    
+    /* Gaming colors */
+    --game-gold: #ffd700;
+    --game-silver: #c0c0c0;
+    --game-bronze: #cd7f32;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: var(--font-family);
+    background: var(--dark-bg);
+    color: var(--neutral-background);
+}
+
+/* App Container */
+.app-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Views Container */
+.views-container {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+}
+
+.view {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.view.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Utility Classes */
+.hidden {
+    display: none !important;
+}
+
+/* Scrollbar Styles */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--dark-border-light);
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--neutral-text-low);
+}

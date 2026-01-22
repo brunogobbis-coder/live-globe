@@ -1,0 +1,63 @@
+/**
+ * Channel Tabs Component
+ * =======================
+ * Filter tabs for sales channels (Online, Chat, POS, Social)
+ */
+
+.channel-tabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 10px;
+    background: var(--dark-surface);
+    padding: 4px;
+    border-radius: 8px;
+}
+
+.channel-tab {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 6px 8px;
+    background: transparent;
+    border: none;
+    border-radius: 6px;
+    color: var(--neutral-text-low);
+    font-size: 10px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.channel-tab svg {
+    width: 12px;
+    height: 12px;
+}
+
+.channel-tab:hover {
+    color: var(--neutral-background);
+    background: var(--dark-surface-2);
+}
+
+.channel-tab.active {
+    color: var(--neutral-background);
+    background: var(--primary-interactive);
+}
+
+/* Channel-specific active states */
+.channel-tab[data-channel="online"].active {
+    background: #2196f3;
+}
+
+.channel-tab[data-channel="chat"].active {
+    background: #4caf50;
+}
+
+.channel-tab[data-channel="pos"].active {
+    background: #ff9800;
+}
+
+.channel-tab[data-channel="social"].active {
+    background: #e91e63;
+}

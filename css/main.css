@@ -1,0 +1,40 @@
+/**
+ * Nuvemshop Live Globe - Main Stylesheet
+ * ========================================
+ * This file imports all component stylesheets.
+ * 
+ * Component Architecture:
+ * - base.css: Variables, resets, utilities
+ * - components/: Individual component styles
+ */
+
+/* Base & Design System */
+@import 'base.css';
+
+/* Layout Components */
+@import 'components/header.css';
+@import 'components/right-sidebar.css';
+@import 'components/info-panel.css';
+
+/* Data Display Components */
+@import 'components/gmv-display.css';
+@import 'components/stats-bar.css';
+@import 'components/solutions-stats.css';
+
+/* Filter Components */
+@import 'components/segment-filters.css';
+@import 'components/channel-tabs.css';
+
+/* Map Components */
+@import 'components/brazil-map.css';
+@import 'components/region-tooltip.css';
+
+/* Sales Components */
+@import 'components/sales-panel.css';
+
+/* Overlay Components */
+@import 'components/celebration.css';
+@import 'components/loading.css';
+
+/* Animations */
+@import 'components/animations.css';

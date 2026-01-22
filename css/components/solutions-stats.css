@@ -1,0 +1,112 @@
+/**
+ * Solutions Stats Component
+ * ==========================
+ * NuvemPay and NuvemEnvios adoption stats
+ */
+
+.solutions-stats {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.solution-stat {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px;
+    background: var(--dark-surface);
+    border: 1px solid var(--dark-border);
+    border-radius: 10px;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.solution-stat:hover {
+    border-color: var(--dark-border-light);
+}
+
+.solution-stat-icon {
+    font-size: 20px;
+}
+
+.solution-stat-info {
+    flex: 1;
+}
+
+.solution-stat-value {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--neutral-background);
+}
+
+.solution-stat-label {
+    font-size: 10px;
+    color: var(--neutral-text-low);
+    font-weight: 500;
+}
+
+/* Solution Stat Tooltip */
+.solution-stat-tooltip {
+    position: absolute;
+    bottom: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%);
+    width: 240px;
+    padding: 14px;
+    background: var(--dark-surface);
+    border: 1px solid var(--dark-border-light);
+    border-radius: 10px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease;
+    z-index: 200;
+    pointer-events: none;
+}
+
+.solution-stat:hover .solution-stat-tooltip {
+    opacity: 1;
+    visibility: visible;
+}
+
+.solution-tooltip-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--neutral-background);
+    margin-bottom: 8px;
+}
+
+.solution-tooltip-desc {
+    font-size: 11px;
+    color: var(--neutral-text-low);
+    line-height: 1.4;
+    margin-bottom: 10px;
+}
+
+.solution-tooltip-stat {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    padding: 4px 0;
+}
+
+.solution-tooltip-stat-label {
+    color: var(--neutral-text-low);
+}
+
+.solution-tooltip-stat-value {
+    color: var(--neutral-background);
+    font-weight: 600;
+}
+
+.solution-tooltip-highlight {
+    font-size: 10px;
+    color: var(--success);
+    font-weight: 500;
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid var(--dark-border);
+}

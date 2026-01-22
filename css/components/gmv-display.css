@@ -1,0 +1,120 @@
+/**
+ * GMV Display Component
+ * ======================
+ * Large GMV counter with real-time updates
+ */
+
+.gmv-display {
+    text-align: center;
+    padding: 20px 0;
+    position: relative;
+}
+
+.gmv-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--neutral-text-low);
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.gmv-value-wrapper {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 6px;
+}
+
+.gmv-prefix {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--primary-light);
+}
+
+.gmv-value {
+    font-size: 32px;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--neutral-background) 0%, var(--primary-light) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -1px;
+}
+
+.gmv-year {
+    font-size: 10px;
+    color: var(--neutral-text-low);
+    margin-top: 6px;
+}
+
+.gmv-per-second {
+    font-size: 12px;
+    color: var(--success);
+    font-weight: 600;
+    margin-top: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.gmv-per-second::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: var(--success);
+    border-radius: 50%;
+    animation: pulse 1s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+}
+
+/* GMV Display Tooltip */
+.info-tooltip {
+    position: absolute;
+    bottom: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%);
+    width: 280px;
+    padding: 16px;
+    background: var(--dark-surface);
+    border: 1px solid var(--dark-border-light);
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease;
+    z-index: 100;
+    pointer-events: none;
+}
+
+.gmv-display:hover .info-tooltip {
+    opacity: 1;
+    visibility: visible;
+}
+
+.info-tooltip-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--neutral-background);
+    margin-bottom: 8px;
+}
+
+.info-tooltip-desc {
+    font-size: 12px;
+    color: var(--neutral-text-low);
+    line-height: 1.5;
+    margin-bottom: 12px;
+}
+
+.info-tooltip-highlight {
+    font-size: 11px;
+    color: var(--success);
+    font-weight: 600;
+    padding-top: 8px;
+    border-top: 1px solid var(--dark-border);
+}

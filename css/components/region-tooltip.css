@@ -1,0 +1,142 @@
+/**
+ * Region Tooltip Component
+ * =========================
+ * Detailed tooltip for cities/states on the map
+ */
+
+.region-tooltip {
+    position: fixed;
+    width: 320px;
+    padding: 20px;
+    background: linear-gradient(135deg, var(--dark-surface) 0%, var(--dark-surface-2) 100%);
+    border: 1px solid var(--dark-border-light);
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+    z-index: 500;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(20px);
+}
+
+.region-tooltip.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.region-tooltip-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--dark-border);
+}
+
+.region-tooltip-flag {
+    font-size: 32px;
+}
+
+.region-tooltip-info h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--neutral-background);
+    margin-bottom: 2px;
+}
+
+.region-tooltip-info p {
+    font-size: 12px;
+    color: var(--neutral-text-low);
+}
+
+.region-tooltip-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.region-stat {
+    padding: 12px;
+    background: var(--dark-surface);
+    border-radius: 10px;
+    text-align: center;
+}
+
+.region-stat-value {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--neutral-background);
+}
+
+.region-stat-label {
+    font-size: 10px;
+    color: var(--neutral-text-low);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 2px;
+}
+
+.region-tooltip-segments {
+    margin-bottom: 16px;
+}
+
+.region-segments-title {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--neutral-text-low);
+    margin-bottom: 10px;
+}
+
+.region-segments-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.region-segment-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 10px;
+    background: var(--dark-surface);
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.region-tooltip-footer {
+    display: flex;
+    gap: 8px;
+}
+
+.region-tooltip-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px 16px;
+    background: var(--primary-interactive);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.region-tooltip-btn:hover {
+    background: var(--primary-hover);
+}
+
+.region-tooltip-btn.secondary {
+    background: var(--dark-surface-2);
+    border: 1px solid var(--dark-border);
+}
+
+.region-tooltip-btn.secondary:hover {
+    background: var(--dark-border);
+}

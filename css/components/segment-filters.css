@@ -1,0 +1,107 @@
+/**
+ * Segment Filters Component
+ * ==========================
+ * Filter buttons for product segments
+ */
+
+.segment-filters {
+    display: flex;
+    gap: 6px;
+    padding: 12px 16px;
+    background: var(--dark-surface);
+    border-radius: 12px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.segment-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    background: transparent;
+    border: 1px solid var(--dark-border);
+    border-radius: 20px;
+    color: var(--neutral-text-low);
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.segment-btn:hover {
+    color: var(--neutral-background);
+    border-color: var(--dark-border-light);
+    background: var(--dark-surface-2);
+}
+
+.segment-btn.active {
+    color: var(--neutral-background);
+    background: var(--dark-surface-2);
+    border-color: var(--primary-interactive);
+}
+
+.segment-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: currentColor;
+}
+
+/* Segment-specific colors */
+.segment-btn[data-segment="all"] .segment-dot { 
+    background: linear-gradient(135deg, var(--primary-interactive), var(--secondary)); 
+}
+.segment-btn[data-segment="moda"] .segment-dot { background: var(--segment-moda); }
+.segment-btn[data-segment="eletronicos"] .segment-dot { background: var(--segment-eletronicos); }
+.segment-btn[data-segment="casa"] .segment-dot { background: var(--segment-casa); }
+.segment-btn[data-segment="beleza"] .segment-dot { background: var(--segment-beleza); }
+.segment-btn[data-segment="alimentos"] .segment-dot { background: var(--segment-alimentos); }
+.segment-btn[data-segment="esportes"] .segment-dot { background: var(--segment-esportes); }
+
+/* Segment Tooltips */
+.segment-tooltip {
+    position: absolute;
+    bottom: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    padding: 12px;
+    background: var(--dark-surface);
+    border: 1px solid var(--dark-border-light);
+    border-radius: 10px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s ease;
+    z-index: 100;
+    pointer-events: none;
+    text-align: left;
+}
+
+.segment-btn:hover .segment-tooltip {
+    opacity: 1;
+    visibility: visible;
+}
+
+.segment-tooltip-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--neutral-background);
+    margin-bottom: 6px;
+}
+
+.segment-tooltip-desc {
+    font-size: 11px;
+    color: var(--neutral-text-low);
+    line-height: 1.4;
+    margin-bottom: 8px;
+}
+
+.segment-tooltip-percent {
+    font-size: 11px;
+    color: var(--primary-light);
+    font-weight: 500;
+}

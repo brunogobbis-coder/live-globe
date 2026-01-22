@@ -1,0 +1,182 @@
+/**
+ * First Sale Celebration Component
+ * ==================================
+ * Modal overlay for celebrating first sales
+ */
+
+.first-sale-celebration {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.7);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.first-sale-celebration.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.celebration-card {
+    text-align: center;
+    padding: 40px 60px;
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(18, 18, 31, 0.98));
+    border: 2px solid var(--game-gold);
+    border-radius: 20px;
+    animation: celebrateIn 0.5s ease-out;
+    position: relative;
+}
+
+@keyframes celebrateIn {
+    from { transform: scale(0.5) rotate(-10deg); opacity: 0; }
+    to { transform: scale(1) rotate(0); opacity: 1; }
+}
+
+.celebration-close-btn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: 50%;
+    color: var(--neutral-text-low);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.celebration-close-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: var(--neutral-background);
+}
+
+.celebration-emoji {
+    font-size: 64px;
+    margin-bottom: 16px;
+    animation: bounce 0.6s ease infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.celebration-regional-icon {
+    font-size: 40px;
+    margin-bottom: 16px;
+}
+
+.celebration-title {
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--game-gold);
+    text-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+    margin-bottom: 8px;
+    letter-spacing: 2px;
+}
+
+.celebration-subtitle {
+    font-size: 14px;
+    color: var(--neutral-text-low);
+    margin-bottom: 20px;
+    font-style: italic;
+}
+
+.celebration-store {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--neutral-background);
+    margin-bottom: 8px;
+}
+
+.celebration-location {
+    font-size: 14px;
+    color: var(--neutral-text-low);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.celebration-journey {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--primary-light);
+    margin-bottom: 16px;
+    padding: 8px 16px;
+    background: rgba(0, 89, 213, 0.15);
+    border-radius: 20px;
+    border: 1px solid rgba(0, 89, 213, 0.3);
+}
+
+.journey-icon {
+    font-size: 16px;
+}
+
+.journey-text {
+    font-weight: 500;
+}
+
+.celebration-value {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 8px;
+}
+
+.celebration-value .value-label {
+    font-size: 12px;
+    color: var(--neutral-text-low);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.celebration-value .value-amount {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--success-light);
+    text-shadow: 0 0 20px rgba(87, 217, 163, 0.5);
+}
+
+/* Confetti particles */
+.confetti {
+    position: fixed;
+    pointer-events: none;
+    z-index: 10000;
+}
+
+.confetti-particle {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    animation: confettiFall 3s ease-out forwards;
+}
+
+@keyframes confettiFall {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0;
+    }
+}

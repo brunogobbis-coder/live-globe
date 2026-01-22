@@ -1,0 +1,197 @@
+/**
+ * Sales Panel Component
+ * ======================
+ * Left panel showing recent sales with channel filters
+ */
+
+.sales-panel {
+    position: fixed;
+    bottom: 24px;
+    left: 32px;
+    z-index: 100;
+    width: 300px;
+    max-height: calc(100vh - 520px);
+}
+
+.panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.panel-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--neutral-background);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.panel-title::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    background: var(--success);
+    border-radius: 50%;
+    animation: pulse 1s ease-in-out infinite;
+}
+
+.sales-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    max-height: calc(100vh - 620px);
+    min-height: 150px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 4px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--dark-border-light) transparent;
+}
+
+.sales-list::-webkit-scrollbar {
+    width: 4px;
+}
+
+.sales-list::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.sales-list::-webkit-scrollbar-thumb {
+    background: var(--dark-border-light);
+    border-radius: 2px;
+}
+
+.sales-list::-webkit-scrollbar-thumb:hover {
+    background: var(--neutral-text-low);
+}
+
+/* Sale Item */
+.sale-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    background: var(--dark-surface);
+    border: 1px solid var(--dark-border);
+    border-radius: 10px;
+    animation: slideIn 0.4s ease-out;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.sale-item:hover {
+    border-color: var(--dark-border-light);
+    transform: translateX(4px);
+}
+
+@keyframes slideIn {
+    from { 
+        opacity: 0; 
+        transform: translateX(-20px); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateX(0); 
+    }
+}
+
+.sale-icon {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--dark-surface-2);
+    border-radius: 8px;
+    font-size: 18px;
+}
+
+.sale-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.sale-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.sale-location {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--neutral-background);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.sale-value {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--success);
+    white-space: nowrap;
+}
+
+.sale-badges {
+    display: flex;
+    gap: 4px;
+    margin-top: 4px;
+    flex-wrap: wrap;
+}
+
+.sale-badge {
+    font-size: 9px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: 500;
+    background: var(--dark-surface-2);
+    color: var(--neutral-text-low);
+}
+
+.sale-badge.nuvempay {
+    background: rgba(0, 89, 213, 0.2);
+    color: var(--primary-light);
+}
+
+.sale-badge.nuvemenvios {
+    background: rgba(54, 179, 126, 0.2);
+    color: var(--success-light);
+}
+
+.sale-badge.first-sale {
+    background: rgba(255, 215, 0, 0.2);
+    color: var(--game-gold);
+}
+
+/* Channel-specific backgrounds */
+.sale-item.channel-online {
+    background: linear-gradient(135deg, rgba(33, 150, 243, 0.1) 0%, var(--dark-surface) 100%);
+    border-color: rgba(33, 150, 243, 0.3);
+}
+
+.sale-item.channel-chat {
+    background: linear-gradient(135deg, rgba(76, 175, 80, 0.1) 0%, var(--dark-surface) 100%);
+    border-color: rgba(76, 175, 80, 0.3);
+}
+
+.sale-item.channel-pos {
+    background: linear-gradient(135deg, rgba(255, 152, 0, 0.1) 0%, var(--dark-surface) 100%);
+    border-color: rgba(255, 152, 0, 0.3);
+}
+
+.sale-item.channel-social {
+    background: linear-gradient(135deg, rgba(233, 30, 99, 0.1) 0%, var(--dark-surface) 100%);
+    border-color: rgba(233, 30, 99, 0.3);
+}
+
+/* Channel badges */
+.sale-badge.channel-online { background: rgba(33, 150, 243, 0.2); color: #2196f3; }
+.sale-badge.channel-chat { background: rgba(76, 175, 80, 0.2); color: #4caf50; }
+.sale-badge.channel-pos { background: rgba(255, 152, 0, 0.2); color: #ff9800; }
+.sale-badge.channel-social { background: rgba(233, 30, 99, 0.2); color: #e91e63; }

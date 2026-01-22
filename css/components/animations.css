@@ -1,0 +1,226 @@
+/**
+ * Map Animations Component
+ * =========================
+ * Delivery, money, and regional emoji animations
+ */
+
+/* Delivery Animation - Truck/Package */
+.delivery-animation {
+    position: absolute;
+    pointer-events: none;
+    z-index: 150;
+    font-size: 24px;
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.5));
+}
+
+.delivery-truck {
+    animation: driveDelivery 2.5s ease-in-out forwards;
+}
+
+.delivery-package {
+    animation: floatPackage 2s ease-out forwards;
+}
+
+@keyframes driveDelivery {
+    0% { 
+        transform: translate(0, 0) scale(0.5) rotate(0deg); 
+        opacity: 0;
+    }
+    15% {
+        transform: translate(5px, -5px) scale(1) rotate(-5deg);
+        opacity: 1;
+    }
+    50% {
+        transform: translate(70px, -10px) scale(1) rotate(5deg);
+        opacity: 1;
+    }
+    85% {
+        transform: translate(120px, 5px) scale(0.9) rotate(-3deg);
+        opacity: 0.8;
+    }
+    100% { 
+        transform: translate(140px, 10px) scale(0.6) rotate(0deg); 
+        opacity: 0;
+    }
+}
+
+@keyframes floatPackage {
+    0% { 
+        transform: translate(0, 0) scale(0.5) rotate(0deg); 
+        opacity: 0;
+    }
+    20% {
+        transform: translate(0, -15px) scale(1.2) rotate(-10deg);
+        opacity: 1;
+    }
+    50% { 
+        transform: translate(20px, -50px) scale(1) rotate(15deg);
+        opacity: 1;
+    }
+    80% {
+        transform: translate(50px, -70px) scale(0.8) rotate(-5deg);
+        opacity: 0.6;
+    }
+    100% { 
+        transform: translate(80px, -90px) scale(0.4) rotate(10deg); 
+        opacity: 0;
+    }
+}
+
+/* Regional Emoji Animation - Food/Drink/Culture */
+.regional-emoji-animation {
+    position: absolute;
+    pointer-events: none;
+    z-index: 155;
+    font-size: 28px;
+    filter: drop-shadow(0 3px 10px rgba(0, 0, 0, 0.5));
+    animation: regionalFloat 2s ease-out forwards;
+}
+
+@keyframes regionalFloat {
+    0% { 
+        transform: translate(-50%, -50%) scale(0) rotate(-20deg); 
+        opacity: 0;
+    }
+    20% {
+        transform: translate(-50%, -70%) scale(1.3) rotate(10deg);
+        opacity: 1;
+    }
+    50% { 
+        transform: translate(-40%, -100%) scale(1.1) rotate(-5deg);
+        opacity: 1;
+    }
+    80% {
+        transform: translate(-30%, -130%) scale(0.9) rotate(15deg);
+        opacity: 0.7;
+    }
+    100% { 
+        transform: translate(-20%, -160%) scale(0.6) rotate(-10deg); 
+        opacity: 0;
+    }
+}
+
+/* Money Animation - Flying Real */
+.money-animation {
+    position: absolute;
+    pointer-events: none;
+    z-index: 160;
+    font-size: 20px;
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.4));
+}
+
+.money-small {
+    animation: moneyFlySmall 1.2s ease-out forwards;
+}
+
+.money-medium {
+    animation: moneyFlyMedium 1.5s ease-out forwards;
+}
+
+.money-large {
+    animation: moneyFlyLarge 1.8s ease-out forwards;
+    font-size: 28px;
+}
+
+@keyframes moneyFlySmall {
+    0% { 
+        transform: translate(0, 0) scale(0.3); 
+        opacity: 0;
+    }
+    20% {
+        transform: translate(-5px, -20px) scale(1);
+        opacity: 1;
+    }
+    100% { 
+        transform: translate(-15px, -80px) scale(0.5); 
+        opacity: 0;
+    }
+}
+
+@keyframes moneyFlyMedium {
+    0% { 
+        transform: translate(0, 0) scale(0.3); 
+        opacity: 0;
+    }
+    20% {
+        transform: translate(0, -25px) scale(1.1);
+        opacity: 1;
+    }
+    100% { 
+        transform: translate(10px, -100px) scale(0.4); 
+        opacity: 0;
+    }
+}
+
+@keyframes moneyFlyLarge {
+    0% { 
+        transform: translate(0, 0) scale(0.3); 
+        opacity: 0;
+    }
+    15% {
+        transform: translate(0, -15px) scale(1.3);
+        opacity: 1;
+    }
+    50% {
+        transform: translate(5px, -60px) scale(1);
+        opacity: 1;
+    }
+    100% { 
+        transform: translate(15px, -120px) scale(0.3); 
+        opacity: 0;
+    }
+}
+
+/* Money burst particles */
+.money-particle {
+    position: absolute;
+    font-size: 14px;
+    animation: moneyParticle 1s ease-out forwards;
+}
+
+@keyframes moneyParticle {
+    0% {
+        transform: translate(0, 0) scale(0.5);
+        opacity: 0;
+    }
+    30% {
+        opacity: 1;
+    }
+    100% {
+        transform: translate(var(--tx, 20px), var(--ty, -40px)) scale(0.3);
+        opacity: 0;
+    }
+}
+
+/* Flow Arc Animation */
+.flow-arc {
+    position: absolute;
+    pointer-events: none;
+    z-index: 100;
+}
+
+.flow-arc-path {
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-dasharray: 100;
+    stroke-dashoffset: 100;
+    animation: flowArc 1.5s ease-out forwards;
+}
+
+@keyframes flowArc {
+    0% {
+        stroke-dashoffset: 100;
+        opacity: 0;
+    }
+    20% {
+        opacity: 1;
+    }
+    80% {
+        opacity: 1;
+    }
+    100% {
+        stroke-dashoffset: 0;
+        opacity: 0;
+    }
+}

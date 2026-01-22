@@ -1,0 +1,46 @@
+/**
+ * Info Panel Component
+ * =====================
+ * Left side panel with title and description
+ */
+
+.info-panel {
+    position: fixed;
+    top: 120px;
+    left: 32px;
+    z-index: 100;
+    max-width: 280px;
+}
+
+.info-title {
+    font-size: 42px;
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -2px;
+    margin-bottom: 16px;
+}
+
+.info-title-main {
+    display: block;
+    color: var(--neutral-background);
+}
+
+.info-title-sub {
+    display: block;
+    background: linear-gradient(135deg, var(--primary-light), var(--secondary-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.info-desc {
+    font-size: 14px;
+    color: var(--neutral-text-low);
+    line-height: 1.6;
+    margin-bottom: 24px;
+}
+
+.info-highlight {
+    color: var(--neutral-background);
+    font-weight: 600;
+}

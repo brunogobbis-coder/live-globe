@@ -1,0 +1,120 @@
+/**
+ * Header Component
+ * =================
+ * Main navigation header with logo and CTA
+ */
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 32px;
+    background: linear-gradient(180deg, rgba(10, 10, 20, 0.98) 0%, rgba(10, 10, 20, 0.9) 100%);
+    border-bottom: 1px solid var(--dark-border);
+    z-index: 1000;
+    backdrop-filter: blur(20px);
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.header-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+}
+
+.header-logo img {
+    height: 28px;
+    width: auto;
+}
+
+.header-brand {
+    display: flex;
+    flex-direction: column;
+}
+
+.header-brand-name {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--neutral-background);
+    letter-spacing: -0.5px;
+}
+
+.header-brand-tag {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--primary-light);
+    font-weight: 500;
+}
+
+.main-nav {
+    display: flex;
+    gap: 8px;
+    margin-left: 40px;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    color: var(--neutral-text-low);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.nav-item svg {
+    width: 18px;
+    height: 18px;
+}
+
+.nav-item:hover {
+    color: var(--neutral-background);
+    background: var(--dark-surface);
+    border-color: var(--dark-border);
+}
+
+.nav-item.active {
+    color: var(--neutral-background);
+    background: var(--primary-interactive);
+    border-color: var(--primary-interactive);
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.header-cta {
+    padding: 10px 20px;
+    background: linear-gradient(135deg, var(--primary-interactive), var(--primary-hover));
+    border-radius: 8px;
+    color: white;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 15px rgba(0, 89, 213, 0.3);
+}
+
+.header-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 89, 213, 0.4);
+}
