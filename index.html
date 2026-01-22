@@ -372,6 +372,28 @@
             transition: transform 0.5s ease-out;
             transform-origin: center center;
             overflow: visible;
+            animation: brazilHeartbeat var(--heartbeat-speed, 3s) ease-in-out infinite;
+        }
+        
+        /* Heartbeat animation - pulses with sales volume */
+        @keyframes brazilHeartbeat {
+            0%, 100% { 
+                filter: drop-shadow(0 0 30px rgba(0, 89, 213, 0.2));
+            }
+            50% { 
+                filter: drop-shadow(0 0 45px rgba(0, 89, 213, 0.35));
+            }
+        }
+        
+        /* Faster heartbeat when sales are high */
+        .brazil-map-svg.pulse-fast {
+            --heartbeat-speed: 1.5s;
+        }
+        .brazil-map-svg.pulse-medium {
+            --heartbeat-speed: 2.5s;
+        }
+        .brazil-map-svg.pulse-slow {
+            --heartbeat-speed: 4s;
         }
         
         /* Heatmap Colors by Region */
@@ -749,6 +771,39 @@
             }
             100% { 
                 transform: translate(80px, -90px) scale(0.4) rotate(10deg); 
+                opacity: 0;
+            }
+        }
+        
+        /* Regional Emoji Animation - Food/Drink/Culture */
+        .regional-emoji-animation {
+            position: absolute;
+            pointer-events: none;
+            z-index: 155;
+            font-size: 28px;
+            filter: drop-shadow(0 3px 10px rgba(0, 0, 0, 0.5));
+            animation: regionalFloat 2s ease-out forwards;
+        }
+        
+        @keyframes regionalFloat {
+            0% { 
+                transform: translate(-50%, -50%) scale(0) rotate(-20deg); 
+                opacity: 0;
+            }
+            20% {
+                transform: translate(-50%, -70%) scale(1.3) rotate(10deg);
+                opacity: 1;
+            }
+            50% { 
+                transform: translate(-40%, -100%) scale(1.1) rotate(-5deg);
+                opacity: 1;
+            }
+            80% {
+                transform: translate(-30%, -130%) scale(0.9) rotate(15deg);
+                opacity: 0.7;
+            }
+            100% { 
+                transform: translate(-20%, -160%) scale(0.6) rotate(-10deg); 
                 opacity: 0;
             }
         }
@@ -1141,6 +1196,14 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
             margin-top: 3px;
+        }
+
+        .stat-context {
+            font-size: 10px;
+            color: var(--primary-light);
+            opacity: 0.8;
+            margin-top: 2px;
+            font-weight: 400;
         }
 
         .stat-trend {
@@ -1664,11 +1727,55 @@
         .celebration-location {
             font-size: 14px;
             color: var(--neutral-text-low);
-            margin-bottom: 12px;
+            margin-bottom: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
+        }
+        
+        .celebration-journey {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 13px;
+            color: var(--primary-light);
+            margin-bottom: 16px;
+            padding: 8px 16px;
+            background: rgba(0, 89, 213, 0.15);
+            border-radius: 20px;
+            border: 1px solid rgba(0, 89, 213, 0.3);
+        }
+        
+        .journey-icon {
+            font-size: 16px;
+        }
+        
+        .journey-text {
+            font-weight: 500;
+        }
+        
+        .celebration-value {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 8px;
+        }
+        
+        .celebration-value .value-label {
+            font-size: 12px;
+            color: var(--neutral-text-low);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .celebration-value .value-amount {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--success-light);
+            text-shadow: 0 0 20px rgba(87, 217, 163, 0.5);
         }
         
         .celebration-greeting {
@@ -4338,11 +4445,19 @@
                 <div class="celebration-emoji">🎉</div>
                 <div class="celebration-regional-icon" id="celebration-regional-icon">🏙️</div>
                 <div class="celebration-title">PRIMEIRA VENDA!</div>
-                <div class="celebration-subtitle">Um novo merchant acaba de fazer história</div>
+                <div class="celebration-subtitle" id="celebration-subtitle">Um sonho que acaba de virar realidade</div>
                 <div class="celebration-store" id="celebration-store">Loja Exemplo</div>
                 <div class="celebration-location">
                     <span>📍</span>
                     <span id="celebration-location">São Paulo, SP</span>
+                </div>
+                <div class="celebration-journey" id="celebration-journey">
+                    <span class="journey-icon">🚀</span>
+                    <span class="journey-text">Abriu a loja há 3 dias</span>
+                </div>
+                <div class="celebration-value" id="celebration-value">
+                    <span class="value-label">Primeira venda:</span>
+                    <span class="value-amount">R$ 127,00</span>
                 </div>
             </div>
         </div>
@@ -4632,6 +4747,7 @@
                         <div class="stat-item">
                             <div class="stat-value" id="total-orders">0</div>
                             <div class="stat-label">Pedidos Totais</div>
+                            <div class="stat-context" id="orders-context">sonhos entregues</div>
                             <div class="stat-trend">
                                 <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
                                     <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
@@ -4642,14 +4758,17 @@
                         <div class="stat-item">
                             <div class="stat-value highlight" id="orders-per-minute">0</div>
                             <div class="stat-label">Pedidos/min</div>
+                            <div class="stat-context" id="orders-min-context">+1 por segundo</div>
                         </div>
                         <div class="stat-item">
                             <div class="stat-value" id="active-stores">0</div>
                             <div class="stat-label">Lojas Ativas</div>
+                            <div class="stat-context" id="stores-context">empreendedores</div>
                         </div>
                         <div class="stat-item">
                             <div class="stat-value" id="avg-ticket">R$ 0</div>
                             <div class="stat-label">Ticket Médio</div>
+                            <div class="stat-context" id="ticket-context">por compra</div>
                         </div>
                     </div>
 
@@ -5600,6 +5719,12 @@
             document.getElementById('active-stores').textContent = formatNumber(state.activeStores);
             document.getElementById('avg-ticket').textContent = 'R$ ' + state.avgTicket;
             
+            // Update Brazilian context
+            updateBrazilianContext();
+            
+            // Update map pulse based on sales intensity
+            updateMapPulse();
+            
             // Stats view
             document.getElementById('stats-gmv').textContent = formatCurrency(state.gmv);
             document.getElementById('stats-orders').textContent = formatNumber(state.totalOrders);
@@ -5614,6 +5739,53 @@
             if (mobileStores) mobileStores.textContent = formatNumber(state.activeStores);
             if (mobileTicket) mobileTicket.textContent = 'R$ ' + state.avgTicket;
             if (mobilePerSec) mobilePerSec.textContent = formatPerSecond(state.gmvPerSecond);
+        }
+        
+        // Update Brazilian context messages
+        function updateBrazilianContext() {
+            const ordersPerSec = Math.floor(state.ordersPerMinute / 60);
+            
+            // Orders per minute context
+            const ordersMinContext = document.getElementById('orders-min-context');
+            if (ordersMinContext) {
+                if (ordersPerSec >= 14) {
+                    ordersMinContext.textContent = `${ordersPerSec} por segundo 🔥`;
+                } else if (ordersPerSec >= 10) {
+                    ordersMinContext.textContent = `${ordersPerSec} por segundo`;
+                } else {
+                    ordersMinContext.textContent = '+1 por segundo';
+                }
+            }
+            
+            // Stores context - rotate messages
+            const storesContext = document.getElementById('stores-context');
+            if (storesContext && Math.random() < 0.1) { // Change occasionally
+                const messages = [
+                    'empreendedores',
+                    'sonhos em ação',
+                    'negócios crescendo',
+                    'histórias de sucesso'
+                ];
+                storesContext.textContent = messages[Math.floor(Math.random() * messages.length)];
+            }
+        }
+        
+        // Update map pulse based on sales volume
+        function updateMapPulse() {
+            const svg = document.querySelector('.brazil-map-svg');
+            if (!svg) return;
+            
+            // Remove all pulse classes
+            svg.classList.remove('pulse-fast', 'pulse-medium', 'pulse-slow');
+            
+            // Add appropriate class based on orders per minute
+            if (state.ordersPerMinute >= 900) {
+                svg.classList.add('pulse-fast');
+            } else if (state.ordersPerMinute >= 800) {
+                svg.classList.add('pulse-medium');
+            } else {
+                svg.classList.add('pulse-slow');
+            }
         }
 
         // ============================================
@@ -5700,7 +5872,7 @@
         }
 
         // NEW: Show first sale celebration
-        function showFirstSaleCelebration(storeName, cityName, stateName) {
+        function showFirstSaleCelebration(storeName, cityName, stateName, saleValue) {
             const celebration = document.getElementById('first-sale-celebration');
             document.getElementById('celebration-store').textContent = storeName;
             document.getElementById('celebration-location').textContent = `${cityName}, ${stateName}`;
@@ -5708,15 +5880,44 @@
             // Get state-specific icon and greeting
             const stateIcon = CONFIG.stateIcons[stateName] || {};
             const regionalIcon = stateIcon.icon || '🏙️';
-            const regionalGreeting = stateIcon.greeting || 'Parabéns, empreendedor!';
             
             document.getElementById('celebration-regional-icon').textContent = regionalIcon;
+            
+            // Emotional subtitles that rotate
+            const subtitles = [
+                'Um sonho que acaba de virar realidade',
+                'O primeiro passo de uma grande jornada',
+                'Mais um empreendedor fazendo história',
+                'O e-commerce brasileiro pulsa com força',
+                'De ideia a realidade: a magia aconteceu'
+            ];
+            const randomSubtitle = subtitles[Math.floor(Math.random() * subtitles.length)];
+            document.getElementById('celebration-subtitle').textContent = randomSubtitle;
+            
+            // Simulate days since store opened (1-14 days for first sale)
+            const daysOpen = Math.floor(Math.random() * 14) + 1;
+            const journeyText = daysOpen === 1 
+                ? 'Abriu a loja hoje!' 
+                : `Abriu a loja há ${daysOpen} dias`;
+            document.getElementById('celebration-journey').querySelector('.journey-text').textContent = journeyText;
+            
+            // Sale value
+            const value = saleValue || (Math.random() * 300 + 50);
+            document.getElementById('celebration-value').querySelector('.value-amount').textContent = 
+                'R$ ' + value.toFixed(2).replace('.', ',');
             
             celebration.classList.add('active');
             createConfetti();
             
+            // Pulse the map faster during celebration
+            const svg = document.querySelector('.brazil-map-svg');
+            if (svg) {
+                svg.classList.add('pulse-fast');
+                setTimeout(() => svg.classList.remove('pulse-fast'), 6000);
+            }
+            
             // Store current celebration data for sharing
-            window.currentCelebration = { storeName, cityName, stateName };
+            window.currentCelebration = { storeName, cityName, stateName, value };
             
             // Auto close after 6 seconds (longer to allow sharing)
             window.celebrationTimeout = setTimeout(() => {
@@ -5818,6 +6019,44 @@
                     delivery.parentNode.removeChild(delivery);
                 }
             }, isTruck ? 2500 : 2000);
+        }
+        
+        // Show regional emoji animation (food, drink, culture)
+        function showRegionalEmoji(cityName, stateCode) {
+            const mapContainer = document.getElementById('brazil-map-container');
+            if (!mapContainer || state.currentView !== 'globe') return;
+            
+            const cityPos = CITY_POSITIONS[cityName];
+            if (!cityPos) return;
+            
+            const stateIcon = CONFIG.stateIcons[stateCode];
+            if (!stateIcon) return;
+            
+            // Pick a random regional element
+            const elements = [stateIcon.food, stateIcon.drink, stateIcon.icon].filter(Boolean);
+            if (elements.length === 0) return;
+            
+            const emoji = elements[Math.floor(Math.random() * elements.length)];
+            
+            const containerRect = mapContainer.getBoundingClientRect();
+            const x = (cityPos.x / 100) * containerRect.width;
+            const y = (cityPos.y / 100) * containerRect.height;
+            
+            // Create regional emoji element
+            const regional = document.createElement('div');
+            regional.className = 'regional-emoji-animation';
+            regional.innerHTML = emoji;
+            regional.style.left = `${x}px`;
+            regional.style.top = `${y}px`;
+            
+            mapContainer.appendChild(regional);
+            
+            // Remove after animation
+            setTimeout(() => {
+                if (regional.parentNode) {
+                    regional.parentNode.removeChild(regional);
+                }
+            }, 2000);
         }
         
         // Show money/real flying animation for sales
@@ -6049,7 +6288,12 @@
             // NEW: First sale celebration
             if (isFirstSale) {
                 state.firstSalesToday += 1;
-                showFirstSaleCelebration(storeName, city.name, city.state);
+                showFirstSaleCelebration(storeName, city.name, city.state, value);
+            }
+            
+            // Occasional regional emoji animation (5% of sales)
+            if (state.currentView === 'globe' && Math.random() < 0.05) {
+                showRegionalEmoji(city.name, city.state);
             }
             
             updateStats();
