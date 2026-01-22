@@ -6279,26 +6279,14 @@
         // MAP ZOOM FUNCTIONS
         // ============================================
         
-        // State center positions for zoom (approximate centers)
-        const STATE_CENTERS = {
-            'AC': { x: 15, y: 40 }, 'AL': { x: 88, y: 42 }, 'AP': { x: 55, y: 10 },
-            'AM': { x: 28, y: 25 }, 'BA': { x: 77, y: 45 }, 'CE': { x: 82, y: 28 },
-            'DF': { x: 67, y: 52 }, 'ES': { x: 86, y: 58 }, 'GO': { x: 60, y: 52 },
-            'MA': { x: 68, y: 25 }, 'MT': { x: 42, y: 45 }, 'MS': { x: 48, y: 62 },
-            'MG': { x: 72, y: 55 }, 'PA': { x: 52, y: 25 }, 'PB': { x: 88, y: 33 },
-            'PR': { x: 58, y: 75 }, 'PE': { x: 85, y: 38 }, 'PI': { x: 72, y: 32 },
-            'RJ': { x: 78, y: 65 }, 'RN': { x: 87, y: 30 }, 'RS': { x: 55, y: 88 },
-            'RO': { x: 28, y: 42 }, 'RR': { x: 32, y: 10 }, 'SC': { x: 60, y: 82 },
-            'SP': { x: 62, y: 68 }, 'SE': { x: 85, y: 44 }, 'TO': { x: 62, y: 40 }
-        };
-        
         function zoomToState(stateCode, pathElement) {
             const svg = document.querySelector('.brazil-map-svg');
+            const container = document.getElementById('brazil-map-container');
             const indicator = document.getElementById('zoom-state-indicator');
             const stateName = document.getElementById('zoom-state-name');
             const stateData = CONFIG.states[stateCode];
             
-            if (!svg || !stateData) return;
+            if (!svg || !stateData || !pathElement) return;
             
             // If already zoomed to this state, reset
             if (state.zoomedState === stateCode) {
@@ -6306,23 +6294,38 @@
                 return;
             }
             
-            // Get state center
-            const center = STATE_CENTERS[stateCode] || { x: 50, y: 50 };
+            // Get the bounding box of the state path
+            const bbox = pathElement.getBBox();
+            const stateCenterX = bbox.x + bbox.width / 2;
+            const stateCenterY = bbox.y + bbox.height / 2;
             
-            // Calculate zoom level based on state size (smaller states get more zoom)
-            let zoomLevel = 2.5;
-            const largeStates = ['AM', 'PA', 'MT', 'MG', 'BA', 'MS', 'GO', 'MA'];
-            const smallStates = ['DF', 'SE', 'AL', 'RN', 'PB', 'ES', 'RJ', 'SC'];
+            // Get SVG viewBox dimensions
+            const viewBox = svg.viewBox.baseVal;
+            const svgWidth = viewBox.width;   // 353.845
+            const svgHeight = viewBox.height; // 367.766
             
-            if (largeStates.includes(stateCode)) zoomLevel = 2;
-            if (smallStates.includes(stateCode)) zoomLevel = 3;
+            // Calculate state center as percentage of SVG
+            const centerXPercent = (stateCenterX / svgWidth) * 100;
+            const centerYPercent = (stateCenterY / svgHeight) * 100;
             
-            // Calculate transform to center the state
-            const translateX = (50 - center.x) * zoomLevel;
-            const translateY = (50 - center.y) * zoomLevel;
+            // Calculate zoom level based on state size
+            const stateArea = bbox.width * bbox.height;
+            let zoomLevel;
             
-            // Apply zoom transform
-            svg.style.transform = `scale(${zoomLevel}) translate(${translateX}%, ${translateY}%)`;
+            if (stateArea > 8000) zoomLevel = 2;        // Very large (AM, PA, MT)
+            else if (stateArea > 4000) zoomLevel = 2.5; // Large (MG, BA, GO)
+            else if (stateArea > 1500) zoomLevel = 3;   // Medium (SP, PR, RS)
+            else if (stateArea > 500) zoomLevel = 3.5;  // Small (RJ, SC, PE)
+            else zoomLevel = 4;                          // Very small (DF, SE, AL)
+            
+            // Calculate translation to center the state
+            // We need to move the state center to the viewport center (50%, 50%)
+            const translateX = (50 - centerXPercent);
+            const translateY = (50 - centerYPercent);
+            
+            // Apply zoom transform with transform-origin at center
+            svg.style.transformOrigin = `${centerXPercent}% ${centerYPercent}%`;
+            svg.style.transform = `scale(${zoomLevel})`;
             
             // Update state
             state.zoomedState = stateCode;
@@ -6340,7 +6343,8 @@
             if (!svg) return;
             
             // Reset transform
-            svg.style.transform = 'scale(1) translate(0, 0)';
+            svg.style.transformOrigin = 'center center';
+            svg.style.transform = 'scale(1)';
             
             // Clear state
             state.zoomedState = null;
