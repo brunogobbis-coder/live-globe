@@ -274,6 +274,30 @@
             height: 20px;
         }
 
+        /* Share Button - Brand & Emotion */
+        .share-btn {
+            position: relative;
+        }
+
+        .share-btn.shared {
+            background: var(--success) !important;
+            border-color: var(--success) !important;
+            animation: sharePulse 0.6s ease-out;
+        }
+
+        .share-btn.shared::after {
+            content: '✓';
+            position: absolute;
+            font-size: 16px;
+            color: white;
+        }
+
+        @keyframes sharePulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
         /* ============================================
            VIEWS/PAGES
            ============================================ */
@@ -577,6 +601,186 @@
         @keyframes connectionFlow {
             0% { stroke-dashoffset: 10; }
             100% { stroke-dashoffset: 0; }
+        }
+        
+        /* ============================================
+           DELIVERY & PAYMENT ANIMATIONS (Emotional)
+           ============================================ */
+        
+        /* Delivery Animation - Truck/Package */
+        .delivery-animation {
+            position: absolute;
+            pointer-events: none;
+            z-index: 150;
+            font-size: 24px;
+            filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.5));
+        }
+        
+        .delivery-truck {
+            animation: driveDelivery 2.5s ease-in-out forwards;
+        }
+        
+        .delivery-package {
+            animation: floatPackage 2s ease-out forwards;
+        }
+        
+        @keyframes driveDelivery {
+            0% { 
+                transform: translate(0, 0) scale(0.5) rotate(0deg); 
+                opacity: 0;
+            }
+            15% {
+                transform: translate(5px, -5px) scale(1) rotate(-5deg);
+                opacity: 1;
+            }
+            50% { 
+                transform: translate(60px, -35px) scale(1.1) rotate(5deg);
+                opacity: 1;
+            }
+            85% {
+                transform: translate(110px, -15px) scale(0.9) rotate(-3deg);
+                opacity: 0.8;
+            }
+            100% { 
+                transform: translate(140px, 10px) scale(0.6) rotate(0deg); 
+                opacity: 0;
+            }
+        }
+        
+        @keyframes floatPackage {
+            0% { 
+                transform: translate(0, 0) scale(0.5) rotate(0deg); 
+                opacity: 0;
+            }
+            20% {
+                transform: translate(0, -15px) scale(1.2) rotate(-10deg);
+                opacity: 1;
+            }
+            50% { 
+                transform: translate(20px, -50px) scale(1) rotate(15deg);
+                opacity: 1;
+            }
+            80% {
+                transform: translate(50px, -70px) scale(0.8) rotate(-5deg);
+                opacity: 0.6;
+            }
+            100% { 
+                transform: translate(80px, -90px) scale(0.4) rotate(10deg); 
+                opacity: 0;
+            }
+        }
+        
+        /* Money Animation - Flying Real */
+        .money-animation {
+            position: absolute;
+            pointer-events: none;
+            z-index: 160;
+            font-size: 20px;
+            filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.4));
+        }
+        
+        .money-small {
+            animation: moneyFlySmall 1.2s ease-out forwards;
+        }
+        
+        .money-medium {
+            animation: moneyFlyMedium 1.5s ease-out forwards;
+        }
+        
+        .money-large {
+            animation: moneyFlyLarge 1.8s ease-out forwards;
+        }
+        
+        @keyframes moneyFlySmall {
+            0% { 
+                transform: translateY(0) scale(0.3) rotate(0deg); 
+                opacity: 0;
+            }
+            20% {
+                transform: translateY(-10px) scale(1) rotate(-15deg);
+                opacity: 1;
+            }
+            60% {
+                transform: translateY(-40px) scale(1.1) rotate(10deg);
+                opacity: 0.9;
+            }
+            100% { 
+                transform: translateY(-70px) scale(0.5) rotate(-5deg); 
+                opacity: 0;
+            }
+        }
+        
+        @keyframes moneyFlyMedium {
+            0% { 
+                transform: translate(0, 0) scale(0.3) rotate(0deg); 
+                opacity: 0;
+            }
+            15% {
+                transform: translate(-5px, -15px) scale(1.2) rotate(-20deg);
+                opacity: 1;
+            }
+            50% {
+                transform: translate(10px, -55px) scale(1.3) rotate(15deg);
+                opacity: 1;
+            }
+            100% { 
+                transform: translate(0, -100px) scale(0.6) rotate(-10deg); 
+                opacity: 0;
+            }
+        }
+        
+        @keyframes moneyFlyLarge {
+            0% { 
+                transform: translate(0, 0) scale(0.3) rotate(0deg); 
+                opacity: 0;
+            }
+            10% {
+                transform: translate(0, -10px) scale(1.3) rotate(-10deg);
+                opacity: 1;
+            }
+            40% {
+                transform: translate(15px, -60px) scale(1.5) rotate(20deg);
+                opacity: 1;
+            }
+            70% {
+                transform: translate(-10px, -100px) scale(1.2) rotate(-15deg);
+                opacity: 0.8;
+            }
+            100% { 
+                transform: translate(5px, -140px) scale(0.7) rotate(5deg); 
+                opacity: 0;
+            }
+        }
+        
+        /* Multiple money burst effect */
+        .money-burst {
+            position: absolute;
+            pointer-events: none;
+            z-index: 165;
+        }
+        
+        .money-burst .money-particle {
+            position: absolute;
+            font-size: 16px;
+            animation: moneyParticle 1.5s ease-out forwards;
+        }
+        
+        .money-burst .money-particle:nth-child(1) { animation-delay: 0s; }
+        .money-burst .money-particle:nth-child(2) { animation-delay: 0.1s; }
+        .money-burst .money-particle:nth-child(3) { animation-delay: 0.2s; }
+        
+        @keyframes moneyParticle {
+            0% { 
+                transform: translate(0, 0) scale(0.5); 
+                opacity: 0;
+            }
+            20% {
+                opacity: 1;
+            }
+            100% { 
+                transform: translate(var(--tx), var(--ty)) scale(0.3) rotate(var(--rot)); 
+                opacity: 0;
+            }
         }
         
         /* State Tooltip (hidden by default) */
@@ -1001,6 +1205,37 @@
             text-overflow: ellipsis;
         }
 
+        /* Human Moments - Customer & Stories */
+        .sale-customer {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--primary-light);
+            margin-top: 2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .sale-moment {
+            font-size: 10px;
+            color: var(--success-light);
+            margin-top: 3px;
+            font-style: italic;
+            line-height: 1.3;
+            max-width: 200px;
+        }
+
+        .sale-item.has-moment {
+            border-color: rgba(54, 179, 126, 0.4);
+            background: rgba(18, 18, 31, 0.95);
+        }
+
+        .sale-item.has-moment:hover {
+            border-color: rgba(54, 179, 126, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(54, 179, 126, 0.2);
+        }
+
         .sale-value {
             font-size: 12px;
             font-weight: 700;
@@ -1039,6 +1274,16 @@
         .sale-badge.channel-pos {
             background: rgba(255, 152, 0, 0.2);
             color: #ffb74d;
+        }
+
+        .sale-badge.channel-marketplace {
+            background: rgba(156, 39, 176, 0.2);
+            color: #ce93d8;
+        }
+
+        .sale-badge.channel-social {
+            background: rgba(233, 30, 99, 0.2);
+            color: #f48fb1;
         }
 
         .sale-badge.nuvem-pay {
@@ -1080,6 +1325,139 @@
         @keyframes celebratePulse {
             0%, 100% { transform: scale(1); }
             50% { transform: scale(1.05); }
+        }
+
+        /* Sale Item Hover Tooltip */
+        .sale-item {
+            position: relative;
+        }
+        
+        .sale-item-tooltip {
+            position: absolute;
+            left: calc(100% + 12px);
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--dark-surface-2);
+            border: 1px solid var(--dark-border-light);
+            border-radius: 12px;
+            padding: 14px 16px;
+            min-width: 240px;
+            max-width: 280px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.25s ease;
+            z-index: 1000;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            pointer-events: none;
+        }
+        
+        .sale-item-tooltip::before {
+            content: '';
+            position: absolute;
+            right: 100%;
+            top: 50%;
+            transform: translateY(-50%);
+            border: 8px solid transparent;
+            border-right-color: var(--dark-border-light);
+        }
+        
+        .sale-item:hover .sale-item-tooltip {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(-50%) translateX(5px);
+        }
+        
+        .tooltip-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--dark-border);
+        }
+        
+        .tooltip-store {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--primary-light);
+        }
+        
+        .tooltip-channel {
+            font-size: 10px;
+            padding: 3px 8px;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .tooltip-product {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--neutral-background);
+            margin-bottom: 6px;
+        }
+        
+        .tooltip-customer {
+            font-size: 11px;
+            color: var(--neutral-text-low);
+            margin-bottom: 4px;
+        }
+        
+        .tooltip-location {
+            font-size: 11px;
+            color: var(--neutral-text-low);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .tooltip-value {
+            font-size: 16px;
+            font-weight: 800;
+            color: var(--success);
+            margin: 10px 0;
+        }
+        
+        .tooltip-solutions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid var(--dark-border);
+        }
+        
+        .tooltip-solutions span {
+            font-size: 10px;
+            padding: 3px 8px;
+            border-radius: 4px;
+            background: rgba(0, 89, 213, 0.15);
+            color: var(--primary-light);
+        }
+        
+        .tooltip-moment {
+            font-size: 11px;
+            font-style: italic;
+            color: var(--success-light);
+            margin-top: 8px;
+            padding: 6px 10px;
+            background: rgba(54, 179, 126, 0.1);
+            border-radius: 6px;
+            border-left: 3px solid var(--success);
+        }
+        
+        .tooltip-time {
+            font-size: 10px;
+            color: var(--neutral-text-low);
+            margin-top: 8px;
+            text-align: right;
+        }
+        
+        /* Hide tooltip on mobile */
+        @media (max-width: 1024px) {
+            .sale-item-tooltip {
+                display: none;
+            }
         }
 
         /* First Sale Celebration Overlay */
@@ -1146,14 +1524,96 @@
         }
 
         .celebration-store {
-            font-size: 18px;
-            font-weight: 600;
+            font-size: 20px;
+            font-weight: 700;
             color: var(--neutral-background);
+            margin-bottom: 4px;
         }
 
         .celebration-location {
-            font-size: 13px;
+            font-size: 14px;
             color: var(--neutral-text-low);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .celebration-greeting {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--success-light);
+            margin-top: 16px;
+            padding: 10px 20px;
+            background: rgba(54, 179, 126, 0.15);
+            border-radius: 50px;
+            display: inline-block;
+            animation: greetingPulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes greetingPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .celebration-share-btn {
+            margin-top: 20px;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, var(--primary-interactive), var(--primary-hover));
+            border: none;
+            border-radius: 50px;
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 89, 213, 0.3);
+        }
+        
+        .celebration-share-btn:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 6px 20px rgba(0, 89, 213, 0.4);
+        }
+        
+        .celebration-share-btn svg {
+            width: 18px;
+            height: 18px;
+        }
+        
+        .celebration-close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 36px;
+            height: 36px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 50%;
+            color: var(--neutral-text-low);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+        
+        .celebration-close-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            color: var(--neutral-background);
+        }
+        
+        .celebration-regional-icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+        
+        .celebration-card {
+            position: relative;
+            max-width: 400px;
         }
 
         /* Confetti */
@@ -1223,6 +1683,15 @@
             padding: 10px 12px;
             background: var(--dark-surface-2);
             border-radius: 10px;
+            position: relative;
+            cursor: help;
+            transition: all 0.2s ease;
+        }
+        
+        .solution-stat:hover {
+            background: var(--dark-border);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
 
         .solution-stat-icon {
@@ -1244,6 +1713,85 @@
             font-size: 9px;
             color: var(--neutral-text-low);
             text-transform: uppercase;
+        }
+        
+        /* Solution Stat Tooltip */
+        .solution-stat-tooltip {
+            position: absolute;
+            bottom: calc(100% + 12px);
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--dark-surface-2);
+            border: 1px solid var(--dark-border-light);
+            border-radius: 12px;
+            padding: 14px 16px;
+            min-width: 220px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.25s ease;
+            z-index: 1000;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            pointer-events: none;
+        }
+        
+        .solution-stat-tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 8px solid transparent;
+            border-top-color: var(--dark-border-light);
+        }
+        
+        .solution-stat:hover .solution-stat-tooltip {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(-5px);
+        }
+        
+        .solution-tooltip-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--neutral-background);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .solution-tooltip-desc {
+            font-size: 11px;
+            color: var(--neutral-text-low);
+            line-height: 1.5;
+            margin-bottom: 10px;
+        }
+        
+        .solution-tooltip-stat {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+            border-top: 1px solid var(--dark-border);
+            font-size: 11px;
+        }
+        
+        .solution-tooltip-stat-label {
+            color: var(--neutral-text-low);
+        }
+        
+        .solution-tooltip-stat-value {
+            font-weight: 700;
+            color: var(--primary-light);
+        }
+        
+        .solution-tooltip-highlight {
+            margin-top: 10px;
+            padding: 8px 10px;
+            background: rgba(0, 89, 213, 0.15);
+            border-radius: 6px;
+            font-size: 10px;
+            color: var(--primary-light);
+            text-align: center;
         }
 
         /* Channel Filter Tabs */
@@ -2340,6 +2888,101 @@
             text-transform: uppercase;
             letter-spacing: 1px;
             margin-bottom: 12px;
+        }
+
+        /* Live Ranking Badge */
+        .live-ranking-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 2px 6px;
+            background: rgba(54, 179, 126, 0.15);
+            border: 1px solid rgba(54, 179, 126, 0.3);
+            border-radius: 10px;
+            font-size: 9px;
+            font-weight: 700;
+            color: var(--success);
+            margin-left: auto;
+            animation: livePulse 2s ease-in-out infinite;
+        }
+
+        .live-ranking-badge .live-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--success);
+            border-radius: 50%;
+            animation: liveDotPulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes livePulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        @keyframes liveDotPulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+
+        /* New Player Animation */
+        .leaderboard-item.new-player {
+            animation: newPlayerSlideIn 0.6s ease-out;
+            border-left: 3px solid var(--success);
+        }
+
+        @keyframes newPlayerSlideIn {
+            0% {
+                opacity: 0;
+                transform: translateX(-20px);
+                background: rgba(54, 179, 126, 0.2);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0);
+                background: rgba(18, 18, 31, 0.85);
+            }
+        }
+
+        /* Just Added Player Highlight */
+        .leaderboard-item.just-added {
+            animation: justAddedPulse 1s ease-out, newPlayerSlideIn 0.6s ease-out;
+            border-left: 3px solid var(--primary-light);
+            background: rgba(0, 89, 213, 0.15) !important;
+            box-shadow: 0 0 20px rgba(0, 89, 213, 0.3);
+        }
+
+        @keyframes justAddedPulse {
+            0%, 100% {
+                box-shadow: 0 0 20px rgba(0, 89, 213, 0.3);
+            }
+            50% {
+                box-shadow: 0 0 30px rgba(0, 89, 213, 0.6);
+            }
+        }
+
+        .just-added-badge {
+            display: inline-block;
+            margin-left: 6px;
+            padding: 2px 6px;
+            background: linear-gradient(135deg, var(--primary-light), var(--primary-interactive));
+            color: white;
+            border-radius: 8px;
+            font-size: 9px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            animation: badgeGlow 1.5s ease-in-out infinite;
+        }
+
+        @keyframes badgeGlow {
+            0%, 100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.8;
+                transform: scale(1.05);
+            }
         }
 
         .clear-ranking-btn {
@@ -3529,6 +4172,15 @@
                     <div class="live-dot"></div>
                     AO VIVO
                 </div>
+                <button class="header-btn share-btn" id="share-btn" onclick="sharePage()" title="Compartilhar">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="18" cy="5" r="3"/>
+                        <circle cx="6" cy="12" r="3"/>
+                        <circle cx="18" cy="19" r="3"/>
+                        <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+                        <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+                    </svg>
+                </button>
                 <button class="header-btn" id="sound-toggle" onclick="toggleSound()">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
@@ -3545,13 +4197,34 @@
         </header>
 
         <!-- First Sale Celebration Overlay -->
-        <div class="first-sale-celebration" id="first-sale-celebration">
+        <div class="first-sale-celebration" id="first-sale-celebration" onclick="closeCelebration(event)">
             <div class="celebration-card">
+                <button class="celebration-close-btn" onclick="closeCelebration(event)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+                        <path d="M18 6L6 18M6 6l12 12"/>
+                    </svg>
+                </button>
                 <div class="celebration-emoji">🎉</div>
+                <div class="celebration-regional-icon" id="celebration-regional-icon">🏙️</div>
                 <div class="celebration-title">PRIMEIRA VENDA!</div>
                 <div class="celebration-subtitle">Um novo merchant acaba de fazer história</div>
                 <div class="celebration-store" id="celebration-store">Loja Exemplo</div>
-                <div class="celebration-location" id="celebration-location">São Paulo, SP</div>
+                <div class="celebration-location">
+                    <span>📍</span>
+                    <span id="celebration-location">São Paulo, SP</span>
+                </div>
+                <div class="celebration-greeting" id="celebration-greeting">Parabéns!</div>
+                <div>
+                    <button class="celebration-share-btn" onclick="shareCelebration(event)">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="18" cy="5" r="3"/>
+                            <circle cx="6" cy="12" r="3"/>
+                            <circle cx="18" cy="19" r="3"/>
+                            <path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98"/>
+                        </svg>
+                        Compartilhar Momento
+                    </button>
+                </div>
             </div>
         </div>
 
@@ -3732,6 +4405,14 @@
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
                             POS
                         </button>
+                        <button class="channel-tab" data-channel="marketplace" onclick="filterChannel('marketplace')">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                            Mktplace
+                        </button>
+                        <button class="channel-tab" data-channel="social" onclick="filterChannel('social')">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+                            Social
+                        </button>
                     </div>
 
                     <!-- Segment Filters -->
@@ -3855,12 +4536,48 @@
                                 <div class="solution-stat-value" id="nuvem-pay-percent">0%</div>
                                 <div class="solution-stat-label">Nuvem Pay</div>
                             </div>
+                            <!-- Nuvem Pay Tooltip -->
+                            <div class="solution-stat-tooltip">
+                                <div class="solution-tooltip-title">💳 Nuvem Pay</div>
+                                <div class="solution-tooltip-desc">
+                                    Solução de pagamentos integrada da Nuvemshop. Aceite cartões, Pix e boleto com as melhores taxas.
+                                </div>
+                                <div class="solution-tooltip-stat">
+                                    <span class="solution-tooltip-stat-label">Transações hoje:</span>
+                                    <span class="solution-tooltip-stat-value" id="nuvem-pay-count">0</span>
+                                </div>
+                                <div class="solution-tooltip-stat">
+                                    <span class="solution-tooltip-stat-label">Ticket médio:</span>
+                                    <span class="solution-tooltip-stat-value">+15% vs outros</span>
+                                </div>
+                                <div class="solution-tooltip-highlight">
+                                    Aprovação 23% maior que concorrentes
+                                </div>
+                            </div>
                         </div>
                         <div class="solution-stat">
                             <div class="solution-stat-icon">📦</div>
                             <div class="solution-stat-info">
                                 <div class="solution-stat-value" id="nuvem-envios-percent">0%</div>
                                 <div class="solution-stat-label">Nuvem Envios</div>
+                            </div>
+                            <!-- Nuvem Envios Tooltip -->
+                            <div class="solution-stat-tooltip">
+                                <div class="solution-tooltip-title">📦 Nuvem Envios</div>
+                                <div class="solution-tooltip-desc">
+                                    Logística integrada com fretes até 75% mais baratos. Correios, Jadlog, Loggi e muito mais.
+                                </div>
+                                <div class="solution-tooltip-stat">
+                                    <span class="solution-tooltip-stat-label">Envios hoje:</span>
+                                    <span class="solution-tooltip-stat-value" id="nuvem-envios-count">0</span>
+                                </div>
+                                <div class="solution-tooltip-stat">
+                                    <span class="solution-tooltip-stat-label">Economia média:</span>
+                                    <span class="solution-tooltip-stat-value">45% no frete</span>
+                                </div>
+                                <div class="solution-tooltip-highlight">
+                                    Rastreio automático para o cliente
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -3952,7 +4669,11 @@
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6M18 9h1.5a2.5 2.5 0 0 0 0-5H18M4 22h16M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20 7 22M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20 17 22M18 2H6v7a6 6 0 1 0 12 0V2Z"/>
                             </svg>
-                            Ranking
+                            Ranking Global
+                            <span class="live-ranking-badge">
+                                <span class="live-dot"></span>
+                                LIVE
+                            </span>
                         </div>
                         <div class="leaderboard-list" id="leaderboard-list">
                             <!-- Populated by JS -->
@@ -4226,11 +4947,13 @@
                 alimentos: { name: 'Alimentos', color: '#4caf50', emoji: '🍫', products: ['Chocolate Belga', 'Vinho Reserva', 'Café Gourmet', 'Kit Churrasco', 'Doces Artesanais'], percent: 10 },
                 esportes: { name: 'Esportes', color: '#00bcd4', emoji: '⚽', products: ['Tênis Running', 'Bicicleta MTB', 'Kit Yoga', 'Halteres Pro', 'Suplemento Whey'], percent: 7 }
             },
-            // NEW: Sales Channels
+            // NEW: Sales Channels (5 channels with distinct colors)
             channels: {
-                online: { name: 'Online', icon: '🛒', color: '#2196f3', percent: 65 },
-                chat: { name: 'Chat', icon: '💬', color: '#4caf50', percent: 25 },
-                pos: { name: 'POS', icon: '🏪', color: '#ff9800', percent: 10 }
+                online: { name: 'Loja Online', icon: '🛒', color: '#2196f3', percent: 40 },
+                chat: { name: 'Nuvemchat', icon: '💬', color: '#4caf50', percent: 15 },
+                pos: { name: 'Loja Física', icon: '🏪', color: '#ff9800', percent: 12 },
+                marketplace: { name: 'Marketplace', icon: '🏬', color: '#9c27b0', percent: 20 },
+                social: { name: 'Redes Sociais', icon: '📱', color: '#e91e63', percent: 13 }
             },
             // NEW: Store names for first sale celebration
             storeNames: [
@@ -4304,6 +5027,149 @@
                 { name: 'Boa Vista', state: 'RR', capital: true, lat: 2.8235, lng: -60.6758, orders: 28000, gmv: 52000000, stores: 420, ticket: 158, topSegments: ['moda', 'alimentos', 'casa'] },
                 { name: 'Palmas', state: 'TO', capital: true, lat: -10.2491, lng: -48.3243, orders: 78000, gmv: 145000000, stores: 1100, ticket: 167, topSegments: ['agro', 'moda', 'casa'] }
             ],
+            // Brazilian names for human moments
+            brazilianNames: {
+                firstNames: [
+                    'Ana', 'Carlos', 'Julia', 'Roberto', 'Maria', 'João', 'Fernanda', 'Pedro',
+                    'Mariana', 'Lucas', 'Beatriz', 'Rafael', 'Gabriela', 'Felipe', 'Isabella',
+                    'Thiago', 'Larissa', 'Bruno', 'Camila', 'Gustavo', 'Amanda', 'Rodrigo',
+                    'Juliana', 'André', 'Patricia', 'Marcos', 'Vanessa', 'Diego', 'Renata',
+                    'Ricardo', 'Carolina', 'Leonardo', 'Priscila', 'Eduardo', 'Tatiana', 'Paulo',
+                    'Daniela', 'Vinicius', 'Adriana', 'Fábio', 'Cristina', 'Alexandre', 'Monica'
+                ],
+                lastNames: [
+                    'Silva', 'Santos', 'Oliveira', 'Souza', 'Rodrigues', 'Ferreira', 'Alves',
+                    'Pereira', 'Lima', 'Gomes', 'Ribeiro', 'Carvalho', 'Almeida', 'Costa',
+                    'Martins', 'Araújo', 'Mendes', 'Barbosa', 'Rocha', 'Nascimento', 'Moreira',
+                    'Fernandes', 'Dias', 'Monteiro', 'Cardoso', 'Teixeira', 'Machado', 'Freitas',
+                    'Cavalcanti', 'Ramos', 'Reis', 'Nunes', 'Moraes', 'Azevedo', 'Correia'
+                ]
+            },
+            // Human moments & emotional stories
+            humanMoments: [
+                { 
+                    type: 'milestone',
+                    templates: [
+                        'Primeira venda do mês! 🎯',
+                        'Meta de R$ {value} atingida! 🏆',
+                        'Cliente fiel retorna! 💚',
+                        'Venda especial de aniversário! 🎂',
+                        'Marca histórica alcançada! 📈',
+                        '100ª venda da loja! 💯'
+                    ]
+                },
+                {
+                    type: 'journey',
+                    templates: [
+                        'Jornada completa: pesquisa → compra em {time}min',
+                        'Cliente visitou {visits}x antes de comprar',
+                        'Abandonou carrinho, retornou e comprou! 🔄',
+                        'Do Instagram direto pro checkout! 📱',
+                        'Indicação de amigo! 👯'
+                    ]
+                },
+                {
+                    type: 'emotion',
+                    templates: [
+                        'Presente para alguém especial 💝',
+                        'Realizando um sonho! ✨',
+                        'Compra planejada há semanas 📅',
+                        'Decisão espontânea que valeu a pena! 🎲',
+                        'Autocuidado merecido! 💆',
+                        'Presente pra si mesmo! 🎁'
+                    ]
+                },
+                {
+                    type: 'local',
+                    templates: [
+                        'De {city} para todo Brasil 🇧🇷',
+                        'Pequeno negócio, grande sonho! 🌟',
+                        'Família brasileira comprando junto 👨‍👩‍👧‍👦',
+                        'Apoiando comércio local! 🏪',
+                        'Empreendedor raiz! 🌱',
+                        'Negócio de família! 👨‍👩‍👧'
+                    ]
+                },
+                {
+                    type: 'celebration',
+                    templates: [
+                        'Eita, vendeu! 🎉',
+                        'Vai Brasil! 🇧🇷',
+                        'É gol! É venda! ⚽',
+                        'Sextou com estilo! 🎊',
+                        'Partiu sucesso! 🚀',
+                        'Tá voando! ✈️',
+                        'Que orgulho! 🏆'
+                    ]
+                },
+                {
+                    type: 'regional',
+                    templates: [
+                        'Ô coisa boa, sô! (MG) 🫘',
+                        'Bah, tchê! Vendeu! (RS) 🧉',
+                        'Oxe, arretado! (NE) 🌴',
+                        'Mó legal! (SP) 🏙️',
+                        'Show de bola! (RJ) 🏖️',
+                        'Égua, mano! (PA) 🌳',
+                        'Uai, deu bom! (GO) 🌾',
+                        'Massa demais! (PE) 🎭',
+                        'Muito bom, visse! (CE) ☀️'
+                    ]
+                },
+                {
+                    type: 'timing',
+                    templates: [
+                        'Venda noturna! 🌙',
+                        'Madrugada produtiva! ⭐',
+                        'Almoço com lucro! 🍽️',
+                        'Happy hour de vendas! 🍻'
+                    ]
+                }
+            ],
+            // Regional cultural references
+            // Regional Icons by region (legacy support)
+            regionalIcons: {
+                'Sudeste': '🏙️',
+                'Sul': '🌲',
+                'Nordeste': '🌴',
+                'Norte': '🌳',
+                'Centro-Oeste': '🌾'
+            },
+            // State-specific cultural data (expanded local identity)
+            stateIcons: {
+                // Sudeste
+                'SP': { icon: '🏙️', food: '🍕', drink: '☕', culture: 'Paulistano', greeting: 'E aí, mano!' },
+                'RJ': { icon: '🏖️', food: '🥤', drink: '🍻', culture: 'Carioca', greeting: 'E aí, parceiro!' },
+                'MG': { icon: '⛰️', food: '🫘', drink: '☕', culture: 'Mineiro', greeting: 'Ô coisa boa, sô!' },
+                'ES': { icon: '🌊', food: '🦐', drink: '🍹', culture: 'Capixaba', greeting: 'Beleza, irmão?' },
+                // Sul
+                'RS': { icon: '🧉', food: '🥩', drink: '🍷', culture: 'Gaúcho', greeting: 'Bah, tchê!' },
+                'SC': { icon: '🏔️', food: '🦪', drink: '🍺', culture: 'Catarinense', greeting: 'Opa, bom dia!' },
+                'PR': { icon: '🌲', food: '🫒', drink: '☕', culture: 'Paranaense', greeting: 'E aí, como vai?' },
+                // Nordeste
+                'BA': { icon: '🥁', food: '🍲', drink: '🥥', culture: 'Baiano', greeting: 'Ôxe, meu rei!' },
+                'PE': { icon: '🎭', food: '🍰', drink: '🍹', culture: 'Pernambucano', greeting: 'Oxente, visse!' },
+                'CE': { icon: '☀️', food: '🦐', drink: '🥥', culture: 'Cearense', greeting: 'Macho, arretado!' },
+                'RN': { icon: '🏜️', food: '🦀', drink: '🧃', culture: 'Potiguar', greeting: 'Eita, cabra!' },
+                'PB': { icon: '🌅', food: '🍖', drink: '🥤', culture: 'Paraibano', greeting: 'E aê, cabra!' },
+                'AL': { icon: '🌴', food: '🐟', drink: '🥥', culture: 'Alagoano', greeting: 'Oxe, bom demais!' },
+                'SE': { icon: '🎶', food: '🦐', drink: '🍹', culture: 'Sergipano', greeting: 'Boa tarde, viu!' },
+                'PI': { icon: '🌵', food: '🍖', drink: '🧃', culture: 'Piauiense', greeting: 'Oxe, danado!' },
+                'MA': { icon: '🏛️', food: '🦀', drink: '🍻', culture: 'Maranhense', greeting: 'Égua, meu fi!' },
+                // Norte
+                'AM': { icon: '🌳', food: '🐟', drink: '🍹', culture: 'Amazonense', greeting: 'Maninho, tudo bem?' },
+                'PA': { icon: '🌴', food: '🥭', drink: '🧃', culture: 'Paraense', greeting: 'Égua, mano!' },
+                'RO': { icon: '🌿', food: '🐟', drink: '🥤', culture: 'Rondoniense', greeting: 'E aí, parceiro!' },
+                'AC': { icon: '🌲', food: '🍖', drink: '🧃', culture: 'Acreano', greeting: 'Oi, compadre!' },
+                'AP': { icon: '🏝️', food: '🦐', drink: '🥥', culture: 'Amapaense', greeting: 'E aí, mano!' },
+                'RR': { icon: '⛰️', food: '🐟', drink: '🍹', culture: 'Roraimense', greeting: 'Tudo bem, irmão?' },
+                'TO': { icon: '🌾', food: '🍖', drink: '🥤', culture: 'Tocantinense', greeting: 'Opa, beleza?' },
+                // Centro-Oeste
+                'GO': { icon: '🌾', food: '🌽', drink: '🍻', culture: 'Goiano', greeting: 'Uai, tudo bom?' },
+                'MT': { icon: '🐊', food: '🐄', drink: '🧃', culture: 'Mato-Grossense', greeting: 'E aí, parceiro!' },
+                'MS': { icon: '🦜', food: '🥩', drink: '🧉', culture: 'Sul-Mato-Grossense', greeting: 'Tchê, como vai?' },
+                'DF': { icon: '🏛️', food: '🍖', drink: '☕', culture: 'Candango', greeting: 'Beleza, véi?' }
+            },
             leaderboard: [
                 { name: 'Ana Silva', store: 'Moda Elegance', score: 15420 },
                 { name: 'Carlos Mendes', store: 'TechStore BR', score: 12350 },
@@ -4339,7 +5205,7 @@
             nuvemPayCount: 0,
             nuvemEnviosCount: 0,
             totalSalesTracked: 0,
-            channelCounts: { online: 0, chat: 0, pos: 0 },
+            channelCounts: { online: 0, chat: 0, pos: 0, marketplace: 0, social: 0 },
             
             // Game
             gameRunning: false,
@@ -4428,6 +5294,13 @@
                 view.classList.toggle('active', view.id === `view-${viewId}`);
             });
             
+            // Start/stop global ranking updates based on view
+            if (viewId === 'game') {
+                startGlobalRankingUpdates();
+            } else {
+                stopGlobalRankingUpdates();
+            }
+            
             // Stop game if switching away
             if (viewId !== 'game' && state.gameRunning) {
                 pauseGame();
@@ -4456,6 +5329,70 @@
             document.getElementById('toggle-rotation').classList.toggle('active', state.rotationEnabled);
             if (controls) {
                 controls.autoRotate = state.rotationEnabled;
+            }
+        }
+
+        // ============================================
+        // SHARE FUNCTIONALITY (Brand & Emotion)
+        // ============================================
+        function sharePage() {
+            const shareData = {
+                title: 'Nuvemshop Live | E-commerce do Brasil ao Vivo',
+                text: `Acompanhe o e-commerce brasileiro em tempo real! R$ ${formatGMV(state.gmv)} em vendas e ${formatNumber(state.totalOrders)} pedidos. 🇧🇷`,
+                url: window.location.href
+            };
+
+            // Try Web Share API first (mobile)
+            if (navigator.share) {
+                navigator.share(shareData)
+                    .then(() => {
+                        showShareFeedback(true);
+                    })
+                    .catch(() => {
+                        fallbackShare();
+                    });
+            } else {
+                fallbackShare();
+            }
+        }
+
+        function fallbackShare() {
+            // Copy to clipboard
+            const text = `Nuvemshop Live | E-commerce do Brasil ao Vivo\n${window.location.href}\n\nAcompanhe o e-commerce brasileiro em tempo real! 🇧🇷`;
+            
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(text)
+                    .then(() => {
+                        showShareFeedback(true);
+                    })
+                    .catch(() => {
+                        showShareFeedback(false);
+                    });
+            } else {
+                // Fallback: create temporary textarea
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                textarea.style.position = 'fixed';
+                textarea.style.opacity = '0';
+                document.body.appendChild(textarea);
+                textarea.select();
+                try {
+                    document.execCommand('copy');
+                    showShareFeedback(true);
+                } catch (err) {
+                    showShareFeedback(false);
+                }
+                document.body.removeChild(textarea);
+            }
+        }
+
+        function showShareFeedback(success) {
+            const shareBtn = document.getElementById('share-btn');
+            if (success) {
+                shareBtn.classList.add('shared');
+                setTimeout(() => {
+                    shareBtn.classList.remove('shared');
+                }, 2000);
             }
         }
 
@@ -4616,13 +5553,199 @@
             document.getElementById('celebration-store').textContent = storeName;
             document.getElementById('celebration-location').textContent = `${cityName}, ${stateName}`;
             
+            // Get state-specific icon and greeting
+            const stateIcon = CONFIG.stateIcons[stateName] || {};
+            const regionalIcon = stateIcon.icon || '🏙️';
+            const regionalGreeting = stateIcon.greeting || 'Parabéns, empreendedor!';
+            
+            document.getElementById('celebration-regional-icon').textContent = regionalIcon;
+            document.getElementById('celebration-greeting').textContent = regionalGreeting;
+            
             celebration.classList.add('active');
             createConfetti();
             
-            // Auto close after 4 seconds
-            setTimeout(() => {
+            // Store current celebration data for sharing
+            window.currentCelebration = { storeName, cityName, stateName };
+            
+            // Auto close after 6 seconds (longer to allow sharing)
+            window.celebrationTimeout = setTimeout(() => {
                 celebration.classList.remove('active');
-            }, 4000);
+            }, 6000);
+        }
+        
+        // Close celebration overlay
+        function closeCelebration(event) {
+            // Only close if clicking the overlay (not the card)
+            if (event.target.closest('.celebration-card') && !event.target.closest('.celebration-close-btn')) {
+                return;
+            }
+            
+            const celebration = document.getElementById('first-sale-celebration');
+            celebration.classList.remove('active');
+            
+            // Clear the auto-close timeout
+            if (window.celebrationTimeout) {
+                clearTimeout(window.celebrationTimeout);
+            }
+        }
+        
+        // Share celebration moment
+        function shareCelebration(event) {
+            event.stopPropagation();
+            
+            const { storeName, cityName, stateName } = window.currentCelebration || {};
+            const shareText = `🎉 Primeira venda histórica!\n\n${storeName} de ${cityName}, ${stateName} acabou de fazer sua primeira venda na Nuvemshop!\n\nO e-commerce brasileiro pulsa! 🇧🇷\n\n#Nuvemshop #Empreendedorismo #PrimeiraVenda`;
+            
+            // Try to use the native share API
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Primeira Venda - Nuvemshop',
+                    text: shareText,
+                    url: window.location.href
+                }).catch(() => {
+                    // Fallback: copy to clipboard
+                    copyToClipboard(shareText);
+                });
+            } else {
+                // Fallback: copy to clipboard
+                copyToClipboard(shareText);
+            }
+        }
+        
+        // Helper: copy to clipboard
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                // Show feedback
+                const btn = document.querySelector('.celebration-share-btn');
+                const originalText = btn.innerHTML;
+                btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M20 6L9 17l-5-5"/></svg> Copiado!`;
+                btn.style.background = 'var(--success)';
+                
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.style.background = '';
+                }, 2000);
+            }).catch(() => {
+                alert('Copie manualmente: ' + text);
+            });
+        }
+
+        // ============================================
+        // EMOTIONAL ANIMATIONS - Delivery & Money
+        // ============================================
+        
+        // Show delivery truck/package animation when NuvemEnvios is used
+        function showDeliveryAnimation(cityName) {
+            const mapContainer = document.getElementById('brazil-map-container');
+            if (!mapContainer || state.currentView !== 'globe') return;
+            
+            const cityPos = CITY_POSITIONS[cityName];
+            if (!cityPos) return;
+            
+            const containerRect = mapContainer.getBoundingClientRect();
+            const x = (cityPos.x / 100) * containerRect.width;
+            const y = (cityPos.y / 100) * containerRect.height;
+            
+            // Create delivery element
+            const delivery = document.createElement('div');
+            delivery.className = 'delivery-animation';
+            
+            // Randomly choose truck or package
+            const isTruck = Math.random() > 0.4;
+            delivery.innerHTML = isTruck ? '🚚' : '📦';
+            delivery.classList.add(isTruck ? 'delivery-truck' : 'delivery-package');
+            
+            // Position at city
+            delivery.style.left = `${x}px`;
+            delivery.style.top = `${y}px`;
+            
+            mapContainer.appendChild(delivery);
+            
+            // Remove after animation
+            setTimeout(() => {
+                if (delivery.parentNode) {
+                    delivery.parentNode.removeChild(delivery);
+                }
+            }, isTruck ? 2500 : 2000);
+        }
+        
+        // Show money/real flying animation for sales
+        function showMoneyAnimation(cityName, value) {
+            const mapContainer = document.getElementById('brazil-map-container');
+            if (!mapContainer || state.currentView !== 'globe') return;
+            
+            const cityPos = CITY_POSITIONS[cityName];
+            if (!cityPos) return;
+            
+            const containerRect = mapContainer.getBoundingClientRect();
+            const x = (cityPos.x / 100) * containerRect.width;
+            const y = (cityPos.y / 100) * containerRect.height;
+            
+            // Determine size based on value
+            let sizeClass = 'money-small';
+            let emoji = '💰';
+            
+            if (value >= 1000) {
+                sizeClass = 'money-large';
+                emoji = '💵';
+            } else if (value >= 500) {
+                sizeClass = 'money-medium';
+                emoji = '💵';
+            }
+            
+            // Create main money element
+            const money = document.createElement('div');
+            money.className = `money-animation ${sizeClass}`;
+            money.innerHTML = emoji;
+            money.style.left = `${x}px`;
+            money.style.top = `${y}px`;
+            
+            mapContainer.appendChild(money);
+            
+            // For large values, create a burst effect with multiple particles
+            if (value >= 800) {
+                const burst = document.createElement('div');
+                burst.className = 'money-burst';
+                burst.style.left = `${x}px`;
+                burst.style.top = `${y}px`;
+                
+                const particles = value >= 1500 ? 3 : 2;
+                const emojis = ['💰', '💵', '🪙'];
+                
+                for (let i = 0; i < particles; i++) {
+                    const particle = document.createElement('span');
+                    particle.className = 'money-particle';
+                    particle.innerHTML = emojis[i % emojis.length];
+                    
+                    // Random directions
+                    const angle = (Math.random() - 0.5) * 120;
+                    const distance = 40 + Math.random() * 60;
+                    const tx = Math.sin(angle * Math.PI / 180) * distance;
+                    const ty = -Math.abs(Math.cos(angle * Math.PI / 180) * distance) - 30;
+                    
+                    particle.style.setProperty('--tx', `${tx}px`);
+                    particle.style.setProperty('--ty', `${ty}px`);
+                    particle.style.setProperty('--rot', `${(Math.random() - 0.5) * 360}deg`);
+                    
+                    burst.appendChild(particle);
+                }
+                
+                mapContainer.appendChild(burst);
+                
+                setTimeout(() => {
+                    if (burst.parentNode) {
+                        burst.parentNode.removeChild(burst);
+                    }
+                }, 1800);
+            }
+            
+            // Remove main money after animation
+            const duration = sizeClass === 'money-large' ? 1800 : sizeClass === 'money-medium' ? 1500 : 1200;
+            setTimeout(() => {
+                if (money.parentNode) {
+                    money.parentNode.removeChild(money);
+                }
+            }, duration);
         }
 
         function createSaleItem() {
@@ -4644,8 +5767,35 @@
             const isFirstSale = Math.random() < 0.005;
             const storeName = isFirstSale ? CONFIG.storeNames[Math.floor(Math.random() * CONFIG.storeNames.length)] : null;
             
+            // HUMAN MOMENT: Generate Brazilian customer name
+            const firstName = CONFIG.brazilianNames.firstNames[Math.floor(Math.random() * CONFIG.brazilianNames.firstNames.length)];
+            const lastName = CONFIG.brazilianNames.lastNames[Math.floor(Math.random() * CONFIG.brazilianNames.lastNames.length)];
+            const customerName = `${firstName} ${lastName}`;
+            
+            // HUMAN MOMENT: Generate emotional story/moment (30% chance)
+            let humanMoment = null;
+            if (Math.random() < 0.3) {
+                const momentType = CONFIG.humanMoments[Math.floor(Math.random() * CONFIG.humanMoments.length)];
+                const template = momentType.templates[Math.floor(Math.random() * momentType.templates.length)];
+                humanMoment = template
+                    .replace('{value}', formatCurrency(value))
+                    .replace('{city}', city.name)
+                    .replace('{time}', Math.floor(Math.random() * 30) + 5)
+                    .replace('{visits}', Math.floor(Math.random() * 5) + 2);
+            }
+            
+            // REGIONAL IDENTITY: Get state-specific icon and culture
+            const stateData = CONFIG.states[city.state];
+            const stateIcon = CONFIG.stateIcons[city.state] || {};
+            const regionIcon = stateIcon.icon || CONFIG.regionalIcons[stateData?.region] || '📍';
+            const stateGreeting = stateIcon.greeting || '';
+            const stateCulture = stateIcon.culture || '';
+            
             const item = document.createElement('div');
-            item.className = 'sale-item' + (isFirstSale ? ' first-sale' : '');
+            item.className = 'sale-item' + (isFirstSale ? ' first-sale' : '') + (humanMoment ? ' has-moment' : '');
+            
+            // Generate a store name for tooltip (use existing for first sale, or random)
+            const displayStoreName = storeName || CONFIG.storeNames[Math.floor(Math.random() * CONFIG.storeNames.length)];
             
             // Build badges HTML
             let badgesHtml = `<span class="sale-badge channel-${channel}">${channelData.icon} ${channelData.name}</span>`;
@@ -4655,10 +5805,45 @@
             // First sale badge
             let firstSaleBadge = isFirstSale ? `<div class="first-sale-badge">🎉 Primeira Venda!</div>` : '';
             
+            // HUMAN MOMENT: Add customer name and story
+            const customerInfo = humanMoment 
+                ? `<div class="sale-customer">${customerName}</div><div class="sale-moment">${humanMoment}</div>`
+                : `<div class="sale-customer">${customerName}</div>`;
+            
+            // Build tooltip solutions HTML
+            let tooltipSolutions = '';
+            if (usesNuvemPay || usesNuvemEnvios) {
+                tooltipSolutions = '<div class="tooltip-solutions">';
+                if (usesNuvemPay) tooltipSolutions += '<span>💳 Nuvem Pay</span>';
+                if (usesNuvemEnvios) tooltipSolutions += '<span>📦 Nuvem Envios</span>';
+                tooltipSolutions += '</div>';
+            }
+            
+            // Build tooltip moment HTML
+            const tooltipMoment = humanMoment ? `<div class="tooltip-moment">${humanMoment}</div>` : '';
+            
+            // Build tooltip HTML
+            const tooltipHtml = `
+                <div class="sale-item-tooltip">
+                    <div class="tooltip-header">
+                        <span class="tooltip-store">${displayStoreName}</span>
+                        <span class="tooltip-channel">${channelData.icon} ${channelData.name}</span>
+                    </div>
+                    <div class="tooltip-product">${segmentData.emoji} ${product}</div>
+                    <div class="tooltip-customer">Cliente: ${customerName}</div>
+                    <div class="tooltip-location">📍 ${city.name}, ${city.state} ${stateIcon.food || ''}</div>
+                    <div class="tooltip-value">R$ ${value.toLocaleString('pt-BR')}</div>
+                    ${tooltipMoment}
+                    ${tooltipSolutions}
+                    <div class="tooltip-time">Agora mesmo</div>
+                </div>
+            `;
+            
             item.innerHTML = `
                 <div class="sale-icon" style="background: linear-gradient(135deg, ${segmentData.color}, ${segmentData.color}dd)">${segmentData.emoji}</div>
                 <div class="sale-info">
-                    <div class="sale-location">${city.name}, ${city.state}</div>
+                    <div class="sale-location">${regionIcon} ${city.name}, ${city.state}</div>
+                    ${customerInfo}
                     <div class="sale-product">${product}</div>
                     <div class="sale-badges">${badgesHtml}</div>
                 </div>
@@ -4666,6 +5851,7 @@
                     <div class="sale-value">R$ ${value.toLocaleString('pt-BR')}</div>
                     ${firstSaleBadge}
                 </div>
+                ${tooltipHtml}
             `;
             
             return { 
@@ -4677,7 +5863,9 @@
                 usesNuvemPay, 
                 usesNuvemEnvios, 
                 isFirstSale, 
-                storeName 
+                storeName,
+                customerName,
+                humanMoment
             };
         }
 
@@ -4729,6 +5917,18 @@
             if (state.totalSalesTracked % 3 === 0 && state.currentView === 'globe') {
                 createFlowArc(city, usesNuvemPay || usesNuvemEnvios);
             }
+            
+            // EMOTIONAL ANIMATIONS: Money flying for every sale
+            if (state.currentView === 'globe' && Math.random() < 0.6) {
+                showMoneyAnimation(city.name, value);
+            }
+            
+            // EMOTIONAL ANIMATIONS: Delivery truck for NuvemEnvios
+            if (usesNuvemEnvios && state.currentView === 'globe' && Math.random() < 0.5) {
+                setTimeout(() => {
+                    showDeliveryAnimation(city.name);
+                }, 300); // Slight delay after money
+            }
         }
         
         // NEW: Update solutions stats display
@@ -4736,6 +5936,8 @@
             const nuvemPayEl = document.getElementById('nuvem-pay-percent');
             const nuvemEnviosEl = document.getElementById('nuvem-envios-percent');
             const firstSalesEl = document.getElementById('first-sales-count');
+            const nuvemPayCountEl = document.getElementById('nuvem-pay-count');
+            const nuvemEnviosCountEl = document.getElementById('nuvem-envios-count');
             
             if (state.totalSalesTracked > 0) {
                 const payPercent = Math.round((state.nuvemPayCount / state.totalSalesTracked) * 100);
@@ -4744,6 +5946,10 @@
                 if (nuvemPayEl) nuvemPayEl.textContent = payPercent + '%';
                 if (nuvemEnviosEl) nuvemEnviosEl.textContent = enviosPercent + '%';
             }
+            
+            // Update tooltip counts
+            if (nuvemPayCountEl) nuvemPayCountEl.textContent = state.nuvemPayCount.toLocaleString('pt-BR');
+            if (nuvemEnviosCountEl) nuvemEnviosCountEl.textContent = state.nuvemEnviosCount.toLocaleString('pt-BR');
             
             if (firstSalesEl) firstSalesEl.textContent = state.firstSalesToday;
         }
@@ -6373,6 +7579,422 @@
                 .substring(0, 50);
         }
         
+        // ============================================
+        // GLOBAL RANKING SYSTEM (LIVE)
+        // ============================================
+        const GLOBAL_RANKING_KEY = 'nuvemshop-global-ranking-v1';
+        const OLD_RANKING_KEY = 'nuvemshop-game-rankings'; // Historical data key
+        const MIGRATION_FLAG_KEY = 'nuvemshop-ranking-migrated-v1';
+        let globalRankingUpdateInterval = null;
+        let lastGlobalRankingUpdate = Date.now();
+        let lastPlayerAdded = null; // Track last player added to highlight them
+
+        // Migrate historical ranking data to global ranking
+        function migrateHistoricalRankingData() {
+            // Check if already migrated
+            if (localStorage.getItem(MIGRATION_FLAG_KEY)) {
+                return;
+            }
+            
+            const globalRanking = JSON.parse(localStorage.getItem(GLOBAL_RANKING_KEY) || '[]');
+            const existingPlayers = new Set();
+            
+            // Create set of existing players (name + score) to avoid duplicates
+            globalRanking.forEach(player => {
+                existingPlayers.add(`${player.name}|${player.score}`);
+            });
+            
+            let migratedCount = 0;
+            const possibleKeys = [
+                'nuvemshop-game-rankings',
+                'game-rankings',
+                'ranking-data',
+                'player-rankings'
+            ];
+            
+            // Try to find historical data in different possible keys
+            for (const key of possibleKeys) {
+                try {
+                    const historicalData = localStorage.getItem(key);
+                    if (historicalData) {
+                        const historicalRanking = JSON.parse(historicalData);
+                        
+                        if (Array.isArray(historicalRanking) && historicalRanking.length > 0) {
+                            historicalRanking.forEach(player => {
+                                // Validate player data
+                                if (player && player.name && typeof player.score === 'number') {
+                                    const playerKey = `${player.name}|${player.score}`;
+                                    
+                                    // Only add if not already in global ranking
+                                    if (!existingPlayers.has(playerKey)) {
+                                        // Normalize player data structure
+                                        const normalizedPlayer = {
+                                            name: player.name,
+                                            email: player.email || null,
+                                            brand: player.brand || player.store || null,
+                                            score: player.score,
+                                            wave: player.wave || null,
+                                            rescued: player.rescued || null,
+                                            maxCombo: player.maxCombo || null,
+                                            gmv: player.gmv || null,
+                                            date: player.date || new Date(Date.now() - Math.random() * 86400000 * 30).toISOString() // Random date in last 30 days
+                                        };
+                                        
+                                        globalRanking.push(normalizedPlayer);
+                                        existingPlayers.add(playerKey);
+                                        migratedCount++;
+                                    }
+                                }
+                            });
+                        }
+                    }
+                } catch (e) {
+                    console.warn(`Failed to migrate data from ${key}:`, e);
+                }
+            }
+            
+            // Also check for any localStorage keys that might contain ranking data
+            try {
+                for (let i = 0; i < localStorage.length; i++) {
+                    const key = localStorage.key(i);
+                    if (key && (key.includes('ranking') || key.includes('leaderboard') || key.includes('game'))) {
+                        // Skip if it's the global ranking key or migration flag
+                        if (key === GLOBAL_RANKING_KEY || key === MIGRATION_FLAG_KEY) continue;
+                        
+                        try {
+                            const data = localStorage.getItem(key);
+                            if (data && data.startsWith('[')) {
+                                const parsed = JSON.parse(data);
+                                if (Array.isArray(parsed) && parsed.length > 0 && parsed[0].score !== undefined) {
+                                    parsed.forEach(player => {
+                                        if (player && player.name && typeof player.score === 'number') {
+                                            const playerKey = `${player.name}|${player.score}`;
+                                            if (!existingPlayers.has(playerKey)) {
+                                                const normalizedPlayer = {
+                                                    name: player.name,
+                                                    email: player.email || null,
+                                                    brand: player.brand || player.store || null,
+                                                    score: player.score,
+                                                    wave: player.wave || null,
+                                                    rescued: player.rescued || null,
+                                                    maxCombo: player.maxCombo || null,
+                                                    gmv: player.gmv || null,
+                                                    date: player.date || new Date(Date.now() - Math.random() * 86400000 * 30).toISOString()
+                                                };
+                                                globalRanking.push(normalizedPlayer);
+                                                existingPlayers.add(playerKey);
+                                                migratedCount++;
+                                            }
+                                        }
+                                    });
+                                }
+                            }
+                        } catch (e) {
+                            // Skip invalid data
+                        }
+                    }
+                }
+            } catch (e) {
+                console.warn('Error scanning localStorage:', e);
+            }
+            
+            // Sort and save if we found any historical data
+            if (migratedCount > 0) {
+                globalRanking.sort((a, b) => b.score - a.score);
+                const top100 = globalRanking.slice(0, 100);
+                localStorage.setItem(GLOBAL_RANKING_KEY, JSON.stringify(top100));
+                console.log(`✅ Migrated ${migratedCount} historical players to global ranking`);
+            }
+            
+            // Mark as migrated
+            localStorage.setItem(MIGRATION_FLAG_KEY, 'true');
+        }
+
+        // Force add specific players that should be in ranking
+        function ensureSpecificPlayers() {
+            let ranking = JSON.parse(localStorage.getItem(GLOBAL_RANKING_KEY) || '[]');
+            let updated = false;
+            
+            // List of players that must be in ranking
+            // NOTE: If the score is wrong, you can update it using: updatePlayerScore("Lombo @lombo CRIA 44.411", NEW_SCORE)
+            const requiredPlayers = [
+                {
+                    name: 'Lombo @lombo CRIA 44.411',
+                    brand: 'CRIA 44.411',
+                    score: 44411, // Default score - can be updated via updatePlayerScore() function
+                    wave: 10,
+                    rescued: 500,
+                    maxCombo: 15,
+                    date: new Date(Date.now() - 86400000).toISOString() // 1 day ago
+                }
+            ];
+            
+            requiredPlayers.forEach(requiredPlayer => {
+                // Check if player exists (by name match, case insensitive, or partial match)
+                const exists = ranking.some(p => {
+                    if (!p || !p.name) return false;
+                    const pName = p.name.toLowerCase().trim();
+                    const rName = requiredPlayer.name.toLowerCase().trim();
+                    // Exact match or contains both "lombo" and "cria"
+                    return pName === rName || 
+                           (pName.includes('lombo') && pName.includes('cria')) ||
+                           (pName.includes('lombo') && pName.includes('44'));
+                });
+                
+                if (!exists) {
+                    ranking.push(requiredPlayer);
+                    updated = true;
+                    console.log(`✅ Added required player: ${requiredPlayer.name} with score ${requiredPlayer.score}`);
+                } else {
+                    console.log(`ℹ️ Player "${requiredPlayer.name}" already exists in ranking`);
+                }
+            });
+            
+            if (updated) {
+                ranking.sort((a, b) => (b.score || 0) - (a.score || 0));
+                const top100 = ranking.slice(0, 100);
+                localStorage.setItem(GLOBAL_RANKING_KEY, JSON.stringify(top100));
+                updateGlobalLeaderboard(false);
+                console.log('✅ Ranking updated with required players');
+            }
+            
+            return ranking;
+        }
+
+        // Force add Lombo player (more aggressive)
+        function forceAddLombo() {
+            console.log('🔧 Force adding Lombo player...');
+            let ranking = JSON.parse(localStorage.getItem(GLOBAL_RANKING_KEY) || '[]');
+            
+            // Remove any existing Lombo entries first
+            ranking = ranking.filter(p => {
+                if (!p || !p.name) return true;
+                const name = p.name.toLowerCase();
+                return !(name.includes('lombo') && name.includes('cria'));
+            });
+            
+            // Add Lombo player
+            const lomboPlayer = {
+                name: 'Lombo @lombo CRIA 44.411',
+                brand: 'CRIA 44.411',
+                score: 44411,
+                wave: 10,
+                rescued: 500,
+                maxCombo: 15,
+                date: new Date(Date.now() - 86400000).toISOString()
+            };
+            
+            ranking.push(lomboPlayer);
+            ranking.sort((a, b) => (b.score || 0) - (a.score || 0));
+            const top100 = ranking.slice(0, 100);
+            localStorage.setItem(GLOBAL_RANKING_KEY, JSON.stringify(top100));
+            
+            updateGlobalLeaderboard(false);
+            
+            const position = ranking.findIndex(p => p.name === lomboPlayer.name) + 1;
+            console.log(`✅ Lombo player force-added! Position: #${position}`);
+            console.log('📊 Current ranking:', ranking.slice(0, 10).map((p, i) => `${i+1}. ${p.name} - ${p.score}`));
+            
+            return ranking;
+        }
+
+        // Get or initialize global ranking
+        function getGlobalRanking() {
+            // First, try to migrate historical data
+            migrateHistoricalRankingData();
+            
+            let ranking = JSON.parse(localStorage.getItem(GLOBAL_RANKING_KEY) || '[]');
+            
+            // Ensure specific players are in ranking
+            ensureSpecificPlayers();
+            
+            // Re-read after ensuring players
+            ranking = JSON.parse(localStorage.getItem(GLOBAL_RANKING_KEY) || '[]');
+            
+            // Initialize with some default players if empty (including Lombo)
+            if (ranking.length === 0) {
+                ranking = [
+                    { name: 'Lombo @lombo CRIA 44.411', brand: 'CRIA 44.411', score: 44411, wave: 10, rescued: 500, maxCombo: 15, date: new Date(Date.now() - 86400000).toISOString() },
+                    { name: 'Ana Silva', brand: 'Moda Elegance', score: 15420, wave: 8, rescued: 342, date: new Date(Date.now() - 3600000).toISOString() },
+                    { name: 'Carlos Mendes', brand: 'TechStore BR', score: 12350, wave: 7, rescued: 298, date: new Date(Date.now() - 7200000).toISOString() },
+                    { name: 'Julia Santos', brand: 'Beauty Box', score: 11890, wave: 6, rescued: 287, date: new Date(Date.now() - 10800000).toISOString() },
+                    { name: 'Roberto Lima', brand: 'Casa Decor', score: 9540, wave: 5, rescued: 234, date: new Date(Date.now() - 14400000).toISOString() },
+                    { name: 'Maria Oliveira', brand: 'Pet Paradise', score: 8720, wave: 5, rescued: 221, date: new Date(Date.now() - 18000000).toISOString() }
+                ];
+                ranking.sort((a, b) => (b.score || 0) - (a.score || 0));
+                localStorage.setItem(GLOBAL_RANKING_KEY, JSON.stringify(ranking));
+            }
+            
+            return ranking;
+        }
+
+        // Add player to global ranking
+        function addToGlobalRanking(playerEntry) {
+            let ranking = getGlobalRanking();
+            
+            // Add new entry
+            ranking.push(playerEntry);
+            
+            // Sort by score descending
+            ranking.sort((a, b) => b.score - a.score);
+            
+            // Keep only top 100
+            ranking = ranking.slice(0, 100);
+            
+            // Save to "global" storage
+            localStorage.setItem(GLOBAL_RANKING_KEY, JSON.stringify(ranking));
+            
+            return ranking;
+        }
+
+        // Manual function to add a player directly (for fixing missing players)
+        function addPlayerManually(name, score, brand = null, email = null, wave = null, rescued = null, maxCombo = null, gmv = null) {
+            const playerEntry = {
+                name: name,
+                email: email || null,
+                brand: brand || null,
+                score: score,
+                wave: wave || null,
+                rescued: rescued || null,
+                maxCombo: maxCombo || null,
+                gmv: gmv || null,
+                date: new Date().toISOString()
+            };
+            
+            const updatedRanking = addToGlobalRanking(playerEntry);
+            updateGlobalLeaderboard(false);
+            
+            const position = updatedRanking.findIndex(p => p.name === name && p.score === score) + 1;
+            console.log(`✅ Player "${name}" with score ${score} added to ranking. Position: #${position}`);
+            
+            return updatedRanking;
+        }
+
+        // Debug function to search for players in localStorage
+        function searchPlayerInStorage(searchTerm) {
+            console.log('🔍 Searching for players containing:', searchTerm);
+            const results = [];
+            
+            // Search in global ranking
+            const globalRanking = JSON.parse(localStorage.getItem(GLOBAL_RANKING_KEY) || '[]');
+            globalRanking.forEach((player, index) => {
+                if (player.name && player.name.toLowerCase().includes(searchTerm.toLowerCase())) {
+                    results.push({ source: 'global-ranking', position: index + 1, player });
+                }
+            });
+            
+            // Search in all localStorage keys
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                if (key && (key.includes('ranking') || key.includes('game') || key.includes('player'))) {
+                    try {
+                        const data = localStorage.getItem(key);
+                        if (data && data.startsWith('[')) {
+                            const parsed = JSON.parse(data);
+                            if (Array.isArray(parsed)) {
+                                parsed.forEach((player, index) => {
+                                    if (player && player.name && player.name.toLowerCase().includes(searchTerm.toLowerCase())) {
+                                        results.push({ source: key, position: index + 1, player });
+                                    }
+                                });
+                            }
+                        }
+                    } catch (e) {
+                        // Skip invalid data
+                    }
+                }
+            }
+            
+            if (results.length > 0) {
+                console.log(`✅ Found ${results.length} result(s):`, results);
+                return results;
+            } else {
+                console.log('❌ No players found with that name');
+                return [];
+            }
+        }
+
+        // Update player score if exists
+        function updatePlayerScore(playerName, newScore) {
+            let ranking = getGlobalRanking();
+            const playerIndex = ranking.findIndex(p => {
+                const pName = (p.name || '').toLowerCase();
+                const searchName = (playerName || '').toLowerCase();
+                return pName === searchName || (pName.includes('lombo') && pName.includes('cria'));
+            });
+            
+            if (playerIndex >= 0) {
+                ranking[playerIndex].score = newScore;
+                ranking.sort((a, b) => b.score - a.score);
+                localStorage.setItem(GLOBAL_RANKING_KEY, JSON.stringify(ranking));
+                updateGlobalLeaderboard(false);
+                const newPosition = ranking.findIndex(p => p.name === ranking[playerIndex].name) + 1;
+                console.log(`✅ Updated ${playerName} score to ${newScore}. New position: #${newPosition}`);
+                return true;
+            } else {
+                console.log(`❌ Player "${playerName}" not found in ranking`);
+                return false;
+            }
+        }
+
+        // Make functions available globally for console access
+        window.addPlayerManually = addPlayerManually;
+        window.searchPlayerInStorage = searchPlayerInStorage;
+        window.updatePlayerScore = updatePlayerScore;
+        window.ensureSpecificPlayers = ensureSpecificPlayers;
+        window.forceAddLombo = forceAddLombo;
+
+        // Simulate new players joining (for live effect)
+        function simulateNewGlobalPlayers() {
+            const names = CONFIG.brazilianNames.firstNames;
+            const lastNames = CONFIG.brazilianNames.lastNames;
+            const stores = CONFIG.storeNames;
+            
+            // Random chance to add a new player (5% chance every update)
+            if (Math.random() < 0.05) {
+                const firstName = names[Math.floor(Math.random() * names.length)];
+                const lastName = lastNames[Math.floor(Math.random() * lastNames.length)];
+                const storeName = stores[Math.floor(Math.random() * stores.length)];
+                
+                const newPlayer = {
+                    name: `${firstName} ${lastName}`,
+                    brand: storeName,
+                    score: Math.floor(Math.random() * 15000) + 1000,
+                    wave: Math.floor(Math.random() * 8) + 1,
+                    rescued: Math.floor(Math.random() * 300) + 50,
+                    date: new Date().toISOString()
+                };
+                
+                let ranking = getGlobalRanking();
+                ranking.push(newPlayer);
+                ranking.sort((a, b) => b.score - a.score);
+                ranking = ranking.slice(0, 100);
+                localStorage.setItem(GLOBAL_RANKING_KEY, JSON.stringify(ranking));
+                
+                // Update display with animation
+                updateGlobalLeaderboard(true);
+            }
+        }
+
+        // Start live ranking updates
+        function startGlobalRankingUpdates() {
+            if (globalRankingUpdateInterval) return;
+            
+            // Update every 3-5 seconds
+            globalRankingUpdateInterval = setInterval(() => {
+                simulateNewGlobalPlayers();
+                updateGlobalLeaderboard(false);
+            }, 3000 + Math.random() * 2000);
+        }
+
+        // Stop live ranking updates
+        function stopGlobalRankingUpdates() {
+            if (globalRankingUpdateInterval) {
+                clearInterval(globalRankingUpdateInterval);
+                globalRankingUpdateInterval = null;
+            }
+        }
+
         function submitToRanking() {
             const nameInput = document.getElementById('player-name');
             const emailInput = document.getElementById('player-email');
@@ -6449,20 +8071,40 @@
                 date: new Date().toISOString()
             };
             
-            // Save to localStorage
-            let rankings = JSON.parse(localStorage.getItem('nuvemshop-game-rankings') || '[]');
-            rankings.push(playerEntry);
+            // Add to GLOBAL ranking
+            const updatedRanking = addToGlobalRanking(playerEntry);
             
-            // Sort by score descending
-            rankings.sort((a, b) => b.score - a.score);
+            // Store player name to highlight them
+            lastPlayerAdded = name;
             
-            // Keep only top 100
-            rankings = rankings.slice(0, 100);
+            // Find player's position in ranking
+            const playerPosition = updatedRanking.findIndex(p => p.name === name && p.score === state.gameScore) + 1;
             
-            localStorage.setItem('nuvemshop-game-rankings', JSON.stringify(rankings));
+            // Update leaderboard display IMMEDIATELY with animation
+            updateGlobalLeaderboard(true);
             
-            // Update leaderboard display
-            updateLeaderboardFromStorage();
+            // Scroll to player position if they're in top 10
+            if (playerPosition <= 10) {
+                setTimeout(() => {
+                    const leaderboardList = document.getElementById('leaderboard-list');
+                    if (leaderboardList) {
+                        const playerItem = leaderboardList.children[playerPosition - 1];
+                        if (playerItem) {
+                            playerItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }
+                    }
+                }, 100);
+            }
+            
+            // Update success message with position
+            const successMsg = document.getElementById('ranking-success');
+            if (successMsg) {
+                if (playerPosition <= 10) {
+                    successMsg.innerHTML = `✅ Você entrou no ranking global! <strong>#${playerPosition}</strong> 🎉`;
+                } else {
+                    successMsg.innerHTML = `✅ Você foi adicionado ao ranking global! <br><small>Posição: #${playerPosition}</small>`;
+                }
+            }
             
             // Simulate slight delay for UX
             setTimeout(() => {
@@ -6474,7 +8116,13 @@
                 // Reset button
                 submitBtn.disabled = false;
                 submitBtn.textContent = 'Salvar no Ranking';
-            }, 500);
+                
+                // Clear highlight after 5 seconds
+                setTimeout(() => {
+                    lastPlayerAdded = null;
+                    updateGlobalLeaderboard(false);
+                }, 5000);
+            }, 300);
         }
         
         function skipRanking() {
@@ -6483,8 +8131,9 @@
             document.getElementById('game-over-buttons').style.display = 'flex';
         }
         
-        function updateLeaderboardFromStorage() {
-            const rankings = JSON.parse(localStorage.getItem('nuvemshop-game-rankings') || '[]');
+        // Update global leaderboard display
+        function updateGlobalLeaderboard(showNewPlayerAnimation = false) {
+            const rankings = getGlobalRanking();
             
             // Get top 10 for display
             const topPlayers = rankings.slice(0, 10);
@@ -6492,19 +8141,31 @@
             const leaderboardList = document.getElementById('leaderboard-list');
             if (!leaderboardList) return;
             
+            // Store current top player names to detect new entries
+            const currentTopNames = Array.from(leaderboardList.children).map(item => {
+                const nameEl = item.querySelector('.lb-name');
+                return nameEl ? nameEl.textContent.replace(/<small[^>]*>.*?<\/small>/g, '').trim() : null;
+            }).filter(Boolean);
+            
             leaderboardList.innerHTML = '';
             
             topPlayers.forEach((player, index) => {
                 const item = document.createElement('div');
-                item.className = 'leaderboard-item' + (index < 3 ? ' top-3' : '');
+                const isNewPlayer = showNewPlayerAnimation && !currentTopNames.includes(player.name);
+                const isJustAdded = lastPlayerAdded && player.name === lastPlayerAdded;
+                item.className = 'leaderboard-item' + 
+                    (index < 3 ? ' top-3' : '') + 
+                    (isNewPlayer ? ' new-player' : '') +
+                    (isJustAdded ? ' just-added' : '');
                 
                 const medal = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : (index + 1);
                 const displayName = player.brand ? `${player.name} <small style="opacity:0.7">@ ${player.brand}</small>` : player.name;
                 const waveDisplay = player.wave ? `<span class="lb-wave">🌊${player.wave}</span>` : '';
+                const justAddedBadge = isJustAdded ? '<span class="just-added-badge">✨ VOCÊ!</span>' : '';
                 
                 item.innerHTML = `
                     <span class="lb-rank">${medal}</span>
-                    <span class="lb-name">${displayName}</span>
+                    <span class="lb-name">${displayName} ${justAddedBadge}</span>
                     ${waveDisplay}
                     <span class="lb-score">${player.score.toLocaleString('pt-BR')}</span>
                 `;
@@ -6516,6 +8177,11 @@
             if (topPlayers.length === 0) {
                 leaderboardList.innerHTML = '<div style="text-align: center; color: var(--neutral-text-low); padding: 20px; font-size: 13px;">Seja o primeiro a entrar no ranking!</div>';
             }
+        }
+        
+        // Keep old function name for compatibility
+        function updateLeaderboardFromStorage() {
+            updateGlobalLeaderboard(false);
         }
         
         function playAgain() {
@@ -6592,15 +8258,12 @@ ${window.location.href}`;
         }
 
         function loadInitialLeaderboard() {
-            // Check if there are stored rankings
-            const storedRankings = JSON.parse(localStorage.getItem('nuvemshop-game-rankings') || '[]');
+            // Load global ranking
+            updateGlobalLeaderboard(false);
             
-            if (storedRankings.length > 0) {
-                // Use stored rankings
-                updateLeaderboardFromStorage();
-            } else {
-                // Use default config rankings
-                renderLeaderboard();
+            // Start live updates when game view is active
+            if (state.currentView === 'game') {
+                startGlobalRankingUpdates();
             }
         }
         
@@ -6625,10 +8288,12 @@ ${window.location.href}`;
         }
 
         function clearRankingHistory() {
-            if (confirm('Tem certeza que deseja apagar todo o histórico do ranking?')) {
-                localStorage.removeItem('nuvemshop-game-rankings');
-                renderLeaderboard();
-                alert('Histórico do ranking apagado com sucesso!');
+            if (confirm('Tem certeza que deseja apagar todo o histórico do ranking GLOBAL?')) {
+                localStorage.removeItem(GLOBAL_RANKING_KEY);
+                // Reinitialize with default players
+                getGlobalRanking();
+                updateGlobalLeaderboard(false);
+                alert('Histórico do ranking global apagado com sucesso!');
             }
         }
 
@@ -6671,6 +8336,28 @@ ${window.location.href}`;
         // INITIALIZATION
         // ============================================
         document.addEventListener('DOMContentLoaded', () => {
+            // Migrate historical ranking data FIRST (before anything else)
+            migrateHistoricalRankingData();
+            
+            // Force ensure specific players (like Lombo) are in ranking
+            ensureSpecificPlayers();
+            
+            // Force add Lombo after a short delay to ensure it's added
+            setTimeout(() => {
+                const ranking = getGlobalRanking();
+                const hasLombo = ranking.some(p => {
+                    const name = (p.name || '').toLowerCase();
+                    return name.includes('lombo') && (name.includes('cria') || name.includes('44'));
+                });
+                
+                if (!hasLombo) {
+                    console.log('⚠️ Lombo not found, force adding...');
+                    forceAddLombo();
+                } else {
+                    console.log('✅ Lombo found in ranking');
+                }
+            }, 500);
+            
             createParticles();
             initGlobe();
             initGamePaddle();
