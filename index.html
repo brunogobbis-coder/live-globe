@@ -5565,8 +5565,22 @@
         // NEW: Filter by channel
         function filterChannel(channel) {
             state.currentChannel = channel;
+            
+            // Update active tab
             document.querySelectorAll('.channel-tab').forEach(tab => {
                 tab.classList.toggle('active', tab.dataset.channel === channel);
+            });
+            
+            // Filter sales list
+            const salesItems = document.querySelectorAll('.sale-item');
+            salesItems.forEach(item => {
+                if (channel === 'all') {
+                    item.style.display = '';
+                } else {
+                    // Check if item has the channel class
+                    const hasChannel = item.classList.contains('channel-' + channel);
+                    item.style.display = hasChannel ? '' : 'none';
+                }
             });
         }
 
@@ -5924,6 +5938,11 @@
             } = createSaleItem();
             
             salesList.insertBefore(item, salesList.firstChild);
+            
+            // Apply current channel filter to new item
+            if (state.currentChannel !== 'all' && !item.classList.contains('channel-' + state.currentChannel)) {
+                item.style.display = 'none';
+            }
             
             while (salesList.children.length > maxSales) {
                 salesList.removeChild(salesList.lastChild);
