@@ -362,12 +362,15 @@
             align-items: center;
             justify-content: center;
             margin-left: -60px;
+            overflow: hidden;
         }
         
         .brazil-map-svg {
             width: 100%;
             height: 100%;
             filter: drop-shadow(0 0 30px rgba(0, 89, 213, 0.2));
+            transition: transform 0.5s ease-out;
+            transform-origin: center center;
             overflow: visible;
         }
         
@@ -566,6 +569,86 @@
         
         .city-dot:hover::after {
             transform: translateX(-50%) scale(1);
+            opacity: 1;
+        }
+        
+        /* Zoom Controls */
+        .map-zoom-controls {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            z-index: 50;
+        }
+        
+        .zoom-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: rgba(18, 18, 31, 0.9);
+            border: 1px solid var(--dark-border);
+            color: var(--neutral-text-low);
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .zoom-btn:hover {
+            background: var(--dark-surface-2);
+            color: var(--neutral-background);
+            border-color: var(--primary-interactive);
+        }
+        
+        .zoom-btn.active {
+            background: var(--primary-interactive);
+            color: white;
+            border-color: var(--primary-interactive);
+        }
+        
+        .zoom-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+        
+        /* Zoomed state indicator */
+        .zoom-state-indicator {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 8px 16px;
+            background: rgba(0, 89, 213, 0.9);
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            color: white;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 50;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .zoom-state-indicator.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .zoom-state-indicator .close-zoom {
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+        
+        .zoom-state-indicator .close-zoom:hover {
             opacity: 1;
         }
         
@@ -4347,6 +4430,22 @@
                 <div class="map-glow"></div>
                 <div class="brazil-map-container" id="brazil-map-container">
                     <!-- SVG Map and city dots will be inserted by JavaScript -->
+                    
+                    <!-- Zoom State Indicator -->
+                    <div class="zoom-state-indicator" id="zoom-state-indicator">
+                        <span id="zoom-state-name">São Paulo</span>
+                        <span class="close-zoom" onclick="resetMapZoom()">✕</span>
+                    </div>
+                    
+                    <!-- Zoom Controls -->
+                    <div class="map-zoom-controls">
+                        <button class="zoom-btn" onclick="resetMapZoom()" title="Voltar ao mapa completo">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+                                <path d="M3 3v5h5"/>
+                            </svg>
+                        </button>
+                    </div>
                 </div>
 
                 <!-- Map Controls Hint -->
@@ -5237,6 +5336,9 @@
             nuvemEnviosCount: 0,
             totalSalesTracked: 0,
             channelCounts: { online: 0, chat: 0, pos: 0, social: 0 },
+            
+            // Map Zoom
+            zoomedState: null,
             
             // Game
             gameRunning: false,
@@ -6179,6 +6281,86 @@
             'Palmas': { x: 65, y: 41, state: 'TO' }
         };
 
+        // ============================================
+        // MAP ZOOM FUNCTIONS
+        // ============================================
+        
+        // State center positions for zoom (approximate centers)
+        const STATE_CENTERS = {
+            'AC': { x: 15, y: 40 }, 'AL': { x: 88, y: 42 }, 'AP': { x: 55, y: 10 },
+            'AM': { x: 28, y: 25 }, 'BA': { x: 77, y: 45 }, 'CE': { x: 82, y: 28 },
+            'DF': { x: 67, y: 52 }, 'ES': { x: 86, y: 58 }, 'GO': { x: 60, y: 52 },
+            'MA': { x: 68, y: 25 }, 'MT': { x: 42, y: 45 }, 'MS': { x: 48, y: 62 },
+            'MG': { x: 72, y: 55 }, 'PA': { x: 52, y: 25 }, 'PB': { x: 88, y: 33 },
+            'PR': { x: 58, y: 75 }, 'PE': { x: 85, y: 38 }, 'PI': { x: 72, y: 32 },
+            'RJ': { x: 78, y: 65 }, 'RN': { x: 87, y: 30 }, 'RS': { x: 55, y: 88 },
+            'RO': { x: 28, y: 42 }, 'RR': { x: 32, y: 10 }, 'SC': { x: 60, y: 82 },
+            'SP': { x: 62, y: 68 }, 'SE': { x: 85, y: 44 }, 'TO': { x: 62, y: 40 }
+        };
+        
+        function zoomToState(stateCode, pathElement) {
+            const svg = document.querySelector('.brazil-map-svg');
+            const indicator = document.getElementById('zoom-state-indicator');
+            const stateName = document.getElementById('zoom-state-name');
+            const stateData = CONFIG.states[stateCode];
+            
+            if (!svg || !stateData) return;
+            
+            // If already zoomed to this state, reset
+            if (state.zoomedState === stateCode) {
+                resetMapZoom();
+                return;
+            }
+            
+            // Get state center
+            const center = STATE_CENTERS[stateCode] || { x: 50, y: 50 };
+            
+            // Calculate zoom level based on state size (smaller states get more zoom)
+            let zoomLevel = 2.5;
+            const largeStates = ['AM', 'PA', 'MT', 'MG', 'BA', 'MS', 'GO', 'MA'];
+            const smallStates = ['DF', 'SE', 'AL', 'RN', 'PB', 'ES', 'RJ', 'SC'];
+            
+            if (largeStates.includes(stateCode)) zoomLevel = 2;
+            if (smallStates.includes(stateCode)) zoomLevel = 3;
+            
+            // Calculate transform to center the state
+            const translateX = (50 - center.x) * zoomLevel;
+            const translateY = (50 - center.y) * zoomLevel;
+            
+            // Apply zoom transform
+            svg.style.transform = `scale(${zoomLevel}) translate(${translateX}%, ${translateY}%)`;
+            
+            // Update state
+            state.zoomedState = stateCode;
+            
+            // Show indicator
+            stateName.textContent = `${stateData.name} (${stateCode})`;
+            indicator.classList.add('visible');
+        }
+        
+        function resetMapZoom() {
+            const svg = document.querySelector('.brazil-map-svg');
+            const indicator = document.getElementById('zoom-state-indicator');
+            const statePaths = document.querySelectorAll('.state-path');
+            
+            if (!svg) return;
+            
+            // Reset transform
+            svg.style.transform = 'scale(1) translate(0, 0)';
+            
+            // Clear state
+            state.zoomedState = null;
+            
+            // Hide indicator
+            indicator.classList.remove('visible');
+            
+            // Remove active from all states
+            statePaths.forEach(p => p.classList.remove('active'));
+            
+            // Close tooltip
+            closeTooltip();
+        }
+        
         function initBrazilMap() {
             const container = document.getElementById('brazil-map-container');
             if (!container) return;
@@ -6221,6 +6403,8 @@
                 
                 if (stateData) {
                     path.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        
                         // Hide hint on first interaction
                         hideControlsHint();
                         
@@ -6229,12 +6413,24 @@
                         // Add active to clicked state
                         path.classList.add('active');
                         
+                        // Zoom to state
+                        zoomToState(stateCode, path);
+                        
                         // Find capital city for this state
                         const capitalCity = CONFIG.cities.find(c => c.state === stateCode);
                         if (capitalCity) {
                             showCityTooltip(capitalCity, e.clientX, e.clientY);
                         }
                     });
+                }
+            });
+            
+            // Click on container background to reset zoom
+            container.addEventListener('click', (e) => {
+                if (e.target === container || e.target.classList.contains('brazil-map-svg')) {
+                    if (state.zoomedState) {
+                        resetMapZoom();
+                    }
                 }
             });
             
