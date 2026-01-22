@@ -4261,18 +4261,6 @@
                     <span>📍</span>
                     <span id="celebration-location">São Paulo, SP</span>
                 </div>
-                <div class="celebration-greeting" id="celebration-greeting">Parabéns!</div>
-                <div>
-                    <button class="celebration-share-btn" onclick="shareCelebration(event)">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="18" cy="5" r="3"/>
-                            <circle cx="6" cy="12" r="3"/>
-                            <circle cx="18" cy="19" r="3"/>
-                            <path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98"/>
-                        </svg>
-                        Compartilhar Momento
-                    </button>
-                </div>
             </div>
         </div>
 
@@ -5621,7 +5609,6 @@
             const regionalGreeting = stateIcon.greeting || 'Parabéns, empreendedor!';
             
             document.getElementById('celebration-regional-icon').textContent = regionalIcon;
-            document.getElementById('celebration-greeting').textContent = regionalGreeting;
             
             celebration.classList.add('active');
             createConfetti();
