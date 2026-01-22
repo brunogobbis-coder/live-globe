@@ -1,0 +1,11 @@
+# Copy this file to terraform.tfvars and fill in the values
+# NEVER commit terraform.tfvars to version control
+
+aws_region           = "us-east-1"
+environment          = "prod"
+allowed_origin       = "https://nuvemshop-live-globe.vercel.app"
+
+# Databricks credentials - get from your workspace
+databricks_host      = "<YOUR_DATABRICKS_WORKSPACE>.cloud.databricks.com"
+databricks_http_path = "/sql/1.0/warehouses/<YOUR_WAREHOUSE_ID>"
+databricks_token     = "<YOUR_DATABRICKS_TOKEN>"

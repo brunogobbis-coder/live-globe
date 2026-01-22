@@ -5304,6 +5304,17 @@
         };
 
         // ============================================
+        // API CONFIGURATION
+        // ============================================
+        const API_CONFIG = {
+            // Set this to your API Gateway URL after deployment
+            // Example: 'https://abc123.execute-api.us-east-1.amazonaws.com/prod'
+            baseUrl: null, // null = use simulated data
+            refreshInterval: 60000, // 60 seconds
+            enabled: false // Set to true when API is ready
+        };
+        
+        // ============================================
         // STATE
         // ============================================
         let state = {
@@ -6445,6 +6456,98 @@
         function initGlobe() {
             initBrazilMap();
             startLiveSalesAnimation();
+            
+            // Start API polling if enabled
+            if (API_CONFIG.enabled && API_CONFIG.baseUrl) {
+                fetchRealStats();
+                setInterval(fetchRealStats, API_CONFIG.refreshInterval);
+            }
+        }
+        
+        // ============================================
+        // API INTEGRATION FUNCTIONS
+        // ============================================
+        
+        async function fetchRealStats() {
+            if (!API_CONFIG.enabled || !API_CONFIG.baseUrl) {
+                console.log('[API] Using simulated data (API not configured)');
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_CONFIG.baseUrl}/stats`, {
+                    method: 'GET',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+                
+                const data = await response.json();
+                updateStatsFromAPI(data);
+                console.log('[API] Stats updated from Databricks');
+                
+            } catch (error) {
+                console.warn('[API] Failed to fetch stats, using simulated data:', error.message);
+            }
+        }
+        
+        function updateStatsFromAPI(data) {
+            // Update aggregated stats
+            if (data.aggregated) {
+                state.totalOrders = data.aggregated.totalOrders || state.totalOrders;
+                state.gmv = data.aggregated.totalGMV || state.gmv;
+                state.activeStores = data.aggregated.totalStores || state.activeStores;
+                state.avgTicket = Math.round(data.aggregated.avgTicket) || state.avgTicket;
+            }
+            
+            // Update solutions stats
+            if (data.solutions) {
+                state.nuvemPayCount = data.solutions.nuvemPay?.count || state.nuvemPayCount;
+                state.nuvemEnviosCount = data.solutions.nuvemEnvios?.count || state.nuvemEnviosCount;
+            }
+            
+            // Update channel counts
+            if (data.byChannel) {
+                data.byChannel.forEach(ch => {
+                    const channel = ch.channel?.toLowerCase();
+                    if (state.channelCounts.hasOwnProperty(channel)) {
+                        state.channelCounts[channel] = ch.orders;
+                    }
+                });
+            }
+            
+            // Refresh UI
+            updateStats();
+            updateSolutionsStats();
+            updateChannelTabs();
+        }
+        
+        async function fetchRecentSales(limit = 20) {
+            if (!API_CONFIG.enabled || !API_CONFIG.baseUrl) return null;
+            
+            try {
+                const response = await fetch(`${API_CONFIG.baseUrl}/sales/recent?limit=${limit}`);
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                return await response.json();
+            } catch (error) {
+                console.warn('[API] Failed to fetch recent sales:', error.message);
+                return null;
+            }
+        }
+        
+        async function fetchStateDetails(stateCode) {
+            if (!API_CONFIG.enabled || !API_CONFIG.baseUrl) return null;
+            
+            try {
+                const response = await fetch(`${API_CONFIG.baseUrl}/states/${stateCode}`);
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                return await response.json();
+            } catch (error) {
+                console.warn('[API] Failed to fetch state details:', error.message);
+                return null;
+            }
         }
         
         // Live Sales Animation - Simulates sales happening in real-time
