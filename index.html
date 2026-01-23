@@ -2624,6 +2624,35 @@
             animation: screen-shake-glow 0.3s ease-in-out;
         }
         
+        /* Shield Active State */
+        .game-area.shield-active {
+            background: rgba(0, 89, 213, 0.15);
+            border-color: var(--primary-light);
+            box-shadow: inset 0 0 50px rgba(0, 89, 213, 0.2),
+                        0 0 30px rgba(0, 89, 213, 0.3);
+        }
+        
+        .game-area.shield-active::before {
+            content: '🛡️ ESCUDO ATIVO';
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 6px 16px;
+            background: rgba(0, 89, 213, 0.8);
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            color: white;
+            z-index: 50;
+            animation: shieldPulse 1s ease-in-out infinite;
+        }
+        
+        @keyframes shieldPulse {
+            0%, 100% { opacity: 1; transform: translateX(-50%) scale(1); }
+            50% { opacity: 0.8; transform: translateX(-50%) scale(1.05); }
+        }
+        
         /* Game Over Screen */
         .game-over-overlay {
             position: absolute;
@@ -5074,11 +5103,11 @@
                             </li>
                             <li>
                                 <span class="instruction-icon">💣</span>
-                                EVITE bombas! Têm borda vermelha e ⚠️
+                                EVITE bombas! Perdem vidas. Borda vermelha = perigo!
                             </li>
                             <li>
-                                <span class="instruction-icon">❓</span>
-                                Decoys parecem carrinhos mas revelam ❓ suspeito
+                                <span class="instruction-icon">🛡️</span>
+                                Escudo protege contra bombas (fundo azul)
                             </li>
                             <li>
                                 <span class="instruction-icon">💖</span>
@@ -7157,18 +7186,14 @@
             vip: { emoji: '💎', points: 500, speed: 1.8, color: 'linear-gradient(135deg, #9c27b0, #e91e63)', class: 'vip' },
             speedy: { emoji: '🚀', points: 400, speed: 2.5, color: 'linear-gradient(135deg, #00bcd4, #03a9f4)', class: 'speedy' },
             zigzag: { emoji: '🌀', points: 350, speed: 1.4, color: 'linear-gradient(135deg, #4caf50, #8bc34a)', class: 'zigzag', movement: 'zigzag' },
-            ghost: { emoji: '👻', points: 600, speed: 1.3, color: 'linear-gradient(135deg, rgba(255,255,255,0.3), rgba(200,200,200,0.5))', class: 'ghost', invisible: true },
             splitter: { emoji: '🎯', points: 200, speed: 1.1, color: 'linear-gradient(135deg, #ff5722, #ff9800)', class: 'splitter', splits: true },
             bomb: { emoji: '💣', points: -500, speed: 1.4, color: 'linear-gradient(135deg, #1a1a1a, #333)', class: 'bomb', damage: true },
-            megaBomb: { emoji: '☢️', points: -1000, speed: 1.0, color: 'linear-gradient(135deg, #4a0000, #8b0000)', class: 'mega-bomb', damage: true, megaDamage: true },
-            decoy: { emoji: '🛒', points: -300, speed: 1.2, color: 'linear-gradient(135deg, var(--danger), var(--danger-light))', class: 'decoy', damage: true }
+            megaBomb: { emoji: '☢️', points: -1000, speed: 1.0, color: 'linear-gradient(135deg, #4a0000, #8b0000)', class: 'mega-bomb', damage: true, megaDamage: true }
         };
         
         // Power-up types - SHORTER DURATIONS
         const POWERUP_TYPES = {
-            speed: { emoji: '⚡', name: 'Velocidade', duration: 5000, effect: 'speed' },
             freeze: { emoji: '❄️', name: 'Congelar', duration: 3000, effect: 'freeze' },
-            multiplier: { emoji: '✨', name: '2x Pontos', duration: 6000, effect: 'multiplier' },
             shield: { emoji: '🛡️', name: 'Escudo', duration: 8000, effect: 'shield' },
             heart: { emoji: '💖', name: '+1 Vida', duration: 0, effect: 'heart', instant: true }
         };
@@ -7574,19 +7599,15 @@
                 cartType = 'megaBomb'; // Mega bomb from wave 6+
             } else if (rand < 0.06 + waveBonus) {
                 cartType = 'bomb'; // Regular bomb
-            } else if (state.wave >= 4 && rand < 0.10 + waveBonus) {
-                cartType = 'decoy'; // Looks like normal but is a trap!
-            } else if (state.wave >= 3 && rand < 0.15 + waveBonus) {
+            } else if (state.wave >= 3 && rand < 0.12 + waveBonus) {
                 cartType = 'speedy'; // Very fast cart
-            } else if (state.wave >= 2 && rand < 0.20 + waveBonus) {
+            } else if (state.wave >= 2 && rand < 0.18 + waveBonus) {
                 cartType = 'zigzag'; // Moves side to side
-            } else if (state.wave >= 5 && rand < 0.24 + waveBonus) {
-                cartType = 'ghost'; // Fades in and out
-            } else if (rand < 0.12 + waveBonus) {
+            } else if (rand < 0.10 + waveBonus) {
                 cartType = 'vip'; // High value
-            } else if (rand < 0.28 + waveBonus) {
+            } else if (rand < 0.25 + waveBonus) {
                 cartType = 'premium'; // Medium value
-            } else if (state.wave >= 4 && rand < 0.35) {
+            } else if (state.wave >= 4 && rand < 0.32) {
                 cartType = 'splitter'; // Splits into more when missed
             }
             
@@ -7615,13 +7636,6 @@
             } else if (cartType === 'megaBomb') {
                 valueLabel.style.color = '#8b0000';
                 valueLabel.textContent = '☢️ PERIGO';
-            } else if (cartType === 'decoy') {
-                // Decoy looks like a normal cart!
-                valueLabel.style.color = 'white';
-                valueLabel.textContent = 'R$' + Math.abs(value);
-            } else if (cartType === 'ghost') {
-                valueLabel.style.color = 'rgba(255,255,255,0.7)';
-                valueLabel.textContent = 'R$' + value;
             } else {
                 valueLabel.style.color = 'white';
                 valueLabel.textContent = 'R$' + value;
@@ -7880,6 +7894,11 @@
             `;
             container.appendChild(indicator);
             
+            // Add shield visual effect to game area
+            if (typeConfig.effect === 'shield') {
+                gameArea.classList.add('shield-active');
+            }
+            
             // Animate timer
             const startTime = Date.now();
             const duration = typeConfig.duration;
@@ -7891,6 +7910,11 @@
                 if (remaining <= 0) {
                     indicator.remove();
                     delete state.activePowerups[typeConfig.effect];
+                    
+                    // Remove shield visual effect
+                    if (typeConfig.effect === 'shield') {
+                        gameArea.classList.remove('shield-active');
+                    }
                 } else {
                     indicator.querySelector('.powerup-timer-fill').style.width = (remaining * 100) + '%';
                     requestAnimationFrame(updateTimer);
@@ -7908,8 +7932,8 @@
             const value = cartData.value;
             const cartType = cartData.type;
             
-            // Handle bomb/decoy/megaBomb collision - all damage types
-            if (cartType === 'bomb' || cartType === 'decoy' || cartType === 'megaBomb') {
+            // Handle bomb/megaBomb collision - damage types
+            if (cartType === 'bomb' || cartType === 'megaBomb') {
                 if (state.activePowerups.shield) {
                     // Shield absorbs damage (but megaBomb removes 2 lives even with shield)
                     if (cartType === 'megaBomb') {
@@ -7918,6 +7942,7 @@
                     }
                     delete state.activePowerups.shield;
                     document.getElementById('powerup-shield')?.remove();
+                    gameArea.classList.remove('shield-active');
                     
                     // Visual feedback
                     const shieldPop = document.createElement('div');
@@ -7952,8 +7977,6 @@
                     
                     if (cartType === 'megaBomb') {
                         damagePopup.innerHTML = '☢️ -2 VIDAS!';
-                    } else if (cartType === 'decoy') {
-                        damagePopup.innerHTML = '🎭 ARMADILHA!';
                     } else {
                         damagePopup.innerHTML = '💥 -1 VIDA';
                     }
@@ -8061,7 +8084,7 @@
             const cartType = cartData.type;
             
             // Bombs that fall through don't hurt you
-            if (cartType === 'bomb') {
+            if (cartType === 'bomb' || cartType === 'megaBomb') {
                 cart.style.opacity = '0';
                 setTimeout(() => {
                     cart.remove();
@@ -8073,9 +8096,6 @@
             cart.style.opacity = '0.3';
             cart.style.transform = 'scale(0.8)';
             
-            // Red flash effect
-            screenShake();
-            
             setTimeout(() => {
                 cart.remove();
                 activeCarts = activeCarts.filter(c => c !== cartData);
@@ -8084,23 +8104,15 @@
             state.cartsLost += 1;
             state.combo = 0; // Reset combo on miss
             
-            // Lose life when cart escapes
-            state.lives--;
-            updateLivesDisplay();
-            
-            // Show life lost message
+            // Show cart lost message (no life lost - only bombs take lives)
             const lostMsg = document.createElement('div');
             lostMsg.className = 'rescue-points';
-            lostMsg.innerHTML = '💔 -1 VIDA';
+            lostMsg.innerHTML = '😢 Escapou!';
             lostMsg.style.left = cart.style.left;
             lostMsg.style.top = (parseFloat(cart.style.top) - 30) + 'px';
-            lostMsg.style.color = '#ff4444';
+            lostMsg.style.color = '#ff9800';
             gameArea.appendChild(lostMsg);
             setTimeout(() => lostMsg.remove(), 1000);
-            
-            if (state.lives <= 0) {
-                gameOver();
-            }
             
             updateGameStats();
         }
