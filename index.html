@@ -355,33 +355,102 @@
         .brazil-map-container {
             position: relative;
             width: 100%;
-            max-width: 520px;
+            max-width: 580px;
             height: calc(100vh - 100px);
-            max-height: 580px;
+            max-height: 620px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-left: -60px;
-            overflow: hidden;
+            margin-left: -40px;
+            overflow: visible;
+            /* 3D Perspective Container */
+            perspective: 1200px;
+            perspective-origin: 50% 40%;
+        }
+        
+        /* 3D Map Wrapper */
+        .brazil-map-3d-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transform: rotateX(15deg) rotateZ(-2deg);
+            transition: transform 0.5s ease;
+        }
+        
+        .brazil-map-container:hover .brazil-map-3d-wrapper {
+            transform: rotateX(12deg) rotateZ(-1deg) scale(1.02);
+        }
+        
+        /* Map Shadow/Depth Layer */
+        .brazil-map-shadow {
+            position: absolute;
+            top: 15px;
+            left: 10px;
+            width: 100%;
+            height: 100%;
+            filter: blur(20px);
+            opacity: 0.3;
+            transform: translateZ(-50px);
+            pointer-events: none;
+        }
+        
+        .brazil-map-shadow .state-path {
+            fill: #000 !important;
+            stroke: none !important;
+        }
+        
+        /* Map Base/Ground Layer */
+        .brazil-map-base {
+            position: absolute;
+            top: 8px;
+            left: 5px;
+            width: 100%;
+            height: 100%;
+            transform: translateZ(-20px);
+            pointer-events: none;
+        }
+        
+        .brazil-map-base .state-path {
+            fill: rgba(30, 60, 40, 0.8) !important;
+            stroke: rgba(20, 40, 30, 0.9) !important;
+            stroke-width: 1px;
+        }
+        
+        /* Main map layer */
+        .brazil-map-main {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform: translateZ(0);
         }
         
         .brazil-map-svg {
             width: 100%;
             height: 100%;
-            filter: drop-shadow(0 0 30px rgba(0, 89, 213, 0.2));
+            position: relative;
+            filter: drop-shadow(0 0 30px rgba(0, 89, 213, 0.2))
+                    drop-shadow(0 10px 20px rgba(0, 0, 0, 0.3));
             transition: transform 0.5s ease-out;
             transform-origin: center center;
             overflow: visible;
             animation: brazilHeartbeat var(--heartbeat-speed, 3s) ease-in-out infinite;
         }
         
+        /* 3D depth effect on states */
+        .brazil-map-svg .state-path {
+            filter: drop-shadow(2px 4px 3px rgba(0, 0, 0, 0.25));
+        }
+        
         /* Heartbeat animation - pulses with sales volume */
         @keyframes brazilHeartbeat {
             0%, 100% { 
-                filter: drop-shadow(0 0 30px rgba(0, 89, 213, 0.2));
+                filter: drop-shadow(0 0 30px rgba(0, 89, 213, 0.2))
+                        drop-shadow(0 10px 20px rgba(0, 0, 0, 0.3));
             }
             50% { 
-                filter: drop-shadow(0 0 45px rgba(0, 89, 213, 0.35));
+                filter: drop-shadow(0 0 45px rgba(0, 89, 213, 0.35))
+                        drop-shadow(0 12px 25px rgba(0, 0, 0, 0.35));
             }
         }
         
@@ -6622,8 +6691,30 @@
             const container = document.getElementById('brazil-map-container');
             if (!container) return;
             
-            // Insert SVG
-            container.innerHTML = BRAZIL_SVG;
+            // Create 3D wrapper structure
+            const wrapper3D = document.createElement('div');
+            wrapper3D.className = 'brazil-map-3d-wrapper';
+            
+            // Create shadow layer (bottom)
+            const shadowLayer = document.createElement('div');
+            shadowLayer.className = 'brazil-map-shadow';
+            shadowLayer.innerHTML = BRAZIL_SVG.replace('brazil-map-svg', 'brazil-map-svg-shadow');
+            
+            // Create base/ground layer (middle)
+            const baseLayer = document.createElement('div');
+            baseLayer.className = 'brazil-map-base';
+            baseLayer.innerHTML = BRAZIL_SVG.replace('brazil-map-svg', 'brazil-map-svg-base');
+            
+            // Create main SVG container
+            const mainLayer = document.createElement('div');
+            mainLayer.className = 'brazil-map-main';
+            mainLayer.innerHTML = BRAZIL_SVG;
+            
+            // Assemble 3D structure
+            wrapper3D.appendChild(shadowLayer);
+            wrapper3D.appendChild(baseLayer);
+            wrapper3D.appendChild(mainLayer);
+            container.insertBefore(wrapper3D, container.firstChild);
             
             // Add city dots with size based on sales volume
             Object.entries(CITY_POSITIONS).forEach(([cityName, pos]) => {
@@ -6649,11 +6740,12 @@
                     showCityTooltip(cityData, e.clientX, e.clientY);
                 });
                 
-                container.appendChild(dot);
+                // Append to main layer for proper 3D positioning
+                mainLayer.appendChild(dot);
             });
             
-            // Add state click handlers
-            const statePaths = container.querySelectorAll('.state-path');
+            // Add state click handlers (only on main layer, not shadow/base)
+            const statePaths = mainLayer.querySelectorAll('.state-path');
             statePaths.forEach(path => {
                 const stateCode = path.getAttribute('data-state');
                 const stateData = CONFIG.states[stateCode];
