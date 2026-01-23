@@ -2339,6 +2339,58 @@
             user-select: none;
         }
         
+        /* In-game HUD */
+        .game-hud {
+            position: absolute;
+            bottom: 12px;
+            left: 12px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 8px 14px;
+            background: rgba(18, 18, 31, 0.85);
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--dark-border);
+            border-radius: 12px;
+            z-index: 20;
+            pointer-events: none;
+        }
+        
+        .hud-score {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .hud-score-value {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--primary-light);
+            line-height: 1;
+        }
+        
+        .hud-score-label {
+            font-size: 9px;
+            color: var(--neutral-text-low);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .hud-lives {
+            display: flex;
+            gap: 4px;
+        }
+        
+        .hud-heart {
+            font-size: 18px;
+            transition: transform 0.2s, opacity 0.2s;
+        }
+        
+        .hud-heart.lost {
+            opacity: 0.2;
+            transform: scale(0.8);
+        }
+        
         .game-view {
             touch-action: none;
             -webkit-touch-callout: none;
@@ -3055,11 +3107,7 @@
 
         /* Side Counter Panel */
         .game-side-counter {
-            position: absolute;
-            bottom: 140px;
-            left: 32px;
-            width: 200px;
-            z-index: 10;
+            display: none; /* Hidden - using in-game HUD instead */
         }
 
         .counter-card {
@@ -3457,13 +3505,14 @@
         /* Game Instructions */
         .game-instructions {
             position: absolute;
-            right: 32px;
-            top: 500px;
-            width: 260px;
-            padding: 20px;
+            left: 32px;
+            top: 120px;
+            width: 240px;
+            padding: 16px;
             background: rgba(18, 18, 31, 0.85);
             border: 1px solid var(--dark-border);
             border-radius: 12px;
+            z-index: 10;
         }
 
         .instructions-title {
@@ -5058,6 +5107,19 @@
 
                     <div class="game-area" id="game-area">
                         <!-- Falling carts appear here -->
+                        
+                        <!-- In-game HUD -->
+                        <div class="game-hud" id="game-hud">
+                            <div class="hud-score">
+                                <span class="hud-score-value" id="hud-score">0</span>
+                                <span class="hud-score-label">pontos</span>
+                            </div>
+                            <div class="hud-lives" id="hud-lives">
+                                <span class="hud-heart">❤️</span>
+                                <span class="hud-heart">❤️</span>
+                                <span class="hud-heart">❤️</span>
+                            </div>
+                        </div>
                         
                         <!-- Game Over Overlay -->
                         <div class="game-over-overlay" id="game-over-overlay">
@@ -7216,8 +7278,6 @@
             normal: { emoji: '🛒', points: 100, speed: 1.2, color: 'linear-gradient(135deg, var(--danger), var(--danger-light))', class: '' },
             premium: { emoji: '🛒', points: 300, speed: 1.5, color: 'linear-gradient(135deg, #ffd700, #ff9800)', class: 'premium' },
             vip: { emoji: '💎', points: 500, speed: 1.8, color: 'linear-gradient(135deg, #9c27b0, #e91e63)', class: 'vip' },
-            speedy: { emoji: '🚀', points: 400, speed: 2.5, color: 'linear-gradient(135deg, #00bcd4, #03a9f4)', class: 'speedy' },
-            zigzag: { emoji: '🌀', points: 350, speed: 1.4, color: 'linear-gradient(135deg, #4caf50, #8bc34a)', class: 'zigzag', movement: 'zigzag' },
             splitter: { emoji: '🎯', points: 200, speed: 1.1, color: 'linear-gradient(135deg, #ff5722, #ff9800)', class: 'splitter', splits: true },
             bomb: { emoji: '💣', points: -500, speed: 1.4, color: 'linear-gradient(135deg, #1a1a1a, #333)', class: 'bomb', damage: true }
         };
@@ -7477,8 +7537,8 @@
                         setTimeout(() => spawnCart(), 600);
                     }
                     
-                    // Chance to spawn power-up
-                    if (Math.random() < 0.05) {
+                    // Chance to spawn power-up (increased for more shields)
+                    if (Math.random() < 0.12) {
                         spawnPowerup();
                     }
                 }
@@ -7532,6 +7592,7 @@
         }
         
         function updateLivesDisplay() {
+            // Update old display (hidden)
             const hearts = document.querySelectorAll('#lives-display .life-heart');
             hearts.forEach((heart, i) => {
                 if (i < state.lives) {
@@ -7540,6 +7601,18 @@
                     heart.classList.add('lost');
                 }
             });
+            
+            // Update HUD lives
+            const hudLives = document.getElementById('hud-lives');
+            if (hudLives) {
+                hudLives.innerHTML = '';
+                for (let i = 0; i < 3; i++) {
+                    const heart = document.createElement('span');
+                    heart.className = 'hud-heart' + (i >= state.lives ? ' lost' : '');
+                    heart.textContent = '❤️';
+                    hudLives.appendChild(heart);
+                }
+            }
         }
 
         function pauseGame() {
@@ -7626,17 +7699,13 @@
             const rand = Math.random();
             const waveBonus = state.wave * 0.025; // More aggressive scaling
             
-            if (rand < 0.08 + waveBonus) {
+            if (rand < 0.10 + waveBonus) {
                 cartType = 'bomb'; // Bomb - avoid!
-            } else if (state.wave >= 3 && rand < 0.14 + waveBonus) {
-                cartType = 'speedy'; // Very fast cart
-            } else if (state.wave >= 2 && rand < 0.20 + waveBonus) {
-                cartType = 'zigzag'; // Moves side to side
-            } else if (rand < 0.12 + waveBonus) {
+            } else if (rand < 0.18 + waveBonus) {
                 cartType = 'vip'; // High value
-            } else if (rand < 0.28 + waveBonus) {
+            } else if (rand < 0.35 + waveBonus) {
                 cartType = 'premium'; // Medium value
-            } else if (state.wave >= 4 && rand < 0.35) {
+            } else if (state.wave >= 3 && rand < 0.45) {
                 cartType = 'splitter'; // Splits into more when missed
             }
             
@@ -8928,6 +8997,12 @@ ${window.location.href}`;
 
         function updateGameStats() {
             document.getElementById('game-score').textContent = state.gameScore.toLocaleString('pt-BR');
+            
+            // Update HUD score
+            const hudScore = document.getElementById('hud-score');
+            if (hudScore) {
+                hudScore.textContent = state.gameScore.toLocaleString('pt-BR');
+            }
             document.getElementById('carts-rescued').textContent = state.cartsRescued;
             document.getElementById('carts-lost').textContent = state.cartsLost;
             
