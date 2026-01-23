@@ -6414,10 +6414,12 @@
             if (usesNuvemPay) state.nuvemPayCount += 1;
             if (usesNuvemEnvios) state.nuvemEnviosCount += 1;
             
-            // NEW: First sale celebration
+            // NEW: First sale celebration (don't show during game)
             if (isFirstSale) {
                 state.firstSalesToday += 1;
-                showFirstSaleCelebration(storeName, city.name, city.state, value);
+                if (!state.gameRunning) {
+                    showFirstSaleCelebration(storeName, city.name, city.state, value);
+                }
             }
             
             // Occasional regional emoji animation (5% of sales)
@@ -7217,8 +7219,7 @@
             speedy: { emoji: '🚀', points: 400, speed: 2.5, color: 'linear-gradient(135deg, #00bcd4, #03a9f4)', class: 'speedy' },
             zigzag: { emoji: '🌀', points: 350, speed: 1.4, color: 'linear-gradient(135deg, #4caf50, #8bc34a)', class: 'zigzag', movement: 'zigzag' },
             splitter: { emoji: '🎯', points: 200, speed: 1.1, color: 'linear-gradient(135deg, #ff5722, #ff9800)', class: 'splitter', splits: true },
-            bomb: { emoji: '💣', points: -500, speed: 1.4, color: 'linear-gradient(135deg, #1a1a1a, #333)', class: 'bomb', damage: true },
-            megaBomb: { emoji: '☢️', points: -1000, speed: 1.0, color: 'linear-gradient(135deg, #4a0000, #8b0000)', class: 'mega-bomb', damage: true, megaDamage: true }
+            bomb: { emoji: '💣', points: -500, speed: 1.4, color: 'linear-gradient(135deg, #1a1a1a, #333)', class: 'bomb', damage: true }
         };
         
         // Power-up types - SHORTER DURATIONS
@@ -7625,19 +7626,17 @@
             const rand = Math.random();
             const waveBonus = state.wave * 0.025; // More aggressive scaling
             
-            if (state.wave >= 6 && rand < 0.03 + waveBonus * 0.5) {
-                cartType = 'megaBomb'; // Mega bomb from wave 6+
-            } else if (rand < 0.06 + waveBonus) {
-                cartType = 'bomb'; // Regular bomb
-            } else if (state.wave >= 3 && rand < 0.12 + waveBonus) {
+            if (rand < 0.08 + waveBonus) {
+                cartType = 'bomb'; // Bomb - avoid!
+            } else if (state.wave >= 3 && rand < 0.14 + waveBonus) {
                 cartType = 'speedy'; // Very fast cart
-            } else if (state.wave >= 2 && rand < 0.18 + waveBonus) {
+            } else if (state.wave >= 2 && rand < 0.20 + waveBonus) {
                 cartType = 'zigzag'; // Moves side to side
-            } else if (rand < 0.10 + waveBonus) {
+            } else if (rand < 0.12 + waveBonus) {
                 cartType = 'vip'; // High value
-            } else if (rand < 0.25 + waveBonus) {
+            } else if (rand < 0.28 + waveBonus) {
                 cartType = 'premium'; // Medium value
-            } else if (state.wave >= 4 && rand < 0.32) {
+            } else if (state.wave >= 4 && rand < 0.35) {
                 cartType = 'splitter'; // Splits into more when missed
             }
             
@@ -7662,10 +7661,7 @@
             
             if (cartType === 'bomb') {
                 valueLabel.style.color = '#ff4444';
-                valueLabel.textContent = '💥';
-            } else if (cartType === 'megaBomb') {
-                valueLabel.style.color = '#8b0000';
-                valueLabel.textContent = '☢️ PERIGO';
+                valueLabel.textContent = '💥 BOMBA';
             } else {
                 valueLabel.style.color = 'white';
                 valueLabel.textContent = 'R$' + value;
@@ -7962,59 +7958,42 @@
             const value = cartData.value;
             const cartType = cartData.type;
             
-            // Handle bomb/megaBomb collision - damage types
-            if (cartType === 'bomb' || cartType === 'megaBomb') {
+            // Handle bomb collision - damage type
+            if (cartType === 'bomb') {
                 if (state.activePowerups.shield) {
-                    // Shield absorbs damage (but megaBomb removes 2 lives even with shield)
-                    if (cartType === 'megaBomb') {
-                        state.lives--; // MegaBomb still takes 1 life through shield
-                        updateLivesDisplay();
-                    }
-                    delete state.activePowerups.shield;
-                    document.getElementById('powerup-shield')?.remove();
-                    gameArea.classList.remove('shield-active');
-                    
+                    // Shield blocks bomb for full duration (doesn't get consumed)
                     // Visual feedback
                     const shieldPop = document.createElement('div');
                     shieldPop.className = 'rescue-points';
-                    shieldPop.innerHTML = cartType === 'megaBomb' ? '🛡️ PARCIAL!' : '🛡️ BLOQUEADO!';
+                    shieldPop.innerHTML = '🛡️ BLOQUEADO!';
                     shieldPop.style.left = cart.style.left;
                     shieldPop.style.top = cart.style.top;
-                    shieldPop.style.color = cartType === 'megaBomb' ? '#ff9800' : '#4caf50';
+                    shieldPop.style.color = '#4caf50';
                     gameArea.appendChild(shieldPop);
                     setTimeout(() => shieldPop.remove(), 1000);
                     
-                    if (cartType === 'megaBomb' && state.lives <= 0) {
-                        gameOver();
-                    }
+                    // Play a softer sound for blocked bomb
+                    playSound('powerup');
                 } else {
-                    // Take damage
+                    // Take damage - lose 1 life
                     playSound('bomb');
                     screenShake();
                     
-                    // MegaBomb takes 2 lives, others take 1
-                    const damage = cartType === 'megaBomb' ? 2 : 1;
-                    state.lives -= damage;
+                    state.lives -= 1;
                     updateLivesDisplay();
                     
                     // Red flash
                     gameArea.style.boxShadow = 'inset 0 0 100px rgba(255,0,0,0.5)';
                     setTimeout(() => gameArea.style.boxShadow = '', 300);
                     
-                    // Show damage popup with type-specific message
+                    // Show damage popup
                     const damagePopup = document.createElement('div');
                     damagePopup.className = 'rescue-points';
-                    
-                    if (cartType === 'megaBomb') {
-                        damagePopup.innerHTML = '☢️ -2 VIDAS!';
-                    } else {
-                        damagePopup.innerHTML = '💥 -1 VIDA';
-                    }
-                    
+                    damagePopup.innerHTML = '💥 -1 VIDA';
                     damagePopup.style.left = cart.style.left;
                     damagePopup.style.top = cart.style.top;
-                    damagePopup.style.color = cartType === 'megaBomb' ? '#8b0000' : '#ff4444';
-                    damagePopup.style.fontSize = cartType === 'megaBomb' ? '28px' : '24px';
+                    damagePopup.style.color = '#ff4444';
+                    damagePopup.style.fontSize = '24px';
                     gameArea.appendChild(damagePopup);
                     setTimeout(() => damagePopup.remove(), 1200);
                     
@@ -8114,7 +8093,7 @@
             const cartType = cartData.type;
             
             // Bombs that fall through don't hurt you
-            if (cartType === 'bomb' || cartType === 'megaBomb') {
+            if (cartType === 'bomb') {
                 cart.style.opacity = '0';
                 setTimeout(() => {
                     cart.remove();
