@@ -7451,34 +7451,34 @@
             // Wave announcement
             showWaveAnnouncement();
             
-            // Calculate spawn rate based on wave (MUCH faster as waves progress)
-            const baseSpawnRate = 1200; // Faster base
-            const spawnRate = Math.max(350, baseSpawnRate - (state.wave - 1) * 120); // Min 350ms
+            // Calculate spawn rate based on wave (more gradual progression)
+            const baseSpawnRate = 1800; // Slower base for better spacing
+            const spawnRate = Math.max(600, baseSpawnRate - (state.wave - 1) * 100); // Min 600ms
             
-            // Multiple carts per spawn in later waves
-            const cartsPerSpawn = state.wave >= 5 ? 2 : 1;
-            const additionalCartsChance = state.wave >= 8 ? 0.4 : (state.wave >= 3 ? 0.2 : 0);
+            // Multiple carts per spawn only in later waves
+            const cartsPerSpawn = state.wave >= 7 ? 2 : 1;
+            const additionalCartsChance = state.wave >= 10 ? 0.3 : (state.wave >= 5 ? 0.15 : 0);
             
             // Spawn initial cart after delay
             setTimeout(() => {
                 if (state.gameRunning) spawnCart();
-            }, 800);
+            }, 1000);
             
             // Set interval for spawning
             state.gameInterval = setInterval(() => {
                 if (state.gameRunning) {
-                    // Spawn base carts
+                    // Spawn base carts with better spacing
                     for (let i = 0; i < cartsPerSpawn; i++) {
-                        setTimeout(() => spawnCart(), i * 150);
+                        setTimeout(() => spawnCart(), i * 400); // 400ms between carts
                     }
                     
-                    // Chance for additional cart
+                    // Chance for additional cart (with more delay)
                     if (Math.random() < additionalCartsChance) {
-                        setTimeout(() => spawnCart(), 300);
+                        setTimeout(() => spawnCart(), 600);
                     }
                     
-                    // Chance to spawn power-up (REDUCED)
-                    if (Math.random() < 0.04) {
+                    // Chance to spawn power-up
+                    if (Math.random() < 0.05) {
                         spawnPowerup();
                     }
                 }
