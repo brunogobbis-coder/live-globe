@@ -1,0 +1,988 @@
+/* Nuvemshop Live Globe - Three.js Version */
+
+/* === CSS Variables === */
+:root {
+    --primary: #0059d5;
+    --primary-light: #3d7fe0;
+    --success: #36b37e;
+    --warning: #ff9800;
+    --danger: #ff5630;
+    --info: #00b8d9;
+    
+    --bg-dark: #0a1628;
+    --bg-card: rgba(15, 30, 50, 0.85);
+    --bg-hover: rgba(255, 255, 255, 0.05);
+    
+    --text-primary: #ffffff;
+    --text-secondary: rgba(255, 255, 255, 0.7);
+    --text-muted: rgba(255, 255, 255, 0.5);
+    
+    --border-color: rgba(255, 255, 255, 0.1);
+    --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    
+    --channel-online: #0059d5;
+    --channel-pos: #36b37e;
+    --channel-chat: #00b8d9;
+    --channel-social: #ff5630;
+    
+    --font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --border-radius: 12px;
+}
+
+/* === Reset & Base === */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-family);
+    background: var(--bg-dark);
+    color: var(--text-primary);
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+}
+
+/* === Layout === */
+.app-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+#map-container {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+}
+
+#map-container canvas {
+    display: block;
+}
+
+/* === Header === */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: linear-gradient(180deg, var(--bg-dark) 0%, transparent 100%);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    z-index: 100;
+    pointer-events: none;
+}
+
+.header > * {
+    pointer-events: auto;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo img {
+    height: 32px;
+}
+
+.logo-text {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.header-actions {
+    display: flex;
+    gap: 12px;
+}
+
+.header-btn {
+    padding: 8px 16px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 14px;
+}
+
+.header-btn:hover {
+    background: var(--bg-hover);
+    color: var(--text-primary);
+}
+
+/* === GMV Display === */
+.gmv-display {
+    position: fixed;
+    top: 80px;
+    left: 24px;
+    background: var(--bg-card);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 20px 28px;
+    z-index: 50;
+    box-shadow: var(--shadow);
+}
+
+.gmv-label {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+}
+
+.gmv-value {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--success);
+    font-variant-numeric: tabular-nums;
+}
+
+.gmv-value.pulse {
+    animation: gmvPulse 0.3s ease;
+}
+
+@keyframes gmvPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+/* === Sales Panel === */
+.sales-panel {
+    position: fixed;
+    bottom: 24px;
+    left: 24px;
+    width: 340px;
+    max-height: calc(100vh - 250px);
+    background: var(--bg-card);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    z-index: 50;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+}
+
+.sales-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sales-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.sales-count {
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+.sales-list {
+    max-height: 300px;
+    overflow-y: auto;
+    padding: 8px;
+}
+
+.sales-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sales-list::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.sales-list::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 3px;
+}
+
+.sale-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 4px;
+    transition: all 0.2s ease;
+}
+
+.sale-item:hover {
+    background: var(--bg-hover);
+}
+
+.sale-item.channel-online { background: rgba(0, 89, 213, 0.15); }
+.sale-item.channel-pos { background: rgba(54, 179, 126, 0.15); }
+.sale-item.channel-chat { background: rgba(0, 184, 217, 0.15); }
+.sale-item.channel-social { background: rgba(255, 86, 48, 0.15); }
+
+.sale-icon {
+    font-size: 20px;
+}
+
+.sale-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.sale-location {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.sale-product {
+    font-size: 11px;
+    color: var(--text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.sale-value {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--success);
+}
+
+/* === Channel Tabs === */
+.channel-tabs {
+    position: fixed;
+    top: 80px;
+    right: 24px;
+    display: flex;
+    gap: 8px;
+    z-index: 50;
+}
+
+.channel-tab {
+    padding: 8px 16px;
+    background: var(--bg-card);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.channel-tab:hover {
+    background: var(--bg-hover);
+    color: var(--text-primary);
+}
+
+.channel-tab.active {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: white;
+}
+
+.channel-tab[data-channel="online"].active { background: var(--channel-online); }
+.channel-tab[data-channel="pos"].active { background: var(--channel-pos); }
+.channel-tab[data-channel="chat"].active { background: var(--channel-chat); }
+.channel-tab[data-channel="social"].active { background: var(--channel-social); }
+
+/* === Stats Bar === */
+.stats-bar {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    display: flex;
+    gap: 12px;
+    z-index: 50;
+}
+
+.stat-card {
+    background: var(--bg-card);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 16px 20px;
+    min-width: 100px;
+    text-align: center;
+    box-shadow: var(--shadow);
+}
+
+.stat-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+}
+
+.stat-value {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-primary);
+    font-variant-numeric: tabular-nums;
+}
+
+.stat-card.online .stat-value { color: var(--channel-online); }
+.stat-card.pos .stat-value { color: var(--channel-pos); }
+.stat-card.chat .stat-value { color: var(--channel-chat); }
+.stat-card.social .stat-value { color: var(--channel-social); }
+
+/* === State Tooltip === */
+#state-tooltip {
+    position: fixed;
+    background: var(--bg-card);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 16px 20px;
+    min-width: 200px;
+    z-index: 200;
+    box-shadow: var(--shadow);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.2s ease;
+    pointer-events: none;
+}
+
+#state-tooltip.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.tooltip-header {
+    margin-bottom: 12px;
+}
+
+.tooltip-state {
+    font-size: 16px;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 2px;
+}
+
+.tooltip-region {
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+.tooltip-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.tooltip-stat {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+}
+
+.tooltip-stat .stat-label {
+    color: var(--text-muted);
+    text-transform: none;
+    letter-spacing: 0;
+}
+
+.tooltip-stat .stat-value {
+    color: var(--text-primary);
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.tooltip-close {
+    width: 100%;
+    padding: 8px;
+    background: var(--bg-hover);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 12px;
+    transition: all 0.2s ease;
+}
+
+.tooltip-close:hover {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+}
+
+/* === Loading Screen === */
+.loading-screen {
+    position: fixed;
+    inset: 0;
+    background: var(--bg-dark);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    transition: opacity 0.5s ease;
+}
+
+.loading-screen.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.loading-spinner {
+    width: 48px;
+    height: 48px;
+    border: 3px solid var(--border-color);
+    border-top-color: var(--primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.loading-text {
+    margin-top: 16px;
+    color: var(--text-muted);
+    font-size: 14px;
+}
+
+/* === Map Instructions === */
+.map-instructions {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 24px;
+    background: var(--bg-card);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--border-color);
+    border-radius: 24px;
+    padding: 10px 24px;
+    z-index: 50;
+}
+
+.instruction {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--text-secondary);
+}
+
+.instruction-icon {
+    font-size: 16px;
+}
+
+/* === First Sale Celebration === */
+.first-sale-celebration {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(8px);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.first-sale-celebration.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.celebration-card {
+    text-align: center;
+    padding: 40px 60px;
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), var(--bg-card));
+    border: 2px solid #ffd700;
+    border-radius: 20px;
+    animation: celebrateIn 0.5s ease-out;
+    position: relative;
+    max-width: 400px;
+    box-shadow: 0 20px 60px rgba(255, 215, 0, 0.2);
+}
+
+@keyframes celebrateIn {
+    from { transform: scale(0.5) rotate(-10deg); opacity: 0; }
+    to { transform: scale(1) rotate(0); opacity: 1; }
+}
+
+.celebration-close-btn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: 50%;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 14px;
+}
+
+.celebration-close-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: var(--text-primary);
+}
+
+.celebration-emoji {
+    font-size: 64px;
+    margin-bottom: 12px;
+    animation: bounce 0.6s ease infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.celebration-regional-icon {
+    font-size: 40px;
+    margin-bottom: 12px;
+}
+
+.celebration-title {
+    font-size: 28px;
+    font-weight: 900;
+    color: #ffd700;
+    text-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+    margin-bottom: 8px;
+    letter-spacing: 2px;
+}
+
+.celebration-subtitle {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+    font-style: italic;
+}
+
+.celebration-store {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+}
+
+.celebration-location {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.celebration-journey {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--primary-light);
+    margin-bottom: 16px;
+    padding: 8px 16px;
+    background: rgba(0, 89, 213, 0.15);
+    border-radius: 20px;
+    border: 1px solid rgba(0, 89, 213, 0.3);
+}
+
+.journey-icon {
+    font-size: 16px;
+}
+
+.journey-text {
+    font-weight: 500;
+}
+
+.celebration-value {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 8px;
+    margin-bottom: 20px;
+}
+
+.celebration-value .value-label {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.celebration-value .value-amount {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--success);
+    text-shadow: 0 0 20px rgba(54, 179, 126, 0.5);
+}
+
+.celebration-actions {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+}
+
+.celebration-share-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 13px;
+    transition: all 0.2s ease;
+}
+
+.celebration-share-btn:hover {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: white;
+}
+
+/* === Confetti Particles === */
+.confetti {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 10000;
+    overflow: hidden;
+}
+
+.confetti-particle {
+    position: absolute;
+    top: -20px;
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    animation: confettiFall 3s ease-out forwards;
+}
+
+@keyframes confettiFall {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+/* === Panel Collapsed State === */
+.sales-panel.collapsed .sales-list {
+    max-height: 0;
+    overflow: hidden;
+}
+
+.sales-panel .sales-header {
+    cursor: pointer;
+    user-select: none;
+}
+
+.sales-panel .sales-header:hover {
+    background: var(--bg-hover);
+}
+
+/* === Additional Animations === */
+.stat-value.pulse,
+.gmv-value.pulse {
+    animation: statPulse 0.2s ease;
+}
+
+@keyframes statPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+/* === Primary Light Variable === */
+:root {
+    --primary-light: #4d8fe8;
+}
+
+/* === Connection Indicator === */
+.connection-indicator {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    font-size: 12px;
+    color: var(--text-secondary);
+    transition: all 0.3s ease;
+}
+
+.connection-indicator .connection-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--text-muted);
+    transition: all 0.3s ease;
+}
+
+.connection-indicator.connected .connection-dot {
+    background: var(--success);
+    box-shadow: 0 0 8px var(--success);
+}
+
+.connection-indicator.connecting .connection-dot {
+    background: var(--warning);
+    animation: connectionPulse 1s ease infinite;
+}
+
+.connection-indicator.disconnected .connection-dot {
+    background: var(--text-muted);
+}
+
+.connection-indicator.error .connection-dot {
+    background: var(--danger);
+}
+
+@keyframes connectionPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+}
+
+.connection-indicator .connection-text {
+    white-space: nowrap;
+}
+
+/* === Sale Item State Highlighting === */
+.sale-item.highlighted {
+    background: rgba(0, 89, 213, 0.25) !important;
+    border: 1px solid var(--primary);
+    transform: scale(1.02);
+}
+
+.sale-item.dimmed {
+    opacity: 0.4;
+}
+
+.sale-item .sale-time {
+    font-size: 10px;
+    color: var(--text-muted);
+    margin-top: 2px;
+}
+
+/* === Stats Bar State Focus === */
+.stats-bar.state-focused {
+    border: 2px solid var(--primary);
+    border-radius: 16px;
+    padding: 4px;
+}
+
+.stat-card.updated {
+    animation: statCardPulse 0.3s ease;
+}
+
+@keyframes statCardPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); box-shadow: 0 0 20px rgba(0, 89, 213, 0.3); }
+}
+
+/* === Tooltip Enhancements === */
+.tooltip-header {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.tooltip-title {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+}
+
+.tooltip-code {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-weight: 500;
+    background: var(--bg-hover);
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+.tooltip-region {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.tooltip-region.region-norte { background: rgba(0, 180, 180, 0.2); color: #00b4b4; }
+.tooltip-region.region-nordeste { background: rgba(80, 180, 100, 0.2); color: #50b464; }
+.tooltip-region.region-centrooeste { background: rgba(200, 160, 80, 0.2); color: #c8a050; }
+.tooltip-region.region-sudeste { background: rgba(0, 89, 213, 0.2); color: #0059d5; }
+.tooltip-region.region-sul { background: rgba(140, 80, 180, 0.2); color: #8c50b4; }
+
+.tooltip-stat.highlight {
+    background: var(--bg-hover);
+    margin: 4px -12px;
+    padding: 8px 12px;
+    border-radius: 6px;
+}
+
+.tooltip-stat.highlight .stat-value {
+    color: var(--success);
+    font-weight: 600;
+}
+
+.tooltip-stat.region-stat {
+    border-top: 1px solid var(--border-color);
+    padding-top: 8px;
+    margin-top: 4px;
+}
+
+.tooltip-close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+}
+
+.tooltip-close .close-icon {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+/* === Channel Count Badge === */
+.channel-tab .channel-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 9px;
+    font-size: 10px;
+    font-weight: 600;
+}
+
+.channel-tab.active .channel-count {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+/* === Region Colors === */
+.region-norte { --region-color: #00b4b4; }
+.region-nordeste { --region-color: #50b464; }
+.region-centro-oeste { --region-color: #c8a050; }
+.region-sudeste { --region-color: #0059d5; }
+.region-sul { --region-color: #8c50b4; }
+
+/* === Sales Panel Collapsed State Enhancement === */
+.sales-panel.collapsed .sales-header::after {
+    content: '▼';
+    font-size: 10px;
+    color: var(--text-muted);
+}
+
+.sales-panel:not(.collapsed) .sales-header::after {
+    content: '▲';
+    font-size: 10px;
+    color: var(--text-muted);
+}
+
+/* === Smooth Transitions === */
+.sale-item,
+.stat-card,
+.channel-tab,
+#state-tooltip {
+    transition: all 0.2s ease;
+}
+
+/* === Responsive === */
+@media (max-width: 768px) {
+    .sales-panel {
+        width: calc(100vw - 48px);
+        max-height: 200px;
+    }
+    
+    .stats-bar {
+        display: none;
+    }
+    
+    .channel-tabs {
+        top: auto;
+        bottom: 240px;
+        right: 12px;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+    }
+    
+    .gmv-display {
+        left: 12px;
+        top: 70px;
+        padding: 12px 16px;
+    }
+    
+    .gmv-value {
+        font-size: 24px;
+    }
+    
+    .map-instructions {
+        display: none;
+    }
+    
+    .celebration-card {
+        margin: 20px;
+        padding: 30px 24px;
+    }
+    
+    .celebration-title {
+        font-size: 22px;
+    }
+    
+    .celebration-emoji {
+        font-size: 48px;
+    }
+    
+    .connection-indicator .connection-text {
+        display: none;
+    }
+}
