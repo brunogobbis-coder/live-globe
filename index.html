@@ -365,6 +365,18 @@
             overflow: visible;
         }
         
+        /* Subtle paper texture overlay */
+        .brazil-map-container::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            opacity: 0.025;
+            pointer-events: none;
+            z-index: 1;
+            border-radius: 16px;
+        }
+        
         /* Clean flat map wrapper */
         .brazil-map-3d-wrapper {
             position: relative;
@@ -392,12 +404,13 @@
             transition: transform 0.3s ease-out;
             transform-origin: center center;
             overflow: visible;
+            filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.15));
         }
         
-        /* Clean state styling */
+        /* Clean state styling with subtle texture feel */
         .brazil-map-svg .state-path {
-            stroke: rgba(255, 255, 255, 0.2);
-            stroke-width: 0.5;
+            stroke: rgba(255, 255, 255, 0.3);
+            stroke-width: 0.8;
             cursor: pointer;
             transition: all 0.3s ease;
         }
@@ -410,7 +423,7 @@
         .brazil-map-svg .state-path[data-state="RR"],
         .brazil-map-svg .state-path[data-state="AP"],
         .brazil-map-svg .state-path[data-state="TO"] {
-            fill: rgba(0, 180, 180, 0.25);
+            fill: rgba(0, 180, 180, 0.35);
         }
         
         /* Nordeste - Verde suave */
@@ -423,7 +436,7 @@
         .brazil-map-svg .state-path[data-state="AL"],
         .brazil-map-svg .state-path[data-state="SE"],
         .brazil-map-svg .state-path[data-state="BA"] {
-            fill: rgba(80, 180, 100, 0.25);
+            fill: rgba(80, 180, 100, 0.35);
         }
         
         /* Centro-Oeste - Âmbar suave */
@@ -431,28 +444,28 @@
         .brazil-map-svg .state-path[data-state="GO"],
         .brazil-map-svg .state-path[data-state="MS"],
         .brazil-map-svg .state-path[data-state="DF"] {
-            fill: rgba(200, 160, 80, 0.25);
+            fill: rgba(200, 160, 80, 0.35);
         }
         
-        /* Sudeste - Azul Nuvemshop suave */
+        /* Sudeste - Azul Nuvemshop (mais intenso = mais vendas) */
         .brazil-map-svg .state-path[data-state="SP"] {
-            fill: rgba(0, 89, 213, 0.4);
+            fill: rgba(0, 89, 213, 0.5);
         }
         .brazil-map-svg .state-path[data-state="RJ"] {
-            fill: rgba(0, 89, 213, 0.35);
+            fill: rgba(0, 89, 213, 0.45);
         }
         .brazil-map-svg .state-path[data-state="MG"] {
-            fill: rgba(0, 89, 213, 0.3);
+            fill: rgba(0, 89, 213, 0.4);
         }
         .brazil-map-svg .state-path[data-state="ES"] {
-            fill: rgba(0, 89, 213, 0.25);
+            fill: rgba(0, 89, 213, 0.35);
         }
         
         /* Sul - Roxo suave */
         .brazil-map-svg .state-path[data-state="PR"],
         .brazil-map-svg .state-path[data-state="SC"],
         .brazil-map-svg .state-path[data-state="RS"] {
-            fill: rgba(140, 80, 180, 0.25);
+            fill: rgba(140, 80, 180, 0.35);
         }
         
         /* Hover Effect - Subtle highlight */
@@ -557,6 +570,90 @@
         .city-dot.size-lg { width: 16px; height: 16px; }
         .city-dot.size-md { width: 12px; height: 12px; }
         .city-dot.size-sm { width: 8px; height: 8px; }
+        
+        /* Sale Dots - Animated sales indicators */
+        .sale-dot {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(54, 179, 126, 0.9) 0%, rgba(54, 179, 126, 0.4) 100%);
+            animation: saleDotPulse 2.5s ease-out forwards;
+            pointer-events: none;
+            z-index: 15;
+            transform: translate(-50%, -50%);
+        }
+        
+        .sale-dot::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: transparent;
+            border: 1px solid rgba(54, 179, 126, 0.6);
+            transform: translate(-50%, -50%);
+            animation: saleDotRing 2.5s ease-out forwards;
+        }
+        
+        @keyframes saleDotPulse {
+            0% { 
+                transform: translate(-50%, -50%) scale(0); 
+                opacity: 1; 
+            }
+            20% { 
+                transform: translate(-50%, -50%) scale(1.3); 
+                opacity: 0.9; 
+            }
+            100% { 
+                transform: translate(-50%, -50%) scale(0.6); 
+                opacity: 0; 
+            }
+        }
+        
+        @keyframes saleDotRing {
+            0% { 
+                width: 100%; 
+                height: 100%; 
+                opacity: 0.8;
+            }
+            100% { 
+                width: 250%; 
+                height: 250%; 
+                opacity: 0;
+            }
+        }
+        
+        /* Channel-specific sale dot colors */
+        .sale-dot.channel-online {
+            background: radial-gradient(circle, rgba(0, 89, 213, 0.9) 0%, rgba(0, 89, 213, 0.4) 100%);
+        }
+        .sale-dot.channel-online::before {
+            border-color: rgba(0, 89, 213, 0.6);
+        }
+        
+        .sale-dot.channel-pos {
+            background: radial-gradient(circle, rgba(249, 115, 22, 0.9) 0%, rgba(249, 115, 22, 0.4) 100%);
+        }
+        .sale-dot.channel-pos::before {
+            border-color: rgba(249, 115, 22, 0.6);
+        }
+        
+        .sale-dot.channel-chat {
+            background: radial-gradient(circle, rgba(124, 58, 237, 0.9) 0%, rgba(124, 58, 237, 0.4) 100%);
+        }
+        .sale-dot.channel-chat::before {
+            border-color: rgba(124, 58, 237, 0.6);
+        }
+        
+        .sale-dot.channel-social {
+            background: radial-gradient(circle, rgba(236, 72, 153, 0.9) 0%, rgba(236, 72, 153, 0.4) 100%);
+        }
+        .sale-dot.channel-social::before {
+            border-color: rgba(236, 72, 153, 0.6);
+        }
         
         .city-dot:hover {
             transform: translate(-50%, -50%) scale(1.8);
@@ -6233,6 +6330,43 @@
                 }
             }, duration);
         }
+        
+        // Spawn animated sale dot on map
+        function spawnSaleDot(cityName, channel) {
+            const mapContainer = document.getElementById('brazil-map-container');
+            if (!mapContainer || state.currentView !== 'globe') return;
+            
+            const cityPos = CITY_POSITIONS[cityName];
+            if (!cityPos) return;
+            
+            // Get map dimensions for percentage to pixel conversion
+            const mainLayer = mapContainer.querySelector('.brazil-map-main');
+            if (!mainLayer) return;
+            
+            const rect = mainLayer.getBoundingClientRect();
+            const containerRect = mapContainer.getBoundingClientRect();
+            
+            // Calculate position with some randomness
+            const offsetX = (Math.random() - 0.5) * 20;
+            const offsetY = (Math.random() - 0.5) * 20;
+            const x = (rect.left - containerRect.left) + (rect.width * cityPos.x / 100) + offsetX;
+            const y = (rect.top - containerRect.top) + (rect.height * cityPos.y / 100) + offsetY;
+            
+            // Create sale dot
+            const dot = document.createElement('div');
+            dot.className = `sale-dot channel-${channel}`;
+            dot.style.left = `${x}px`;
+            dot.style.top = `${y}px`;
+            
+            mapContainer.appendChild(dot);
+            
+            // Remove after animation completes
+            setTimeout(() => {
+                if (dot.parentNode) {
+                    dot.parentNode.removeChild(dot);
+                }
+            }, 2500);
+        }
 
         function createSaleItem() {
             const segment = getRandomSegment();
@@ -6413,6 +6547,11 @@
             // NEW: Create flow arc occasionally (every 3rd sale)
             if (state.totalSalesTracked % 3 === 0 && state.currentView === 'globe') {
                 createFlowArc(city, usesNuvemPay || usesNuvemEnvios);
+            }
+            
+            // Spawn sale dot on map (always when viewing map)
+            if (state.currentView === 'globe') {
+                spawnSaleDot(city.name, channel);
             }
             
             // EMOTIONAL ANIMATIONS: Money flying for every sale
