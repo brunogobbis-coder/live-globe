@@ -365,15 +365,41 @@
             overflow: visible;
         }
         
-        /* Subtle paper texture overlay */
+        /* Paper/grain texture overlay - more visible */
         .brazil-map-container::before {
             content: '';
             position: absolute;
             inset: 0;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-            opacity: 0.025;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            opacity: 0.12;
             pointer-events: none;
-            z-index: 1;
+            z-index: 10;
+            border-radius: 16px;
+            mix-blend-mode: overlay;
+        }
+        
+        /* Additional grain texture for organic feel */
+        .brazil-map-container::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: 
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(255,255,255,0.015) 2px,
+                    rgba(255,255,255,0.015) 4px
+                ),
+                repeating-linear-gradient(
+                    90deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(255,255,255,0.01) 2px,
+                    rgba(255,255,255,0.01) 4px
+                );
+            pointer-events: none;
+            z-index: 11;
             border-radius: 16px;
         }
         
@@ -404,15 +430,18 @@
             transition: transform 0.3s ease-out;
             transform-origin: center center;
             overflow: visible;
-            filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.15));
+            filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.2)) 
+                    drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
         }
         
-        /* Clean state styling with subtle texture feel */
+        /* State styling with illustrated texture feel */
         .brazil-map-svg .state-path {
-            stroke: rgba(255, 255, 255, 0.3);
-            stroke-width: 0.8;
+            stroke: rgba(255, 255, 255, 0.5);
+            stroke-width: 1.2;
+            stroke-linejoin: round;
             cursor: pointer;
             transition: all 0.3s ease;
+            filter: url(#state-texture);
         }
         
         /* Norte - Floresta Amazônica (Cyan com textura) */
@@ -470,14 +499,15 @@
         
         /* Hover Effect - Subtle highlight */
         .brazil-map-svg .state-path:hover {
-            filter: brightness(1.2);
-            stroke: rgba(255, 255, 255, 0.5);
-            stroke-width: 1;
+            filter: url(#state-texture) brightness(1.15);
+            stroke: rgba(255, 255, 255, 0.7);
+            stroke-width: 1.5;
+            transform: translateZ(2px);
         }
         
         /* Active State - Clean highlight */
         .brazil-map-svg .state-path.active {
-            filter: brightness(1.3);
+            filter: url(#state-glow) brightness(1.25);
             stroke: rgba(0, 89, 213, 0.8);
             stroke-width: 1.5;
         }
@@ -6680,6 +6710,26 @@
         // Real geographic SVG paths for Brazilian states (from IBGE data)
         const BRAZIL_SVG = `
         <svg class="brazil-map-svg" viewBox="0 0 353.845 367.766" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+            <defs>
+                <!-- Illustrated texture filter for states -->
+                <filter id="state-texture" x="0%" y="0%" width="100%" height="100%">
+                    <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="3" result="noise"/>
+                    <feDiffuseLighting in="noise" lighting-color="white" surfaceScale="1.5" result="light">
+                        <feDistantLight azimuth="45" elevation="60"/>
+                    </feDiffuseLighting>
+                    <feBlend in="SourceGraphic" in2="light" mode="multiply" result="textured"/>
+                    <feComposite in="textured" in2="SourceGraphic" operator="in"/>
+                </filter>
+                
+                <!-- Glow effect for hover -->
+                <filter id="state-glow" x="-20%" y="-20%" width="140%" height="140%">
+                    <feGaussianBlur stdDeviation="2" result="blur"/>
+                    <feMerge>
+                        <feMergeNode in="blur"/>
+                        <feMergeNode in="SourceGraphic"/>
+                    </feMerge>
+                </filter>
+            </defs>
             <!-- Amazonas -->
             <polygon class="state-path" data-state="AM" points="159.534,63.864 156.251,66.717 155.966,64.435 152.255,61.866 144.834,61.009 143.408,59.154 142.123,55.016 139.269,53.018 137.699,48.023 137.771,43.884 128.28,44.027 126.71,48.451 123.428,49.878 123.999,53.446 119.146,54.017 116.721,50.734 113.01,54.445 112.725,58.869 105.874,53.018 107.017,50.877 104.447,44.455 104.162,37.748 101.308,34.037 99.596,29.613 95.782,28.182 93.558,27.979 92.359,29.04 89.831,29.901 89.763,32.354 87.301,34.808 86.17,33.349 83.706,35.47 77.715,36.929 75.785,39.78 73.521,39.382 71.991,39.515 70.859,40.178 68.862,39.581 65.134,36.2 63.337,37.692 62.139,36.797 62.339,32.719 60.242,29.437 58.046,29.337 57.247,32.321 55.15,32.918 53.153,29.239 51.556,29.337 51.056,31.426 39.874,31.625 38.575,34.211 39.874,36.896 43.668,37.095 44.566,39.482 43.668,42.267 39.973,40.775 37.477,42.764 37.078,50.023 40.372,53.206 40.172,56.289 43.168,58.676 38.376,87.118 34.382,85.825 28.59,85.229 27.592,87.218 20.702,88.212 12.082,92.729 10.618,94.851 9.52,99.251 7.789,102.235 8.388,103.826 7.723,105.484 3.528,107.937 2.197,111.915 2.199,113.858 9.973,116.096 16.253,117.808 27.527,118.949 34.662,120.662 51.502,129.225 70.312,136.403 79.532,137.421 81.757,134.363 83.469,134.363 85.039,132.792 84.753,128.797 87.894,126.942 90.605,126.514 91.604,124.944 91.604,122.232 93.744,119.521 96.599,117.666 101.308,117.666 103.734,121.661 108.158,124.087 112.012,124.087 114.58,126.371 140.649,125.419 141.314,123.136 142.647,121.042 141.885,117.998 142.409,116.381 142.551,113.527 141.694,113.099 141.267,111.529 141.125,109.959 139.126,106.677 139.839,104.393 142.123,103.537 154.967,76.565 157.108,70.571 159.676,67.574 161.817,63.864"/>
             <!-- Roraima -->
