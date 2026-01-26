@@ -415,7 +415,7 @@
             transition: all 0.3s ease;
         }
         
-        /* Norte - Cyan suave */
+        /* Norte - Floresta Amazônica */
         .brazil-map-svg .state-path[data-state="AM"],
         .brazil-map-svg .state-path[data-state="PA"],
         .brazil-map-svg .state-path[data-state="AC"],
@@ -423,10 +423,10 @@
         .brazil-map-svg .state-path[data-state="RR"],
         .brazil-map-svg .state-path[data-state="AP"],
         .brazil-map-svg .state-path[data-state="TO"] {
-            fill: rgba(0, 180, 180, 0.35);
+            fill: url(#pattern-norte);
         }
         
-        /* Nordeste - Verde suave */
+        /* Nordeste - Praias e Ondas */
         .brazil-map-svg .state-path[data-state="MA"],
         .brazil-map-svg .state-path[data-state="PI"],
         .brazil-map-svg .state-path[data-state="CE"],
@@ -436,36 +436,30 @@
         .brazil-map-svg .state-path[data-state="AL"],
         .brazil-map-svg .state-path[data-state="SE"],
         .brazil-map-svg .state-path[data-state="BA"] {
-            fill: rgba(80, 180, 100, 0.35);
+            fill: url(#pattern-nordeste);
         }
         
-        /* Centro-Oeste - Âmbar suave */
+        /* Centro-Oeste - Cerrado/Savana */
         .brazil-map-svg .state-path[data-state="MT"],
         .brazil-map-svg .state-path[data-state="GO"],
         .brazil-map-svg .state-path[data-state="MS"],
         .brazil-map-svg .state-path[data-state="DF"] {
-            fill: rgba(200, 160, 80, 0.35);
+            fill: url(#pattern-centro-oeste);
         }
         
-        /* Sudeste - Azul Nuvemshop (mais intenso = mais vendas) */
-        .brazil-map-svg .state-path[data-state="SP"] {
-            fill: rgba(0, 89, 213, 0.5);
-        }
-        .brazil-map-svg .state-path[data-state="RJ"] {
-            fill: rgba(0, 89, 213, 0.45);
-        }
-        .brazil-map-svg .state-path[data-state="MG"] {
-            fill: rgba(0, 89, 213, 0.4);
-        }
+        /* Sudeste - Urbano (intensidade por vendas) */
+        .brazil-map-svg .state-path[data-state="SP"],
+        .brazil-map-svg .state-path[data-state="RJ"],
+        .brazil-map-svg .state-path[data-state="MG"],
         .brazil-map-svg .state-path[data-state="ES"] {
-            fill: rgba(0, 89, 213, 0.35);
+            fill: url(#pattern-sudeste);
         }
         
-        /* Sul - Roxo suave */
+        /* Sul - Araucárias */
         .brazil-map-svg .state-path[data-state="PR"],
         .brazil-map-svg .state-path[data-state="SC"],
         .brazil-map-svg .state-path[data-state="RS"] {
-            fill: rgba(140, 80, 180, 0.35);
+            fill: url(#pattern-sul);
         }
         
         /* Hover Effect - Subtle highlight */
@@ -6680,6 +6674,52 @@
         // Real geographic SVG paths for Brazilian states (from IBGE data)
         const BRAZIL_SVG = `
         <svg class="brazil-map-svg" viewBox="0 0 353.845 367.766" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+            <defs>
+                <!-- Norte Pattern - Forest/Amazon Trees -->
+                <pattern id="pattern-norte" patternUnits="userSpaceOnUse" width="24" height="24">
+                    <rect width="24" height="24" fill="rgba(0, 180, 180, 0.35)"/>
+                    <!-- Simple tree shapes -->
+                    <path d="M6 20 L6 14 M3 14 L6 10 L9 14 M4 12 L6 8 L8 12" stroke="rgba(255,255,255,0.15)" stroke-width="1" fill="none"/>
+                    <path d="M18 20 L18 16 M16 16 L18 12 L20 16" stroke="rgba(255,255,255,0.12)" stroke-width="1" fill="none"/>
+                </pattern>
+                
+                <!-- Nordeste Pattern - Waves/Beach -->
+                <pattern id="pattern-nordeste" patternUnits="userSpaceOnUse" width="28" height="20">
+                    <rect width="28" height="20" fill="rgba(80, 180, 100, 0.35)"/>
+                    <!-- Wave lines -->
+                    <path d="M0 14 Q7 10, 14 14 T28 14" stroke="rgba(255,255,255,0.15)" stroke-width="1" fill="none"/>
+                    <path d="M0 18 Q7 14, 14 18 T28 18" stroke="rgba(255,255,255,0.12)" stroke-width="1" fill="none"/>
+                    <!-- Sun hint -->
+                    <circle cx="22" cy="6" r="3" stroke="rgba(255,255,255,0.1)" stroke-width="0.8" fill="none"/>
+                </pattern>
+                
+                <!-- Centro-Oeste Pattern - Cerrado/Savanna -->
+                <pattern id="pattern-centro-oeste" patternUnits="userSpaceOnUse" width="30" height="24">
+                    <rect width="30" height="24" fill="rgba(200, 160, 80, 0.35)"/>
+                    <!-- Scattered grass and small tree -->
+                    <path d="M5 20 L5 18 L7 16 L5 16 L3 18 L5 18" stroke="rgba(255,255,255,0.12)" stroke-width="0.8" fill="none"/>
+                    <path d="M15 22 L15 20 M13 22 L15 20 L17 22" stroke="rgba(255,255,255,0.1)" stroke-width="0.8" fill="none"/>
+                    <path d="M25 20 L25 16 M23 18 L25 14 L27 18" stroke="rgba(255,255,255,0.12)" stroke-width="1" fill="none"/>
+                </pattern>
+                
+                <!-- Sudeste Pattern - Urban/Buildings -->
+                <pattern id="pattern-sudeste" patternUnits="userSpaceOnUse" width="24" height="24">
+                    <rect width="24" height="24" fill="rgba(0, 89, 213, 0.4)"/>
+                    <!-- Building silhouettes -->
+                    <rect x="2" y="12" width="5" height="10" stroke="rgba(255,255,255,0.12)" stroke-width="0.8" fill="none"/>
+                    <rect x="8" y="8" width="4" height="14" stroke="rgba(255,255,255,0.15)" stroke-width="0.8" fill="none"/>
+                    <rect x="13" y="14" width="4" height="8" stroke="rgba(255,255,255,0.1)" stroke-width="0.8" fill="none"/>
+                    <rect x="18" y="10" width="4" height="12" stroke="rgba(255,255,255,0.12)" stroke-width="0.8" fill="none"/>
+                </pattern>
+                
+                <!-- Sul Pattern - Araucárias (Pine Trees) -->
+                <pattern id="pattern-sul" patternUnits="userSpaceOnUse" width="28" height="28">
+                    <rect width="28" height="28" fill="rgba(140, 80, 180, 0.35)"/>
+                    <!-- Araucária shape (distinctive umbrella-like pine) -->
+                    <path d="M8 24 L8 16 M4 16 L8 12 L12 16 M5 14 L8 10 L11 14" stroke="rgba(255,255,255,0.15)" stroke-width="1" fill="none"/>
+                    <path d="M22 24 L22 18 M19 18 L22 14 L25 18" stroke="rgba(255,255,255,0.12)" stroke-width="1" fill="none"/>
+                </pattern>
+            </defs>
             <!-- Amazonas -->
             <polygon class="state-path" data-state="AM" points="159.534,63.864 156.251,66.717 155.966,64.435 152.255,61.866 144.834,61.009 143.408,59.154 142.123,55.016 139.269,53.018 137.699,48.023 137.771,43.884 128.28,44.027 126.71,48.451 123.428,49.878 123.999,53.446 119.146,54.017 116.721,50.734 113.01,54.445 112.725,58.869 105.874,53.018 107.017,50.877 104.447,44.455 104.162,37.748 101.308,34.037 99.596,29.613 95.782,28.182 93.558,27.979 92.359,29.04 89.831,29.901 89.763,32.354 87.301,34.808 86.17,33.349 83.706,35.47 77.715,36.929 75.785,39.78 73.521,39.382 71.991,39.515 70.859,40.178 68.862,39.581 65.134,36.2 63.337,37.692 62.139,36.797 62.339,32.719 60.242,29.437 58.046,29.337 57.247,32.321 55.15,32.918 53.153,29.239 51.556,29.337 51.056,31.426 39.874,31.625 38.575,34.211 39.874,36.896 43.668,37.095 44.566,39.482 43.668,42.267 39.973,40.775 37.477,42.764 37.078,50.023 40.372,53.206 40.172,56.289 43.168,58.676 38.376,87.118 34.382,85.825 28.59,85.229 27.592,87.218 20.702,88.212 12.082,92.729 10.618,94.851 9.52,99.251 7.789,102.235 8.388,103.826 7.723,105.484 3.528,107.937 2.197,111.915 2.199,113.858 9.973,116.096 16.253,117.808 27.527,118.949 34.662,120.662 51.502,129.225 70.312,136.403 79.532,137.421 81.757,134.363 83.469,134.363 85.039,132.792 84.753,128.797 87.894,126.942 90.605,126.514 91.604,124.944 91.604,122.232 93.744,119.521 96.599,117.666 101.308,117.666 103.734,121.661 108.158,124.087 112.012,124.087 114.58,126.371 140.649,125.419 141.314,123.136 142.647,121.042 141.885,117.998 142.409,116.381 142.551,113.527 141.694,113.099 141.267,111.529 141.125,109.959 139.126,106.677 139.839,104.393 142.123,103.537 154.967,76.565 157.108,70.571 159.676,67.574 161.817,63.864"/>
             <!-- Roraima -->
