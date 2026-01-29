@@ -20,46 +20,96 @@
     
     <style>
         :root {
-            /* Nimbus Design System - Nuvemshop Colors */
-            --primary-interactive: #0059d5;
-            --primary-hover: #00429f;
-            --primary-pressed: #00347d;
-            --primary-surface: #eef5ff;
-            --primary-light: #4d8fe8;
-            --primary-glow: rgba(0, 89, 213, 0.6);
+            /* ==========================================
+               Nimbus Design System - DARK THEME PREMIUM
+               ========================================== */
             
-            --secondary: #7c3aed;
-            --secondary-light: #a78bfa;
+            /* Primary Colors (Dark Mode) */
+            --primary-interactive: #2577e9;
+            --primary-hover: #4b92f5;
+            --primary-pressed: #96c1fc;
+            --primary-surface: #001737;
+            --primary-surface-highlight: #00347d;
+            --primary-text-low: #c2dbfe;
+            --primary-text-high: #ffffff;
+            --primary-light: #4b92f5;
+            --primary-glow: rgba(37, 119, 233, 0.4);
             
-            --neutral-background: #ffffff;
-            --neutral-surface: #f6f6f6;
-            --neutral-text-high: #0a0a0a;
-            --neutral-text-low: #5d5d5d;
+            /* Secondary (Blue variant) */
+            --secondary: #1a5fc9;
+            --secondary-light: #6ba3f7;
             
-            --success: #36b37e;
-            --success-light: #57d9a3;
-            --warning: #ffab00;
-            --danger: #de350b;
-            --danger-light: #ff6b4a;
+            /* Neutral Colors (Dark Mode) */
+            --neutral-background: #0a0a0a;
+            --neutral-surface: #1f2020;
+            --neutral-surface-disabled: #3d3d3d;
+            --neutral-surface-highlight: #454545;
+            --neutral-interactive: #4f4f4f;
+            --neutral-interactive-hover: #5d5d5d;
+            --neutral-interactive-pressed: #6d6d6d;
+            --neutral-text-disabled: #777777;
+            --neutral-text-low: #888888;
+            --neutral-text-high: #ffffff;
             
-            /* Segment Colors */
-            --segment-moda: #e91e63;
-            --segment-eletronicos: #2196f3;
-            --segment-casa: #ff9800;
-            --segment-beleza: #9c27b0;
-            --segment-alimentos: #4caf50;
-            --segment-esportes: #00bcd4;
-            --segment-pets: #795548;
-            --segment-livros: #607d8b;
+            /* Semantic Colors (Dark Mode) */
+            --success-surface: #003420;
+            --success-interactive: #0fdc8e;
+            --success-interactive-hover: #3feca9;
+            --success-text-low: #bcfde4;
+            --success: #0fdc8e;
+            --success-light: #7af7c7;
             
-            /* Dark theme */
-            --dark-bg: #0a0a14;
-            --dark-surface: #12121f;
-            --dark-surface-2: #1a1a2e;
-            --dark-border: #1e1e2d;
-            --dark-border-light: #2a2a3e;
+            --warning-surface: #342000;
+            --warning-interactive: #dc8e0f;
+            --warning-interactive-hover: #eca93f;
+            --warning: #dc8e0f;
             
+            --danger-surface: #340001;
+            --danger-interactive: #dc0f13;
+            --danger-interactive-hover: #ec3f41;
+            --danger: #dc0f13;
+            --danger-light: #f77a7c;
+            
+            /* Segment Colors (Monochromatic Blue) */
+            --segment-moda: #4b92f5;
+            --segment-eletronicos: #2577e9;
+            --segment-casa: #6ba3f7;
+            --segment-beleza: #96c1fc;
+            --segment-alimentos: #3d8be6;
+            --segment-esportes: #5a9cf3;
+            --segment-pets: #7eb0f8;
+            --segment-livros: #aacffd;
+            
+            /* Theme Surfaces (Dark Mode) */
+            --dark-bg: #0a0a0a;
+            --dark-surface: #1f2020;
+            --dark-surface-2: #2a2b2b;
+            --dark-border: #3d3d3d;
+            --dark-border-light: #454545;
+            
+            /* Typography */
             --font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            
+            /* Spacing Tokens */
+            --spacing-1: 0.25rem;
+            --spacing-2: 0.5rem;
+            --spacing-3: 0.75rem;
+            --spacing-4: 1rem;
+            --spacing-6: 1.5rem;
+            --spacing-8: 2rem;
+            
+            /* Border Radius Tokens */
+            --radius-1: 0.25rem;
+            --radius-2: 0.5rem;
+            --radius-base: 0.375rem;
+            --radius-4: 1rem;
+            --radius-full: 9999px;
+            
+            /* Shadow Tokens (Dark Mode - Glow effect) */
+            --shadow-level-1: 0px 0px 2px 0px rgba(0, 0, 0, 0.5);
+            --shadow-level-2: 0px 0px 4px 0px rgba(0, 0, 0, 0.6);
+            --shadow-level-3: 0px 4px 12px 0px rgba(0, 0, 0, 0.5), 0px 0px 2px 0px rgba(37, 119, 233, 0.2);
+            --shadow-level-4: 0px 12px 24px 0px rgba(0, 0, 0, 0.6), 0px 0px 4px 0px rgba(37, 119, 233, 0.15);
             
             /* Gaming colors */
             --game-gold: #ffd700;
@@ -79,7 +129,7 @@
             overflow: hidden;
             font-family: var(--font-family);
             background: var(--dark-bg);
-            color: var(--neutral-background);
+            color: var(--neutral-text-high);
         }
 
         /* ============================================
@@ -93,7 +143,7 @@
             flex-direction: column;
         }
 
-        /* Header */
+        /* Header - Nimbus Primary Blue */
         .header {
             position: fixed;
             top: 0;
@@ -103,10 +153,43 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 16px 32px;
-            background: rgba(10, 10, 20, 0.95);
+            padding: var(--spacing-4) var(--spacing-8);
+            background: #00347d;
             backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--dark-border);
+            border-bottom: 1px solid #00255a;
+            box-shadow: 0 4px 20px rgba(0, 52, 125, 0.3);
+        }
+        
+        /* Header elements need light text */
+        .header, .header * {
+            --header-text: #ffffff;
+            --header-text-low: #888888;
+        }
+        
+        .header .logo-text,
+        .header .nav-item,
+        .header .live-badge {
+            color: #ffffff;
+        }
+        
+        .header .nav-item {
+            color: #888888;
+        }
+        
+        .header .nav-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+        }
+        
+        .header .nav-item.active {
+            background: var(--primary-interactive);
+            color: #ffffff;
+        }
+        
+        .header .live-badge {
+            background: rgba(0, 200, 123, 0.15);
+            border-color: rgba(0, 200, 123, 0.4);
+            color: #0fdc8e;
         }
 
         .header-left {
@@ -138,7 +221,9 @@
         }
         
         .navbar-logo {
-            filter: brightness(0) invert(1);
+            height: 32px;
+            width: auto;
+            color: #ffffff;
         }
 
         .logo-text {
@@ -160,11 +245,11 @@
         .nav-item {
             display: flex;
             align-items: center;
-            gap: 8px;
-            padding: 10px 16px;
+            gap: var(--spacing-2);
+            padding: var(--spacing-2) var(--spacing-4);
             background: transparent;
             border: none;
-            border-radius: 8px;
+            border-radius: var(--radius-2);
             color: var(--neutral-text-low);
             font-size: 13px;
             font-weight: 500;
@@ -173,13 +258,13 @@
         }
 
         .nav-item:hover {
-            background: var(--dark-surface);
-            color: var(--neutral-background);
+            background: var(--neutral-interactive);
+            color: var(--neutral-text-high);
         }
 
         .nav-item.active {
             background: var(--primary-interactive);
-            color: white;
+            color: var(--primary-text-high);
         }
 
         .nav-item svg {
@@ -188,9 +273,9 @@
         }
 
         .nav-badge {
-            padding: 2px 6px;
-            background: var(--danger);
-            border-radius: 10px;
+            padding: var(--spacing-1) var(--spacing-2);
+            background: var(--danger-interactive);
+            border-radius: var(--radius-full);
             font-size: 10px;
             font-weight: 600;
         }
@@ -205,14 +290,14 @@
         .live-badge {
             display: flex;
             align-items: center;
-            gap: 8px;
-            padding: 8px 16px;
-            background: rgba(54, 179, 126, 0.15);
-            border: 1px solid rgba(54, 179, 126, 0.3);
-            border-radius: 50px;
+            gap: var(--spacing-2);
+            padding: var(--spacing-2) var(--spacing-4);
+            background: var(--success-surface);
+            border: 1px solid var(--success-interactive);
+            border-radius: var(--radius-full);
             font-size: 12px;
             font-weight: 600;
-            color: var(--success);
+            color: var(--success-interactive);
         }
 
         .live-dot {
@@ -245,23 +330,29 @@
         .header-cta {
             display: flex;
             align-items: center;
-            gap: 8px;
-            padding: 10px 20px;
-            background: linear-gradient(135deg, var(--primary-interactive), var(--primary-hover));
+            gap: var(--spacing-2);
+            padding: var(--spacing-2) var(--spacing-4);
+            background: var(--primary-interactive);
             border: none;
-            border-radius: 10px;
-            color: white;
+            border-radius: var(--radius-2);
+            color: var(--primary-text-high);
             font-size: 13px;
             font-weight: 600;
             cursor: pointer;
             text-decoration: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0, 89, 213, 0.3);
+            transition: all 0.2s ease;
+            box-shadow: var(--shadow-level-2);
         }
 
         .header-cta:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 89, 213, 0.4);
+            background: var(--primary-hover);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-level-3);
+        }
+
+        .header-cta:active {
+            background: var(--primary-pressed);
+            transform: translateY(0);
         }
 
         .header-cta svg {
@@ -270,14 +361,14 @@
         }
 
         .header-btn:hover {
-            background: var(--dark-surface-2);
-            color: var(--neutral-background);
+            background: var(--neutral-interactive-hover);
+            color: var(--neutral-text-high);
         }
 
         .header-btn.active {
             background: var(--primary-interactive);
             border-color: var(--primary-interactive);
-            color: white;
+            color: var(--primary-text-high);
         }
 
         .header-btn svg {
@@ -338,9 +429,8 @@
             justify-content: center;
             overflow: hidden;
             background: 
-                radial-gradient(ellipse at 50% 50%, rgba(0, 89, 213, 0.05) 0%, transparent 50%),
-                radial-gradient(ellipse at 30% 70%, rgba(124, 58, 237, 0.03) 0%, transparent 40%),
-                linear-gradient(180deg, #050510 0%, #0a0a1a 50%, #050510 100%);
+                radial-gradient(ellipse at 50% 50%, rgba(37, 119, 233, 0.06) 0%, transparent 50%),
+                linear-gradient(180deg, #0a0a0a 0%, #121314 50%, #0a0a0a 100%);
         }
         
         /* Animated Grid Background */
@@ -352,11 +442,11 @@
             right: 0;
             bottom: 0;
             background-image: 
-                linear-gradient(rgba(0, 89, 213, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 89, 213, 0.03) 1px, transparent 1px);
-            background-size: 50px 50px;
+                linear-gradient(rgba(37, 119, 233, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(37, 119, 233, 0.04) 1px, transparent 1px);
+            background-size: 60px 60px;
             pointer-events: none;
-            opacity: 0.5;
+            opacity: 0.3;
         }
 
         #globe-canvas {
@@ -366,13 +456,13 @@
         .brazil-map-container {
             position: relative;
             width: 100%;
-            max-width: 580px;
-            height: calc(100vh - 100px);
-            max-height: 620px;
+            max-width: 800px;
+            height: 100%;
+            max-height: calc(100vh - 100px);
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-left: -40px;
+            margin: 0 auto;
             overflow: visible;
         }
         
@@ -447,7 +537,7 @@
         
         /* State styling with illustrated texture feel */
         .brazil-map-svg .state-path {
-            stroke: rgba(255, 255, 255, 0.5);
+            stroke: rgba(255, 255, 255, 0.25);
             stroke-width: 1.2;
             stroke-linejoin: round;
             cursor: pointer;
@@ -455,7 +545,7 @@
             filter: url(#state-texture);
         }
         
-        /* Norte - Floresta Amazônica (Cyan com textura) */
+        /* Norte - Azul Suave */
         .brazil-map-svg .state-path[data-state="AM"],
         .brazil-map-svg .state-path[data-state="PA"],
         .brazil-map-svg .state-path[data-state="AC"],
@@ -463,10 +553,10 @@
         .brazil-map-svg .state-path[data-state="RR"],
         .brazil-map-svg .state-path[data-state="AP"],
         .brazil-map-svg .state-path[data-state="TO"] {
-            fill: rgba(0, 180, 180, 0.4);
+            fill: rgba(37, 119, 233, 0.20);
         }
         
-        /* Nordeste - Praias (Verde com textura) */
+        /* Nordeste - Azul Leve */
         .brazil-map-svg .state-path[data-state="MA"],
         .brazil-map-svg .state-path[data-state="PI"],
         .brazil-map-svg .state-path[data-state="CE"],
@@ -476,50 +566,50 @@
         .brazil-map-svg .state-path[data-state="AL"],
         .brazil-map-svg .state-path[data-state="SE"],
         .brazil-map-svg .state-path[data-state="BA"] {
-            fill: rgba(80, 180, 100, 0.4);
+            fill: rgba(37, 119, 233, 0.25);
         }
         
-        /* Centro-Oeste - Cerrado (Âmbar com textura) */
+        /* Centro-Oeste - Azul Medio */
         .brazil-map-svg .state-path[data-state="MT"],
         .brazil-map-svg .state-path[data-state="GO"],
         .brazil-map-svg .state-path[data-state="MS"],
         .brazil-map-svg .state-path[data-state="DF"] {
-            fill: rgba(200, 160, 80, 0.4);
+            fill: rgba(37, 119, 233, 0.30);
         }
         
-        /* Sudeste - Urbano (Azul intenso) */
+        /* Sudeste - Azul Intenso (Destaque) */
         .brazil-map-svg .state-path[data-state="SP"] {
-            fill: rgba(0, 89, 213, 0.55);
+            fill: rgba(37, 119, 233, 0.50);
         }
         .brazil-map-svg .state-path[data-state="RJ"] {
-            fill: rgba(0, 89, 213, 0.5);
+            fill: rgba(37, 119, 233, 0.45);
         }
         .brazil-map-svg .state-path[data-state="MG"] {
-            fill: rgba(0, 89, 213, 0.45);
+            fill: rgba(37, 119, 233, 0.40);
         }
         .brazil-map-svg .state-path[data-state="ES"] {
-            fill: rgba(0, 89, 213, 0.4);
+            fill: rgba(37, 119, 233, 0.38);
         }
         
-        /* Sul - Araucárias (Roxo com textura) */
+        /* Sul - Azul Forte */
         .brazil-map-svg .state-path[data-state="PR"],
         .brazil-map-svg .state-path[data-state="SC"],
         .brazil-map-svg .state-path[data-state="RS"] {
-            fill: rgba(140, 80, 180, 0.4);
+            fill: rgba(37, 119, 233, 0.35);
         }
         
         /* Hover Effect - Subtle highlight */
         .brazil-map-svg .state-path:hover {
-            filter: url(#state-texture) brightness(1.15);
-            stroke: rgba(255, 255, 255, 0.7);
+            filter: url(#state-texture) brightness(1.3);
+            stroke: rgba(255, 255, 255, 0.5);
             stroke-width: 1.5;
             transform: translateZ(2px);
         }
         
         /* Active State - Clean highlight */
         .brazil-map-svg .state-path.active {
-            filter: url(#state-glow) brightness(1.25);
-            stroke: rgba(0, 89, 213, 0.8);
+            filter: url(#state-glow) brightness(1.4);
+            stroke: rgba(37, 119, 233, 0.8);
             stroke-width: 1.5;
         }
         
@@ -540,8 +630,8 @@
             width: 6px;
             height: 6px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.9);
-            border: 1px solid rgba(0, 89, 213, 0.5);
+            background: rgba(37, 119, 233, 0.9);
+            border: 1px solid rgba(75, 146, 245, 0.6);
             cursor: pointer;
             transform: translate(-50%, -50%);
             transition: all 0.2s ease;
@@ -722,7 +812,7 @@
             width: 40px;
             height: 40px;
             border-radius: 10px;
-            background: rgba(18, 18, 31, 0.9);
+            background: rgba(31, 32, 32, 0.92);
             border: 1px solid var(--dark-border);
             color: var(--neutral-text-low);
             font-size: 18px;
@@ -1043,14 +1133,14 @@
         .right-sidebar {
             position: fixed;
             top: 80px;
-            right: 24px;
-            bottom: 24px;
+            right: var(--spacing-6);
+            bottom: var(--spacing-6);
             z-index: 100;
             width: 340px;
             display: grid;
             grid-template-columns: 1fr;
             grid-template-rows: auto auto 1fr auto auto;
-            gap: 12px;
+            gap: var(--spacing-3);
         }
 
         /* Segment Filters - Right Sidebar */
@@ -1059,7 +1149,7 @@
             flex-wrap: wrap;
             gap: 6px;
             padding: 12px;
-            background: rgba(18, 18, 31, 0.95);
+            background: rgba(31, 32, 32, 0.95);
             backdrop-filter: blur(20px);
             border: 1px solid var(--dark-border);
             border-radius: 12px;
@@ -1180,7 +1270,7 @@
             align-items: center;
             text-align: center;
             padding: 16px;
-            background: rgba(18, 18, 31, 0.95);
+            background: rgba(31, 32, 32, 0.95);
             backdrop-filter: blur(20px);
             border: 1px solid var(--dark-border);
             border-radius: 12px;
@@ -1208,7 +1298,7 @@
             font-size: 28px;
             font-weight: 900;
             letter-spacing: -1px;
-            background: linear-gradient(135deg, var(--neutral-background) 0%, var(--primary-light) 50%, var(--neutral-background) 100%);
+            background: linear-gradient(135deg, #2577e9 0%, #ffffff 50%, #2577e9 100%);
             background-size: 200% 100%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -1273,7 +1363,7 @@
             grid-template-columns: repeat(2, 1fr);
             gap: 8px;
             padding: 12px;
-            background: rgba(18, 18, 31, 0.95);
+            background: rgba(31, 32, 32, 0.95);
             backdrop-filter: blur(20px);
             border: 1px solid var(--dark-border);
             border-radius: 12px;
@@ -1327,7 +1417,7 @@
         .info-panel {
             position: fixed;
             top: 120px;
-            left: 32px;
+            left: var(--spacing-8);
             z-index: 100;
             max-width: 280px;
         }
@@ -1337,7 +1427,7 @@
             font-weight: 900;
             line-height: 1.05;
             letter-spacing: -2px;
-            margin-bottom: 16px;
+            margin-bottom: var(--spacing-4);
         }
 
         .info-title .highlight {
@@ -1378,8 +1468,8 @@
         /* Left Sales Panel - Below Info Panel */
         .sales-panel {
             position: fixed;
-            bottom: 24px;
-            left: 32px;
+            bottom: var(--spacing-6);
+            left: var(--spacing-8);
             z-index: 100;
             width: 300px;
             max-height: calc(100vh - 520px);
@@ -1389,7 +1479,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 12px;
+            margin-bottom: var(--spacing-3);
         }
 
         .panel-title {
@@ -1426,7 +1516,7 @@
             align-items: center;
             gap: 10px;
             padding: 10px 12px;
-            background: rgba(18, 18, 31, 0.85);
+            background: rgba(31, 32, 32, 0.9);
             backdrop-filter: blur(10px);
             border: 1px solid var(--dark-border);
             border-radius: 10px;
@@ -1435,27 +1525,27 @@
         
         /* Channel-specific background colors */
         .sale-item.channel-online {
-            background: linear-gradient(135deg, rgba(33, 150, 243, 0.15), rgba(18, 18, 31, 0.9));
+            background: linear-gradient(135deg, rgba(33, 150, 243, 0.15), rgba(31, 32, 32, 0.92));
             border-color: rgba(33, 150, 243, 0.3);
         }
         
         .sale-item.channel-chat {
-            background: linear-gradient(135deg, rgba(76, 175, 80, 0.15), rgba(18, 18, 31, 0.9));
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.15), rgba(31, 32, 32, 0.92));
             border-color: rgba(76, 175, 80, 0.3);
         }
         
         .sale-item.channel-pos {
-            background: linear-gradient(135deg, rgba(255, 152, 0, 0.15), rgba(18, 18, 31, 0.9));
+            background: linear-gradient(135deg, rgba(255, 152, 0, 0.15), rgba(31, 32, 32, 0.92));
             border-color: rgba(255, 152, 0, 0.3);
         }
         
         .sale-item.channel-marketplace {
-            background: linear-gradient(135deg, rgba(156, 39, 176, 0.15), rgba(18, 18, 31, 0.9));
+            background: linear-gradient(135deg, rgba(156, 39, 176, 0.15), rgba(31, 32, 32, 0.92));
             border-color: rgba(156, 39, 176, 0.3);
         }
         
         .sale-item.channel-social {
-            background: linear-gradient(135deg, rgba(233, 30, 99, 0.15), rgba(18, 18, 31, 0.9));
+            background: linear-gradient(135deg, rgba(233, 30, 99, 0.15), rgba(31, 32, 32, 0.92));
             border-color: rgba(233, 30, 99, 0.3);
         }
         
@@ -1535,7 +1625,7 @@
 
         .sale-item.has-moment {
             border-color: rgba(54, 179, 126, 0.4);
-            background: rgba(18, 18, 31, 0.95);
+            background: rgba(31, 32, 32, 0.95);
         }
 
         .sale-item.has-moment:hover {
@@ -1607,7 +1697,7 @@
         /* First Sale Celebration */
         .sale-item.first-sale {
             border: 2px solid var(--game-gold);
-            background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(18, 18, 31, 0.95));
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(31, 32, 32, 0.95));
             animation: firstSaleGlow 2s ease-in-out infinite, slideIn 0.4s ease-out;
         }
 
@@ -1793,7 +1883,7 @@
         .celebration-card {
             text-align: center;
             padding: 40px 60px;
-            background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(18, 18, 31, 0.98));
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(31, 32, 32, 0.95));
             border: 2px solid var(--game-gold);
             border-radius: 20px;
             animation: celebrateIn 0.5s ease-out;
@@ -2022,7 +2112,7 @@
             display: flex;
             gap: 10px;
             padding: 12px;
-            background: rgba(18, 18, 31, 0.95);
+            background: rgba(31, 32, 32, 0.95);
             border: 1px solid var(--dark-border);
             border-radius: 12px;
         }
@@ -2374,7 +2464,7 @@
             transform: translateX(-50%);
             width: 600px;
             height: calc(100% - 200px);
-            background: rgba(18, 18, 31, 0.5);
+            background: rgba(255, 255, 255, 0.7);
             border: 2px solid var(--dark-border);
             border-radius: 16px;
             overflow: hidden;
@@ -2392,7 +2482,7 @@
             align-items: center;
             gap: 16px;
             padding: 8px 14px;
-            background: rgba(18, 18, 31, 0.85);
+            background: rgba(31, 32, 32, 0.9);
             backdrop-filter: blur(8px);
             border: 1px solid var(--dark-border);
             border-radius: 12px;
@@ -2674,7 +2764,7 @@
             top: 80px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(18, 18, 31, 0.95);
+            background: rgba(31, 32, 32, 0.95);
             padding: 12px 24px;
             border-radius: 30px;
             border: 2px solid var(--primary-interactive);
@@ -2928,19 +3018,19 @@
         
         .game-over-buttons {
             display: flex;
-            gap: 8px;
-            margin-top: 12px;
+            gap: var(--spacing-2);
+            margin-top: var(--spacing-3);
         }
         
         .game-over-btn {
             flex: 1;
-            padding: 10px 14px;
-            border-radius: 8px;
+            padding: var(--spacing-2) var(--spacing-3);
+            border-radius: var(--radius-2);
             font-weight: 600;
             font-size: 12px;
             cursor: pointer;
             border: none;
-            transition: all 0.3s;
+            transition: all 0.2s ease;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -2978,7 +3068,7 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            background: rgba(18, 18, 31, 0.9);
+            background: rgba(31, 32, 32, 0.92);
             padding: 8px 12px;
             border-radius: 20px;
             font-size: 12px;
@@ -3114,7 +3204,9 @@
         }
         
         .paddle-logo {
-            filter: drop-shadow(0 2px 8px rgba(0, 102, 255, 0.5));
+            width: 100%;
+            height: 100%;
+            filter: drop-shadow(0 2px 8px rgba(37, 119, 233, 0.5));
         }
 
         .paddle-trail {
@@ -3154,12 +3246,13 @@
         }
 
         .counter-card {
-            background: rgba(18, 18, 31, 0.9);
+            background: var(--neutral-surface);
             backdrop-filter: blur(10px);
-            border: 1px solid var(--dark-border);
-            border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 16px;
+            border: 1px solid var(--neutral-surface-highlight);
+            border-radius: var(--radius-4);
+            padding: var(--spacing-4);
+            margin-bottom: var(--spacing-4);
+            box-shadow: var(--shadow-level-2);
         }
 
         .counter-title {
@@ -3168,7 +3261,7 @@
             color: var(--neutral-text-low);
             text-transform: uppercase;
             letter-spacing: 1px;
-            margin-bottom: 8px;
+            margin-bottom: var(--spacing-2);
         }
 
         .counter-main-value {
@@ -3282,7 +3375,7 @@
             left: 50%;
             transform: translateX(-50%);
             padding: 10px 20px;
-            background: rgba(18, 18, 31, 0.9);
+            background: rgba(31, 32, 32, 0.92);
             border: 1px solid var(--dark-border);
             border-radius: 10px;
             font-size: 12px;
@@ -3305,7 +3398,7 @@
             width: 260px;
             max-height: calc(100vh - 180px);
             z-index: 10;
-            background: rgba(18, 18, 31, 0.9);
+            background: rgba(31, 32, 32, 0.92);
             backdrop-filter: blur(10px);
             border: 1px solid var(--dark-border);
             border-radius: 16px;
@@ -3375,7 +3468,7 @@
             100% {
                 opacity: 1;
                 transform: translateX(0);
-                background: rgba(18, 18, 31, 0.85);
+                background: rgba(31, 32, 32, 0.9);
             }
         }
 
@@ -3474,7 +3567,7 @@
             align-items: center;
             gap: 12px;
             padding: 12px 14px;
-            background: rgba(18, 18, 31, 0.85);
+            background: rgba(31, 32, 32, 0.9);
             border: 1px solid var(--dark-border);
             border-radius: 10px;
         }
@@ -3552,7 +3645,7 @@
             top: 120px;
             width: 240px;
             padding: 16px;
-            background: rgba(18, 18, 31, 0.85);
+            background: rgba(31, 32, 32, 0.9);
             border: 1px solid var(--dark-border);
             border-radius: 12px;
             z-index: 10;
@@ -3613,10 +3706,11 @@
         }
 
         .stats-card {
-            padding: 24px;
-            background: rgba(18, 18, 31, 0.8);
-            border: 1px solid var(--dark-border);
-            border-radius: 16px;
+            padding: var(--spacing-6);
+            background: var(--neutral-surface);
+            border: 1px solid var(--neutral-surface-highlight);
+            border-radius: var(--radius-4);
+            box-shadow: var(--shadow-level-2);
         }
 
         .stats-card.large {
@@ -3631,7 +3725,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 20px;
+            margin-bottom: var(--spacing-4);
         }
 
         .card-title {
@@ -3962,7 +4056,7 @@
                 top: 10px;
                 left: 10px;
                 right: 10px;
-                background: rgba(18, 18, 31, 0.95);
+                background: rgba(31, 32, 32, 0.95);
                 backdrop-filter: blur(10px);
                 border: 1px solid var(--dark-border);
                 border-radius: 10px;
@@ -3993,7 +4087,7 @@
             .mobile-gmv .gmv-value {
                 font-size: 18px;
                 font-weight: 700;
-                color: var(--success);
+                color: var(--primary-interactive);
             }
             
             .mobile-gmv-chevron {
@@ -4065,7 +4159,7 @@
                 transform: none;
                 padding: 10px 16px;
                 text-align: center;
-                background: rgba(18, 18, 31, 0.9);
+                background: rgba(31, 32, 32, 0.92);
             }
             
             .game-title { font-size: 16px; margin: 0; }
@@ -4092,7 +4186,7 @@
                 justify-content: center;
                 gap: 8px;
                 padding: 10px;
-                background: rgba(18, 18, 31, 0.9);
+                background: rgba(31, 32, 32, 0.92);
             }
             
             .game-stat {
@@ -4211,7 +4305,7 @@
             left: 0;
             right: 0;
             z-index: 1000;
-            background: rgba(18, 18, 31, 0.98);
+            background: rgba(31, 32, 32, 0.95);
             backdrop-filter: blur(20px);
             border-top: 1px solid var(--dark-border);
             padding: 6px 8px;
@@ -4258,7 +4352,7 @@
             display: flex;
             gap: 24px;
             padding: 12px 20px;
-            background: rgba(18, 18, 31, 0.95);
+            background: rgba(31, 32, 32, 0.95);
             backdrop-filter: blur(10px);
             border: 1px solid var(--dark-border);
             border-radius: 12px;
@@ -4297,7 +4391,7 @@
             min-width: 280px;
             max-width: 340px;
             padding: 20px;
-            background: rgba(18, 18, 31, 0.95);
+            background: rgba(31, 32, 32, 0.95);
             backdrop-filter: blur(20px);
             border: 1px solid var(--dark-border);
             border-radius: 16px;
@@ -4537,7 +4631,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: rgba(18, 18, 31, 0.9);
+            background: rgba(31, 32, 32, 0.92);
             backdrop-filter: blur(10px);
             border: 1px solid var(--dark-border);
             border-radius: 10px;
@@ -4591,7 +4685,16 @@
             <div class="header-left">
                 <div class="logo" onclick="switchView('globe')">
                     <div class="logo-icon">
-                        <img src="assets/nuvemshop-logo.png" alt="Nuvemshop" class="navbar-logo">
+<svg class="navbar-logo" viewBox="0 0 160 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <mask id="maskNav">
+                                    <rect width="160" height="100" fill="white"/>
+                                    <path d="M 58 22 A 30 30 0 0 0 58 78" stroke="black" stroke-width="14" fill="none"/>
+                                </mask>
+                            </defs>
+                            <circle cx="105" cy="50" r="38" stroke="currentColor" stroke-width="11" fill="none" mask="url(#maskNav)"/>
+                            <circle cx="50" cy="50" r="30" stroke="currentColor" stroke-width="11" fill="none"/>
+                        </svg>
                     </div>
                     <div class="logo-text">E-commerce do Brasil ao Vivo</div>
                 </div>
@@ -5071,7 +5174,16 @@
                     <!-- Nuvemshop Paddle (follows mouse inside game area) -->
                     <div class="game-paddle" id="game-paddle">
                         <div class="paddle-inner">
-                            <img src="assets/nuvemshop-logo.png" alt="Nuvemshop" class="paddle-logo">
+<svg class="paddle-logo" viewBox="0 0 160 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                    <mask id="maskPaddle">
+                                        <rect width="160" height="100" fill="white"/>
+                                        <path d="M 58 22 A 30 30 0 0 0 58 78" stroke="black" stroke-width="14" fill="none"/>
+                                    </mask>
+                                </defs>
+                                <circle cx="105" cy="50" r="38" stroke="#2577e9" stroke-width="11" fill="none" mask="url(#maskPaddle)"/>
+                                <circle cx="50" cy="50" r="30" stroke="#2577e9" stroke-width="11" fill="none"/>
+                            </svg>
                         </div>
                     </div>
 
@@ -7860,6 +7972,9 @@
                 type: cartType,
                 rescued: false,
                 startTime: Date.now(),
+                lastUpdateTime: Date.now(),
+                accumulatedProgress: 0,  // Track actual progress separately for smooth freeze transitions
+                animationTime: 0,        // For visual effects timing
                 duration: duration,
                 leftPos: leftPos,
                 typeConfig: typeConfig
@@ -7868,32 +7983,40 @@
             activeCarts.push(cartData);
             
             // Animate falling with special movements
+            // Uses delta time and accumulated progress to handle freeze smoothly
             const animateCart = () => {
                 if (!cart.parentNode || cartData.rescued) return;
                 
-                // Check if frozen
+                const now = Date.now();
+                const deltaTime = now - cartData.lastUpdateTime;
+                cartData.lastUpdateTime = now;
+                
+                // Apply freeze modifier only to delta time (prevents jump when freeze ends)
                 const freezeMod = state.activePowerups.freeze ? 0.4 : 1;
-                const elapsed = (Date.now() - cartData.startTime) * freezeMod;
-                const progress = elapsed / cartData.duration;
+                const progressDelta = (deltaTime * freezeMod) / cartData.duration;
+                cartData.accumulatedProgress += progressDelta;
+                cartData.animationTime += deltaTime * freezeMod;
+                
+                const progress = cartData.accumulatedProgress;
                 const top = -70 + (areaRect.height + 70) * progress;
                 
                 cart.style.top = top + 'px';
                 
-                // ZIGZAG MOVEMENT
+                // ZIGZAG MOVEMENT - use animation time for smooth effects
                 if (cartType === 'zigzag') {
-                    const zigzagOffset = Math.sin(elapsed / 150) * 80; // Wide zigzag
+                    const zigzagOffset = Math.sin(cartData.animationTime / 150) * 80;
                     const newLeft = Math.max(10, Math.min(areaRect.width - 80, leftPos + zigzagOffset));
                     cart.style.left = newLeft + 'px';
                 }
                 
                 // GHOST VISIBILITY (handled by CSS, but add extra unpredictability)
                 if (cartType === 'ghost') {
-                    const phase = (elapsed / 400) % 1;
+                    const phase = (cartData.animationTime / 400) % 1;
                     cart.style.opacity = phase < 0.3 ? '0.15' : phase < 0.7 ? '0.9' : '0.4';
                 }
                 
                 // SPEEDY - add trail effect
-                if (cartType === 'speedy' && elapsed % 100 < 20) {
+                if (cartType === 'speedy' && cartData.animationTime % 100 < 20) {
                     cart.style.filter = 'blur(2px)';
                 } else if (cartType === 'speedy') {
                     cart.style.filter = 'none';
@@ -7939,6 +8062,8 @@
                     type: 'normal',
                     rescued: false,
                     startTime: Date.now(),
+                    lastUpdateTime: Date.now(),
+                    accumulatedProgress: 0,
                     duration: 1800, // Fast!
                     leftPos: newLeft,
                     typeConfig: CART_TYPES.normal
@@ -7949,9 +8074,17 @@
                 const animateSplit = () => {
                     if (!splitCart.parentNode || splitCartData.rescued) return;
                     
-                    const elapsed = Date.now() - splitCartData.startTime;
+                    const now = Date.now();
+                    const deltaTime = now - splitCartData.lastUpdateTime;
+                    splitCartData.lastUpdateTime = now;
+                    
+                    // Apply freeze modifier to delta time
+                    const freezeMod = state.activePowerups.freeze ? 0.4 : 1;
+                    const progressDelta = (deltaTime * freezeMod) / splitCartData.duration;
+                    splitCartData.accumulatedProgress += progressDelta;
+                    
                     const startTop = areaRect.height * 0.6;
-                    const progress = elapsed / splitCartData.duration;
+                    const progress = splitCartData.accumulatedProgress;
                     const top = startTop + (areaRect.height * 0.4 + 70) * progress;
                     
                     splitCart.style.top = top + 'px';
@@ -9285,6 +9418,103 @@ ${window.location.href}`;
         import * as THREE from 'three';
         import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
         
+        // Simplex 2D Noise implementation for organic terrain deformation
+        // Based on Stefan Gustavson's SimplexNoise implementation
+        const SimplexNoise = (() => {
+            const F2 = 0.5 * (Math.sqrt(3) - 1);
+            const G2 = (3 - Math.sqrt(3)) / 6;
+            
+            // Gradient vectors for 2D
+            const grad2 = [
+                [1, 1], [-1, 1], [1, -1], [-1, -1],
+                [1, 0], [-1, 0], [0, 1], [0, -1]
+            ];
+            
+            // Permutation table (seeded for consistency)
+            const perm = new Uint8Array(512);
+            const seed = 42;
+            for (let i = 0; i < 256; i++) {
+                perm[i] = perm[i + 256] = ((i * 1103515245 + seed) >>> 16) & 255;
+            }
+            
+            function dot2(g, x, y) {
+                return g[0] * x + g[1] * y;
+            }
+            
+            return {
+                noise2D: function(x, y) {
+                    // Skew input space to determine which simplex cell we're in
+                    const s = (x + y) * F2;
+                    const i = Math.floor(x + s);
+                    const j = Math.floor(y + s);
+                    
+                    const t = (i + j) * G2;
+                    const X0 = i - t;
+                    const Y0 = j - t;
+                    const x0 = x - X0;
+                    const y0 = y - Y0;
+                    
+                    // Determine which simplex we're in
+                    let i1, j1;
+                    if (x0 > y0) { i1 = 1; j1 = 0; }
+                    else { i1 = 0; j1 = 1; }
+                    
+                    const x1 = x0 - i1 + G2;
+                    const y1 = y0 - j1 + G2;
+                    const x2 = x0 - 1 + 2 * G2;
+                    const y2 = y0 - 1 + 2 * G2;
+                    
+                    // Hash coordinates of corners
+                    const ii = i & 255;
+                    const jj = j & 255;
+                    
+                    // Calculate contributions from three corners
+                    let n0 = 0, n1 = 0, n2 = 0;
+                    
+                    let t0 = 0.5 - x0 * x0 - y0 * y0;
+                    if (t0 >= 0) {
+                        t0 *= t0;
+                        const gi0 = perm[ii + perm[jj]] % 8;
+                        n0 = t0 * t0 * dot2(grad2[gi0], x0, y0);
+                    }
+                    
+                    let t1 = 0.5 - x1 * x1 - y1 * y1;
+                    if (t1 >= 0) {
+                        t1 *= t1;
+                        const gi1 = perm[ii + i1 + perm[jj + j1]] % 8;
+                        n1 = t1 * t1 * dot2(grad2[gi1], x1, y1);
+                    }
+                    
+                    let t2 = 0.5 - x2 * x2 - y2 * y2;
+                    if (t2 >= 0) {
+                        t2 *= t2;
+                        const gi2 = perm[ii + 1 + perm[jj + 1]] % 8;
+                        n2 = t2 * t2 * dot2(grad2[gi2], x2, y2);
+                    }
+                    
+                    // Scale result to [-1, 1]
+                    return 70 * (n0 + n1 + n2);
+                },
+                
+                // Fractal Brownian Motion for more natural terrain
+                fbm: function(x, y, octaves = 3, lacunarity = 2, persistence = 0.5) {
+                    let value = 0;
+                    let amplitude = 1;
+                    let frequency = 1;
+                    let maxValue = 0;
+                    
+                    for (let i = 0; i < octaves; i++) {
+                        value += this.noise2D(x * frequency, y * frequency) * amplitude;
+                        maxValue += amplitude;
+                        amplitude *= persistence;
+                        frequency *= lacunarity;
+                    }
+                    
+                    return value / maxValue;
+                }
+            };
+        })();
+        
         // Three.js 3D Map for Brazil
         class BrazilMap3D {
             constructor(containerId) {
@@ -9310,36 +9540,50 @@ ${window.location.href}`;
                     sul: 0x8c50b4
                 };
                 
-                // State data (simplified polygons)
+                // State data (simplified polygons) with realistic elevation values
+                // Elevations based on real Brazilian geography:
+                // - Sudeste: Serra do Mar, Serra da Mantiqueira (highest)
+                // - Sul: Planalto Meridional (medium-high)
+                // - Centro-Oeste: Planalto Central (medium)
+                // - Nordeste: Chapada Diamantina in BA, coastal states low
+                // - Norte: Amazonia plains (lowest), RR/AP with tepuis
                 this.statesData = {
-                    AM: { region: 'norte', center: { x: -2.5, z: -2.0 }, polygon: [[-4.0, -3.5], [-3.0, -4.0], [-1.5, -3.8], [-0.5, -3.0], [-0.3, -1.5], [-1.0, -0.5], [-2.5, -0.3], [-3.8, -1.0], [-4.2, -2.0], [-4.0, -3.5]], elevation: 0.15 },
-                    PA: { region: 'norte', center: { x: -0.5, z: -2.0 }, polygon: [[-0.3, -3.0], [1.0, -3.2], [2.0, -2.5], [2.2, -1.0], [1.5, 0.0], [0.0, 0.2], [-0.5, -0.8], [-0.3, -1.5], [-0.3, -3.0]], elevation: 0.1 },
-                    AC: { region: 'norte', center: { x: -4.2, z: -1.5 }, polygon: [[-4.8, -2.0], [-4.0, -2.2], [-3.8, -1.0], [-4.2, -0.5], [-4.8, -0.8], [-4.8, -2.0]], elevation: 0.2 },
-                    RO: { region: 'norte', center: { x: -3.2, z: -0.5 }, polygon: [[-3.8, -1.0], [-2.5, -0.3], [-2.2, 0.5], [-3.0, 0.8], [-3.8, 0.3], [-4.2, -0.5], [-3.8, -1.0]], elevation: 0.15 },
-                    RR: { region: 'norte', center: { x: -2.0, z: -4.0 }, polygon: [[-2.5, -4.5], [-1.5, -4.8], [-1.0, -4.0], [-1.5, -3.5], [-2.5, -3.5], [-2.8, -4.0], [-2.5, -4.5]], elevation: 0.2 },
-                    AP: { region: 'norte', center: { x: 0.5, z: -3.8 }, polygon: [[0.0, -4.2], [1.0, -4.5], [1.5, -3.8], [1.0, -3.2], [0.0, -3.2], [0.0, -4.2]], elevation: 0.1 },
-                    TO: { region: 'norte', center: { x: 0.0, z: 0.0 }, polygon: [[-0.5, -0.8], [0.5, -0.8], [1.0, 0.5], [0.5, 1.2], [-0.3, 1.0], [-0.8, 0.3], [-0.5, -0.8]], elevation: 0.3 },
-                    MA: { region: 'nordeste', center: { x: 0.8, z: -1.5 }, polygon: [[0.0, -2.2], [1.5, -2.5], [2.2, -1.8], [2.0, -0.8], [1.2, -0.5], [0.0, -0.8], [0.0, -2.2]], elevation: 0.1 },
-                    PI: { region: 'nordeste', center: { x: 1.2, z: -0.3 }, polygon: [[0.5, -0.8], [1.8, -1.0], [2.2, 0.0], [1.8, 0.8], [0.8, 0.5], [0.5, -0.8]], elevation: 0.15 },
-                    CE: { region: 'nordeste', center: { x: 2.2, z: -1.2 }, polygon: [[1.8, -1.8], [2.8, -1.8], [3.2, -1.0], [2.8, -0.5], [2.0, -0.8], [1.8, -1.8]], elevation: 0.1 },
-                    RN: { region: 'nordeste', center: { x: 2.8, z: -0.8 }, polygon: [[2.5, -1.2], [3.5, -1.0], [3.5, -0.5], [2.8, -0.3], [2.5, -0.6], [2.5, -1.2]], elevation: 0.05 },
-                    PB: { region: 'nordeste', center: { x: 2.8, z: -0.2 }, polygon: [[2.3, -0.5], [3.5, -0.5], [3.5, 0.0], [2.5, 0.2], [2.3, -0.5]], elevation: 0.05 },
-                    PE: { region: 'nordeste', center: { x: 2.5, z: 0.3 }, polygon: [[1.5, 0.0], [3.2, 0.0], [3.5, 0.5], [2.8, 0.8], [1.5, 0.5], [1.5, 0.0]], elevation: 0.1 },
-                    AL: { region: 'nordeste', center: { x: 2.8, z: 0.7 }, polygon: [[2.5, 0.5], [3.3, 0.5], [3.5, 1.0], [2.8, 1.0], [2.5, 0.5]], elevation: 0.05 },
-                    SE: { region: 'nordeste', center: { x: 2.5, z: 1.0 }, polygon: [[2.2, 0.8], [2.8, 0.8], [3.0, 1.3], [2.5, 1.5], [2.2, 0.8]], elevation: 0.05 },
-                    BA: { region: 'nordeste', center: { x: 1.5, z: 1.2 }, polygon: [[0.5, 0.5], [2.5, 0.5], [2.8, 1.5], [2.5, 2.5], [1.5, 2.8], [0.2, 2.2], [0.0, 1.2], [0.5, 0.5]], elevation: 0.35 },
+                    // Norte - Planicie Amazonica (low elevation)
+                    AM: { region: 'norte', center: { x: -2.5, z: -2.0 }, polygon: [[-4.0, -3.5], [-3.0, -4.0], [-1.5, -3.8], [-0.5, -3.0], [-0.3, -1.5], [-1.0, -0.5], [-2.5, -0.3], [-3.8, -1.0], [-4.2, -2.0], [-4.0, -3.5]], elevation: 0.12 },
+                    PA: { region: 'norte', center: { x: -0.5, z: -2.0 }, polygon: [[-0.3, -3.0], [1.0, -3.2], [2.0, -2.5], [2.2, -1.0], [1.5, 0.0], [0.0, 0.2], [-0.5, -0.8], [-0.3, -1.5], [-0.3, -3.0]], elevation: 0.08 },
+                    AC: { region: 'norte', center: { x: -4.2, z: -1.5 }, polygon: [[-4.8, -2.0], [-4.0, -2.2], [-3.8, -1.0], [-4.2, -0.5], [-4.8, -0.8], [-4.8, -2.0]], elevation: 0.10 },
+                    RO: { region: 'norte', center: { x: -3.2, z: -0.5 }, polygon: [[-3.8, -1.0], [-2.5, -0.3], [-2.2, 0.5], [-3.0, 0.8], [-3.8, 0.3], [-4.2, -0.5], [-3.8, -1.0]], elevation: 0.12 },
+                    RR: { region: 'norte', center: { x: -2.0, z: -4.0 }, polygon: [[-2.5, -4.5], [-1.5, -4.8], [-1.0, -4.0], [-1.5, -3.5], [-2.5, -3.5], [-2.8, -4.0], [-2.5, -4.5]], elevation: 0.25 },
+                    AP: { region: 'norte', center: { x: 0.5, z: -3.8 }, polygon: [[0.0, -4.2], [1.0, -4.5], [1.5, -3.8], [1.0, -3.2], [0.0, -3.2], [0.0, -4.2]], elevation: 0.15 },
+                    TO: { region: 'norte', center: { x: 0.0, z: 0.0 }, polygon: [[-0.5, -0.8], [0.5, -0.8], [1.0, 0.5], [0.5, 1.2], [-0.3, 1.0], [-0.8, 0.3], [-0.5, -0.8]], elevation: 0.30 },
+                    // Nordeste - Coastal states low, BA higher (Chapada Diamantina)
+                    MA: { region: 'nordeste', center: { x: 0.8, z: -1.5 }, polygon: [[0.0, -2.2], [1.5, -2.5], [2.2, -1.8], [2.0, -0.8], [1.2, -0.5], [0.0, -0.8], [0.0, -2.2]], elevation: 0.12 },
+                    PI: { region: 'nordeste', center: { x: 1.2, z: -0.3 }, polygon: [[0.5, -0.8], [1.8, -1.0], [2.2, 0.0], [1.8, 0.8], [0.8, 0.5], [0.5, -0.8]], elevation: 0.18 },
+                    CE: { region: 'nordeste', center: { x: 2.2, z: -1.2 }, polygon: [[1.8, -1.8], [2.8, -1.8], [3.2, -1.0], [2.8, -0.5], [2.0, -0.8], [1.8, -1.8]], elevation: 0.12 },
+                    RN: { region: 'nordeste', center: { x: 2.8, z: -0.8 }, polygon: [[2.5, -1.2], [3.5, -1.0], [3.5, -0.5], [2.8, -0.3], [2.5, -0.6], [2.5, -1.2]], elevation: 0.08 },
+                    PB: { region: 'nordeste', center: { x: 2.8, z: -0.2 }, polygon: [[2.3, -0.5], [3.5, -0.5], [3.5, 0.0], [2.5, 0.2], [2.3, -0.5]], elevation: 0.10 },
+                    PE: { region: 'nordeste', center: { x: 2.5, z: 0.3 }, polygon: [[1.5, 0.0], [3.2, 0.0], [3.5, 0.5], [2.8, 0.8], [1.5, 0.5], [1.5, 0.0]], elevation: 0.12 },
+                    AL: { region: 'nordeste', center: { x: 2.8, z: 0.7 }, polygon: [[2.5, 0.5], [3.3, 0.5], [3.5, 1.0], [2.8, 1.0], [2.5, 0.5]], elevation: 0.08 },
+                    SE: { region: 'nordeste', center: { x: 2.5, z: 1.0 }, polygon: [[2.2, 0.8], [2.8, 0.8], [3.0, 1.3], [2.5, 1.5], [2.2, 0.8]], elevation: 0.08 },
+                    BA: { region: 'nordeste', center: { x: 1.5, z: 1.2 }, polygon: [[0.5, 0.5], [2.5, 0.5], [2.8, 1.5], [2.5, 2.5], [1.5, 2.8], [0.2, 2.2], [0.0, 1.2], [0.5, 0.5]], elevation: 0.45 },
+                    // Centro-Oeste - Planalto Central (medium)
                     MT: { region: 'centro-oeste', center: { x: -1.8, z: 0.8 }, polygon: [[-3.0, 0.0], [-1.0, -0.2], [-0.5, 1.0], [-0.8, 2.0], [-2.0, 2.2], [-3.2, 1.5], [-3.0, 0.0]], elevation: 0.35 },
-                    GO: { region: 'centro-oeste', center: { x: -0.2, z: 1.5 }, polygon: [[-0.8, 0.8], [0.5, 0.8], [1.0, 1.8], [0.5, 2.5], [-0.5, 2.5], [-1.0, 1.8], [-0.8, 0.8]], elevation: 0.45 },
+                    GO: { region: 'centro-oeste', center: { x: -0.2, z: 1.5 }, polygon: [[-0.8, 0.8], [0.5, 0.8], [1.0, 1.8], [0.5, 2.5], [-0.5, 2.5], [-1.0, 1.8], [-0.8, 0.8]], elevation: 0.50 },
                     MS: { region: 'centro-oeste', center: { x: -1.8, z: 2.5 }, polygon: [[-2.5, 1.8], [-1.2, 1.8], [-0.8, 2.8], [-1.5, 3.5], [-2.8, 3.2], [-3.0, 2.2], [-2.5, 1.8]], elevation: 0.25 },
-                    DF: { region: 'centro-oeste', center: { x: 0.0, z: 1.2 }, polygon: [[-0.2, 1.0], [0.2, 1.0], [0.3, 1.4], [-0.1, 1.5], [-0.3, 1.2], [-0.2, 1.0]], elevation: 0.6 },
-                    SP: { region: 'sudeste', center: { x: -0.5, z: 3.0 }, polygon: [[-1.5, 2.2], [0.5, 2.0], [1.2, 2.8], [1.0, 3.8], [-0.5, 4.0], [-1.8, 3.5], [-1.5, 2.2]], elevation: 0.5 },
+                    DF: { region: 'centro-oeste', center: { x: 0.0, z: 1.2 }, polygon: [[-0.2, 1.0], [0.2, 1.0], [0.3, 1.4], [-0.1, 1.5], [-0.3, 1.2], [-0.2, 1.0]], elevation: 0.55 },
+                    // Sudeste - Serra do Mar, Serra da Mantiqueira (highest)
+                    SP: { region: 'sudeste', center: { x: -0.5, z: 3.0 }, polygon: [[-1.5, 2.2], [0.5, 2.0], [1.2, 2.8], [1.0, 3.8], [-0.5, 4.0], [-1.8, 3.5], [-1.5, 2.2]], elevation: 0.60 },
                     RJ: { region: 'sudeste', center: { x: 1.2, z: 3.2 }, polygon: [[0.8, 2.8], [2.0, 2.5], [2.5, 3.2], [2.0, 3.8], [1.0, 3.8], [0.8, 2.8]], elevation: 0.55 },
-                    MG: { region: 'sudeste', center: { x: 0.8, z: 2.0 }, polygon: [[0.0, 1.2], [1.8, 1.0], [2.5, 1.8], [2.2, 2.8], [1.0, 3.0], [0.0, 2.5], [-0.2, 1.8], [0.0, 1.2]], elevation: 0.55 },
-                    ES: { region: 'sudeste', center: { x: 2.0, z: 2.2 }, polygon: [[1.8, 1.8], [2.5, 1.8], [2.8, 2.5], [2.2, 2.8], [1.8, 1.8]], elevation: 0.3 },
-                    PR: { region: 'sul', center: { x: -0.8, z: 3.8 }, polygon: [[-1.8, 3.2], [0.0, 3.2], [0.5, 4.0], [0.0, 4.5], [-1.5, 4.5], [-2.0, 3.8], [-1.8, 3.2]], elevation: 0.45 },
-                    SC: { region: 'sul', center: { x: -0.5, z: 4.5 }, polygon: [[-1.5, 4.2], [0.2, 4.2], [0.5, 4.8], [0.0, 5.2], [-1.2, 5.0], [-1.5, 4.2]], elevation: 0.35 },
-                    RS: { region: 'sul', center: { x: -1.0, z: 5.2 }, polygon: [[-2.0, 4.5], [-0.5, 4.5], [0.0, 5.2], [-0.5, 6.0], [-2.0, 6.2], [-2.8, 5.5], [-2.5, 4.8], [-2.0, 4.5]], elevation: 0.25 }
+                    MG: { region: 'sudeste', center: { x: 0.8, z: 2.0 }, polygon: [[0.0, 1.2], [1.8, 1.0], [2.5, 1.8], [2.2, 2.8], [1.0, 3.0], [0.0, 2.5], [-0.2, 1.8], [0.0, 1.2]], elevation: 0.65 },
+                    ES: { region: 'sudeste', center: { x: 2.0, z: 2.2 }, polygon: [[1.8, 1.8], [2.5, 1.8], [2.8, 2.5], [2.2, 2.8], [1.8, 1.8]], elevation: 0.40 },
+                    // Sul - Planalto Meridional (medium-high)
+                    PR: { region: 'sul', center: { x: -0.8, z: 3.8 }, polygon: [[-1.8, 3.2], [0.0, 3.2], [0.5, 4.0], [0.0, 4.5], [-1.5, 4.5], [-2.0, 3.8], [-1.8, 3.2]], elevation: 0.50 },
+                    SC: { region: 'sul', center: { x: -0.5, z: 4.5 }, polygon: [[-1.5, 4.2], [0.2, 4.2], [0.5, 4.8], [0.0, 5.2], [-1.2, 5.0], [-1.5, 4.2]], elevation: 0.45 },
+                    RS: { region: 'sul', center: { x: -1.0, z: 5.2 }, polygon: [[-2.0, 4.5], [-0.5, 4.5], [0.0, 5.2], [-0.5, 6.0], [-2.0, 6.2], [-2.8, 5.5], [-2.5, 4.8], [-2.0, 4.5]], elevation: 0.35 }
                 };
+                
+                // Max elevation for color gradient calculations
+                this.maxElevation = 0.65;
                 
                 this.init();
             }
@@ -9355,11 +9599,16 @@ ${window.location.href}`;
                 this.scene = new THREE.Scene();
                 this.scene.background = null; // Transparent
                 
-                // Camera
+                // Camera - map will be auto-centered at origin by createStates()
                 const aspect = canvasContainer.clientWidth / canvasContainer.clientHeight;
-                this.camera = new THREE.PerspectiveCamera(45, aspect, 0.1, 1000);
-                this.camera.position.set(0, 8, 10);
-                this.camera.lookAt(0, 0, 0);
+                this.camera = new THREE.PerspectiveCamera(38, aspect, 0.1, 1000);
+                
+                // Map center at origin (group is offset to center the map)
+                this.mapCenter = new THREE.Vector3(0, 0, 0);
+                
+                // Position camera to show entire map centered in view
+                this.camera.position.set(0, 11, 14);
+                this.camera.lookAt(this.mapCenter);
                 
                 // Renderer
                 this.renderer = new THREE.WebGLRenderer({ 
@@ -9372,15 +9621,18 @@ ${window.location.href}`;
                 this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
                 canvasContainer.appendChild(this.renderer.domElement);
                 
-                // Controls
+                // Controls - targeting map center (origin)
                 this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+                this.controls.target.set(0, 0, 0);
                 this.controls.enableDamping = true;
                 this.controls.dampingFactor = 0.05;
-                this.controls.minDistance = 5;
-                this.controls.maxDistance = 15;
-                this.controls.maxPolarAngle = Math.PI / 2.2;
-                this.controls.minPolarAngle = Math.PI / 6;
+                this.controls.minDistance = 9;
+                this.controls.maxDistance = 20;
+                // Rotação vertical mais restrita (mantém visão de cima)
+                this.controls.minPolarAngle = Math.PI / 5;     // ~36° (limite superior - mais de cima)
+                this.controls.maxPolarAngle = Math.PI / 2.8;   // ~64° (limite inferior - menos horizontal)
                 this.controls.enablePan = false;
+                this.controls.update();
                 
                 // Lighting
                 this.setupLighting();
@@ -9396,26 +9648,63 @@ ${window.location.href}`;
             }
             
             setupLighting() {
-                const ambientLight = new THREE.AmbientLight(0x404080, 0.5);
+                // Softer ambient light for better shadow contrast
+                const ambientLight = new THREE.AmbientLight(0x404080, 0.4);
                 this.scene.add(ambientLight);
                 
-                const mainLight = new THREE.DirectionalLight(0xffffff, 1.0);
-                mainLight.position.set(5, 10, 5);
+                // Main directional light - positioned to illuminate centered map
+                const mainLight = new THREE.DirectionalLight(0xffffff, 1.1);
+                mainLight.position.set(6, 12, 6);
                 mainLight.castShadow = true;
+                
+                // Enhanced shadow map settings for clearer terrain definition
+                mainLight.shadow.mapSize.width = 2048;
+                mainLight.shadow.mapSize.height = 2048;
+                mainLight.shadow.camera.near = 0.5;
+                mainLight.shadow.camera.far = 50;
+                mainLight.shadow.camera.left = -12;
+                mainLight.shadow.camera.right = 12;
+                mainLight.shadow.camera.top = 12;
+                mainLight.shadow.camera.bottom = -12;
+                mainLight.shadow.bias = -0.0001;
+                mainLight.shadow.normalBias = 0.02;
                 this.scene.add(mainLight);
                 
-                const fillLight = new THREE.DirectionalLight(0x8090ff, 0.3);
-                fillLight.position.set(-5, 5, -5);
+                // Cool-toned fill light from opposite side
+                const fillLight = new THREE.DirectionalLight(0x8090ff, 0.25);
+                fillLight.position.set(-5, 6, -5);
                 this.scene.add(fillLight);
+                
+                // Subtle warm rim light to highlight terrain edges
+                const rimLight = new THREE.DirectionalLight(0xffeedd, 0.15);
+                rimLight.position.set(-2, 8, 6);
+                this.scene.add(rimLight);
+                
+                // Hemisphere light for natural sky/ground color blending
+                const hemiLight = new THREE.HemisphereLight(0x87ceeb, 0x3a5f3a, 0.2);
+                this.scene.add(hemiLight);
             }
             
             createStates() {
+                // Create a group to hold all states for easier centering
+                this.statesGroup = new THREE.Group();
+                
                 for (const [stateCode, stateData] of Object.entries(this.statesData)) {
                     const mesh = this.createStateMesh(stateCode, stateData);
                     this.statesMeshes.push(mesh);
                     this.stateMeshMap[stateCode] = mesh;
-                    this.scene.add(mesh);
+                    this.statesGroup.add(mesh);
                 }
+                
+                // Calculate bounding box to find the center of the map
+                const box = new THREE.Box3().setFromObject(this.statesGroup);
+                const center = box.getCenter(new THREE.Vector3());
+                
+                // Offset the group so the map is centered at origin
+                this.statesGroup.position.x = -center.x;
+                this.statesGroup.position.z = -center.z;
+                
+                this.scene.add(this.statesGroup);
             }
             
             createStateMesh(stateCode, stateData) {
@@ -9428,23 +9717,32 @@ ${window.location.href}`;
                 }
                 shape.closePath();
                 
+                // Enhanced extrude settings for smoother terrain
                 const extrudeSettings = {
                     depth: stateData.elevation,
                     bevelEnabled: true,
-                    bevelThickness: 0.02,
-                    bevelSize: 0.02,
-                    bevelSegments: 2
+                    bevelThickness: 0.03,
+                    bevelSize: 0.03,
+                    bevelSegments: 3,
+                    curveSegments: 12  // More segments for smoother curves
                 };
                 
                 const geometry = new THREE.ExtrudeGeometry(shape, extrudeSettings);
                 geometry.rotateX(-Math.PI / 2);
                 
+                // Apply simplex noise displacement to top vertices for organic terrain
+                this.applyTerrainDisplacement(geometry, stateData);
+                
+                // Calculate elevation-based color
                 const baseColor = this.regionColors[stateData.region];
+                const elevationColor = this.getElevationColor(baseColor, stateData.elevation);
+                
                 const material = new THREE.MeshStandardMaterial({
-                    color: baseColor,
-                    roughness: 0.6,
-                    metalness: 0.1,
-                    side: THREE.DoubleSide
+                    color: elevationColor,
+                    roughness: 0.55,
+                    metalness: 0.08,
+                    side: THREE.DoubleSide,
+                    flatShading: false  // Smooth shading for terrain
                 });
                 
                 const mesh = new THREE.Mesh(geometry, material);
@@ -9454,10 +9752,74 @@ ${window.location.href}`;
                     state: stateCode,
                     region: stateData.region,
                     baseColor: baseColor,
-                    center: stateData.center
+                    elevationColor: elevationColor.getHex(),
+                    center: stateData.center,
+                    elevation: stateData.elevation
                 };
                 
                 return mesh;
+            }
+            
+            // Apply noise-based displacement to geometry vertices for organic terrain
+            applyTerrainDisplacement(geometry, stateData) {
+                const positions = geometry.attributes.position.array;
+                const noiseScale = 0.5;       // Scale of noise pattern
+                const noiseStrength = 0.08;   // Maximum displacement
+                const elevation = stateData.elevation;
+                
+                // Find min and max Y to identify top surface
+                let minY = Infinity, maxY = -Infinity;
+                for (let i = 1; i < positions.length; i += 3) {
+                    minY = Math.min(minY, positions[i]);
+                    maxY = Math.max(maxY, positions[i]);
+                }
+                
+                const topThreshold = maxY - (maxY - minY) * 0.3; // Top 30% of geometry
+                
+                for (let i = 0; i < positions.length; i += 3) {
+                    const x = positions[i];
+                    const y = positions[i + 1];
+                    const z = positions[i + 2];
+                    
+                    // Only displace top vertices (above threshold)
+                    if (y > topThreshold) {
+                        // Use fractal Brownian motion for more natural terrain
+                        const noise = SimplexNoise.fbm(
+                            x * noiseScale + stateData.center.x,
+                            z * noiseScale + stateData.center.z,
+                            3,    // octaves
+                            2.0,  // lacunarity
+                            0.5   // persistence
+                        );
+                        
+                        // Scale displacement by elevation (higher regions have more variation)
+                        const displacementFactor = Math.min(1, elevation / this.maxElevation);
+                        const displacement = noise * noiseStrength * (0.5 + displacementFactor * 0.5);
+                        
+                        positions[i + 1] += displacement;
+                    }
+                }
+                
+                geometry.attributes.position.needsUpdate = true;
+                geometry.computeVertexNormals();  // Recompute normals for proper lighting
+            }
+            
+            // Calculate color based on elevation (higher = lighter)
+            getElevationColor(baseColorHex, elevation) {
+                const color = new THREE.Color(baseColorHex);
+                const elevationFactor = elevation / this.maxElevation;
+                
+                // Blend towards lighter color at higher elevations
+                const highlightColor = new THREE.Color(0xffffff);
+                color.lerp(highlightColor, elevationFactor * 0.18);
+                
+                // Also slightly increase saturation for mid-range elevations
+                const hsl = {};
+                color.getHSL(hsl);
+                hsl.s = Math.min(1, hsl.s * (1 + (1 - Math.abs(elevationFactor - 0.5) * 2) * 0.1));
+                color.setHSL(hsl.h, hsl.s, hsl.l);
+                
+                return color;
             }
             
             setupEvents(container) {
@@ -9548,15 +9910,19 @@ ${window.location.href}`;
             
             highlightStateMesh(mesh, yOffset, brightness) {
                 mesh.position.y = yOffset;
-                mesh.material.color.setHex(mesh.userData.baseColor);
+                // Use elevation color (accounts for terrain-based coloring)
+                const baseColor = mesh.userData.elevationColor || mesh.userData.baseColor;
+                mesh.material.color.setHex(baseColor);
                 mesh.material.color.multiplyScalar(brightness);
-                mesh.material.emissive = new THREE.Color(mesh.userData.baseColor);
-                mesh.material.emissiveIntensity = 0.1;
+                mesh.material.emissive = new THREE.Color(baseColor);
+                mesh.material.emissiveIntensity = 0.12;
             }
             
             resetStateMesh(mesh) {
                 mesh.position.y = 0;
-                mesh.material.color.setHex(mesh.userData.baseColor);
+                // Restore to elevation-adjusted color
+                const baseColor = mesh.userData.elevationColor || mesh.userData.baseColor;
+                mesh.material.color.setHex(baseColor);
                 mesh.material.emissive = new THREE.Color(0x000000);
                 mesh.material.emissiveIntensity = 0;
             }
